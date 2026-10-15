@@ -45,9 +45,17 @@ button,input,textarea,select{font:inherit;color:inherit}
 .side{display:flex;flex-direction:column;gap:24px;position:relative;z-index:1;min-width:0}
 .hub{position:relative;z-index:1;width:330px;height:330px;border-radius:50%;display:grid;place-items:center;text-align:center;background:var(--surface);border:1px solid var(--line);
   box-shadow:0 0 0 28px var(--bg),0 0 0 29px var(--line),0 0 0 60px var(--bg),0 0 0 61px var(--sunk)}
-.hub::before{content:"";position:absolute;inset:14px;border-radius:50%;border:1.5px dashed var(--accent);opacity:.35}
+.hub::before{content:"";position:absolute;inset:14px;border-radius:50%;border:1.5px dashed var(--accent);opacity:.35;animation:spin 80s linear infinite}
+.hub::after{content:"";position:absolute;inset:0;border-radius:50%;z-index:-1;background:radial-gradient(circle at 50% 30%,color-mix(in srgb,var(--accent) 30%,transparent),transparent 62%);animation:glow 4s ease-in-out infinite alternate}
 .hub-in{display:flex;flex-direction:column;align-items:center;gap:6px;padding:20px}
-.hub .dot{width:56px;height:56px;border-radius:14px;background:var(--accent);display:grid;place-items:center}
+.hub .dot{position:relative;overflow:hidden;width:56px;height:56px;border-radius:14px;background:var(--accent);display:grid;place-items:center;animation:halo 2.6s ease-in-out infinite}
+.hub .dot .scan{position:absolute;left:9px;right:9px;height:2px;border-radius:2px;background:var(--on-accent);box-shadow:0 0 8px 2px color-mix(in srgb,var(--on-accent) 70%,transparent);animation:scan 2.6s ease-in-out infinite}
+.hub .dot .corners{transform-box:fill-box;transform-origin:center;animation:lock 2.6s ease-in-out infinite}
+@keyframes scan{0%{top:12px;opacity:0}12%{opacity:1}50%{top:42px;opacity:1}62%,100%{top:42px;opacity:0}}
+@keyframes lock{0%,45%{transform:scale(1)}58%{transform:scale(.86)}72%,100%{transform:scale(1)}}
+@keyframes halo{0%,50%{box-shadow:0 0 0 0 color-mix(in srgb,var(--accent) 55%,transparent)}75%{box-shadow:0 0 0 14px transparent}100%{box-shadow:0 0 0 0 transparent}}
+@keyframes glow{from{opacity:.55}to{opacity:1}}
+@keyframes spin{to{transform:rotate(360deg)}}
 .hub .dot svg{width:32px;height:32px;stroke:var(--on-accent);fill:none;stroke-width:1.8;stroke-linecap:round}
 .hub h1{font-family:var(--display);font-weight:700;font-size:42px;letter-spacing:-.03em;line-height:1.02;margin:0;text-wrap:balance}
 .hub h1 em{font-style:normal;color:var(--accent)}
@@ -138,7 +146,7 @@ textarea{min-height:70px;resize:vertical}
   .cards{border-left:1.5px solid var(--accent);padding-left:14px}
   .row{grid-template-columns:1fr}
 }
-@media (prefers-reduced-motion:reduce){.card,.stage{transition:none}}
+@media (prefers-reduced-motion:reduce){.card,.stage{transition:none}.hub::before,.hub::after,.hub .dot,.hub .dot .scan,.hub .dot .corners{animation:none}.hub .dot .scan{display:none}}
 </style>
 </head>
 <body>
@@ -156,7 +164,7 @@ textarea{min-height:70px;resize:vertical}
   <main class="map" id="map">
     <svg class="wires" id="wires" aria-hidden="true"></svg>
     <div class="side left" id="side-left"></div>
-    <div class="hub" id="hub"><div class="hub-in"><div class="dot" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M4 10V6a2 2 0 0 1 2-2h4M22 4h4a2 2 0 0 1 2 2v4M28 22v4a2 2 0 0 1-2 2h-4M10 28H6a2 2 0 0 1-2-2v-4"/><circle cx="16" cy="14" r="4"/><path d="M9.5 23.5c1.4-2.6 3.7-4 6.5-4s5.1 1.4 6.5 4"/></svg></div><h1>How Incode <em>sells</em></h1><div class="count" id="count"></div></div></div>
+    <div class="hub" id="hub"><div class="hub-in"><div class="dot" aria-hidden="true"><svg viewBox="0 0 32 32"><path class="corners" d="M4 10V6a2 2 0 0 1 2-2h4M22 4h4a2 2 0 0 1 2 2v4M28 22v4a2 2 0 0 1-2 2h-4M10 28H6a2 2 0 0 1-2-2v-4"/><circle cx="16" cy="14" r="4"/><path d="M9.5 23.5c1.4-2.6 3.7-4 6.5-4s5.1 1.4 6.5 4"/></svg><span class="scan"></span></div><h1>How Incode <em>sells</em></h1><div class="count" id="count"></div></div></div>
     <div class="side right" id="side-right"></div>
   </main>
   <section class="meddicc" aria-labelledby="meddicc-h">
