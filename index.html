@@ -113,8 +113,11 @@ button,input,textarea,select{font:inherit;color:inherit}
 .m-link::after{content:"→";color:var(--accent);transition:transform .15s}
 .m-link:hover{color:var(--accent)}
 .m-link:hover::after{transform:translateX(3px)}
-@media (max-width:1100px){.m-row,.m-row:nth-child(n+5){grid-column:span 6}.m-row:last-child{grid-column:span 12}}
-@media (max-width:640px){.m-row,.m-row:nth-child(n+5),.m-row:last-child{grid-column:span 12}.m-row{padding:20px}}
+.bant{border-top:0;padding-top:24px;margin-top:0}
+.bant .m-row{grid-column:span 3}
+.bant .m-ic{background:var(--accent);color:var(--on-accent);border-color:transparent}
+@media (max-width:1100px){.m-row,.m-row:nth-child(n+5),.bant .m-row{grid-column:span 6}#meddicc-rows .m-row:last-child{grid-column:span 12}}
+@media (max-width:640px){.m-row,.m-row:nth-child(n+5),#meddicc-rows .m-row:last-child,.bant .m-row{grid-column:span 12}.m-row{padding:20px}}
 .chip.method{background:var(--sunk);color:var(--fg)}
 fieldset.methods{border:1px solid var(--line);border-radius:8px;padding:8px 12px 10px;margin:0}
 fieldset.methods legend{font-family:var(--mono);font-size:12px;color:var(--muted);padding:0 4px}
@@ -188,6 +191,15 @@ textarea{min-height:70px;resize:vertical}
     </div>
     <div class="m-rows" id="meddicc-rows"></div>
   </section>
+  <section class="meddicc bant" aria-labelledby="bant-h">
+    <div class="m-head">
+      <div class="eyebrow">Second lens</div>
+      <h2 id="bant-h">BANT: is this a <em>real</em> deal?</h2>
+      <p class="lede">BANT is the quicker four-question check: budget, authority, need, timing. Here is how Incode's site moves each one in its favor.</p>
+      <div class="m-word" aria-hidden="true"><span>B</span><span>A</span><span>N</span><span>T</span></div>
+    </div>
+    <div class="m-rows" id="bant-rows"></div>
+  </section>
 </div>
 
 <dialog id="det">
@@ -240,13 +252,19 @@ const METHODS=[
   {id:"validation",name:"Third-party validation"}
 ];
 const MEDDICC=[
-  {l:"M",n:"Metrics",t:"Every claim has a number a risk team can repeat: 0.01% false acceptance, 98% pass on the first try, +20% conversion, 99% fraud reduction on the telco page.",ids:["two-budgets","industry-pages","scale-numbers"]},
+  {l:"M",n:"Metrics",t:"Every claim has a number a risk team can repeat: 0.01% false acceptance, 98% pass on the first try, +20% conversion, 99% fraud reduction on the telco page, and results in named case studies.",ids:["two-budgets","case-studies","industry-pages","scale-numbers"]},
   {l:"E",n:"Economic buyer",t:"Pitching both lower fraud and higher sign-ups lifts the deal above the fraud manager to the executive who owns growth and risk, and regulatory exposure brings in the board.",ids:["two-budgets","compliance-close"]},
   {l:"D",n:"Decision criteria",t:"Incode shapes the checklist around strengths it can prove: certified liveness, deepfake detection, and analyst standing. A rival without a Level 3 certificate or Deepsight-style defense looks behind.",ids:["ibeta-level3","deepfake-threat","gartner-mq","deepsight-proof"]},
-  {l:"D",n:"Decision process",t:"Engineers read the open docs, test in a time-boxed demo environment, sales builds a custom quote, and IT sees it plugs into tools it already runs.",ids:["dev-hub","demo-env","sales-led","iam-plugins"]},
+  {l:"D",n:"Decision process",t:"Engineers read the open docs and release notes, test in a time-boxed demo environment, sales builds a custom quote, and IT sees it plugs into tools it already runs.",ids:["dev-hub","release-notes","demo-env","sales-led","iam-plugins"]},
   {l:"I",n:"Identify pain",t:"The content names the pains: deepfakes and injected cameras, fake job candidates and help-desk scams, compliance deadlines.",ids:["deepfake-threat","workforce-crosssell","compliance-close"]},
   {l:"C",n:"Champion",t:"Fraud reports and the Deepfake Guesser turn the fraud lead into the internal expert, and the logo wall gives them peers to point to.",ids:["fraud-reports","deepfake-guesser","logo-wall"]},
-  {l:"C",n:"Competition",t:"Gartner Leader every year, 'first' to pass iBeta Level 3, and buying rivals such as AuthenticID shrink the field before the buyer compares.",ids:["gartner-mq","ibeta-level3","acquisitions"]}
+  {l:"C",n:"Competition",t:"Gartner Leader every year, top marks from Liminal and G2, 'first' to pass iBeta Level 3, and buying rivals such as AuthenticID shrink the field before the buyer compares.",ids:["recognitions","gartner-mq","ibeta-level3","acquisitions"]}
+];
+const BANT=[
+  {l:"B",n:"Budget",t:"There is no price to object to. Quotes are custom and sized by volume and modules, and the pitch draws on two budgets at once: fraud losses avoided and sign-ups gained. Fines make the cost of doing nothing concrete.",ids:["sales-led","two-budgets","compliance-close"]},
+  {l:"A",n:"Authority",t:"The material is built for people who sign. A downloadable Gartner report and analyst badges speak to executives, invite-style events gather senior risk leaders, and Workforce brings the CISO in.",ids:["gartner-mq","recognitions","own-events","workforce-crosssell"]},
+  {l:"N",n:"Need",t:"Need is shown, not asked about. Deepfake demos, industry pages and case studies with results let the buyer see their own problem and the fix side by side.",ids:["deepfake-threat","industry-pages","case-studies"]},
+  {l:"T",n:"Timing",t:"Urgency comes from outside: new AI attacks, compliance deadlines and a time-limited demo environment keep the evaluation from drifting.",ids:["deepfake-guesser","compliance-close","demo-env"]}
 ];
 const $=s=>document.querySelector(s);
 let cards=[],db=null,canWrite=false,editing=null,viewing=null,lens="",openStage="";
@@ -313,9 +331,10 @@ function renderLens(){
     b.onclick=()=>{lens=id;openStage="";render()};return b};
   bar.append(mk("","All tactics"),...METHODS.map(m=>mk(m.id,m.name)));
 }
-function renderMeddicc(){
-  const box=$("#meddicc-rows");box.replaceChildren();
-  for(const r of MEDDICC){
+function renderMeddicc(){renderLensGrid("#meddicc-rows",MEDDICC);renderLensGrid("#bant-rows",BANT)}
+function renderLensGrid(sel,list){
+  const box=$(sel);box.replaceChildren();
+  for(const r of list){
     const row=el("article","m-row");
     row.append(el("div","m-ic",r.l),el("h3",null,r.n),el("p",null,r.t));
     const links=el("div","m-links");links.append(el("span","m-lbl","Tactics that answer it"));

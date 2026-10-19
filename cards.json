@@ -11,7 +11,7 @@
         "url": "https://www.incode.com/",
         "title": "Lead with the deepfake threat",
         "what": "The homepage and launches put AI fraud front and center. Deepsight is pitched as protection from deepfakes, injected virtual cameras and synthetic identities, with each check running in under 100 milliseconds.",
-        "metric": "Under 100 ms per check \u00b7 claimed 10x more accurate than trained human reviewers (internal tests)",
+        "metric": "Under 100 ms per check · claimed 10x more accurate than trained human reviewers (internal tests)",
         "take": "Fear of a new, fast-growing threat opens doors that a pitch about better onboarding never would. The buyer's old vendor now looks like it was built for yesterday's fraud."
     },
     "deepfake-guesser": {
@@ -26,7 +26,7 @@
         "url": "https://www.incode.com/es/register/money-2020-2026",
         "title": "Deepfake Guesser Challenge at the booth",
         "what": "At Money20/20 Europe the booth runs a game: visitors try to tell real faces from deepfakes. The event page pairs it with a talk on fighting deepfakes and a form to request a meeting.",
-        "metric": "Booth #1C150 \u00b7 request-a-meeting form on the event page",
+        "metric": "Booth #1C150 · request-a-meeting form on the event page",
         "take": "A fraud lead who fails to spot a fake has felt the pain in person. The meeting request right after the game catches them while that feeling is fresh."
     },
     "own-events": {
@@ -40,7 +40,7 @@
         "url": "https://incode.com/events/money-2020-2025",
         "title": "Own event series: Decoded",
         "what": "Besides big booths at Money20/20 USA and Europe, Incode hosts its own invite-style event, Decoded: Fraud & Identity in Focus (London, November 2025), promoted on the homepage.",
-        "metric": "Money20/20 USA booth #11047 \u00b7 Decoded London, 18 Nov 2025",
+        "metric": "Money20/20 USA booth #11047 · Decoded London, 18 Nov 2025",
         "take": "Owning the room means Incode sets the agenda and the guest list. Senior fraud and risk leaders meet peers, and Incode is the host of that conversation."
     },
     "agentic-identity": {
@@ -70,7 +70,7 @@
         "url": "https://www.incode.com/ai-info/",
         "title": "A fact sheet written for AI assistants",
         "what": "A dedicated AI info page lists the company facts in plain, quotable form: 700+ enterprise clients, 4.1B+ trust checks a year, 400M+ identity profiles, about 4 seconds average verification, 98% validated on the first try.",
-        "metric": "700+ enterprise clients \u00b7 4.1B+ trust checks a year",
+        "metric": "700+ enterprise clients · 4.1B+ trust checks a year",
         "take": "Buyers now ask ChatGPT or Google AI to shortlist vendors. A clean fact page shapes what those answers say about Incode before a human ever visits the site."
     },
     "latam-roots": {
@@ -99,7 +99,7 @@
         "url": "https://incode.com/industries/telco/",
         "title": "Industry pages in the buyer's own language",
         "what": "Separate pages for financial services, telco, gaming, marketplaces and government. Each speaks to that industry's fraud and rules, with its own headline numbers. The telco page, for example, claims 99% fraud reduction and 40% higher conversion.",
-        "metric": "Telco: 99% fraud reduction \u00b7 40% higher conversion",
+        "metric": "Telco: 99% fraud reduction · 40% higher conversion",
         "take": "A telco fraud lead reading about SIM-swap and account takeover feels understood. One generic identity pitch would force them to translate it for their own world."
     },
     "two-budgets": {
@@ -114,7 +114,7 @@
         "url": "https://www.incode.com/technology/identity-verification",
         "title": "Less fraud and more sign-ups at once",
         "what": "The pitch refuses the usual trade-off between security and friction. Fraud numbers (0.01% false acceptance) sit next to growth numbers (98% pass on the first try, 20% conversion uplift when checking against government records).",
-        "metric": "0.01% false acceptance \u00b7 98% first-try pass \u00b7 +20% conversion",
+        "metric": "0.01% false acceptance · 98% first-try pass · +20% conversion",
         "take": "Fraud teams want fewer bad users; growth teams want fewer dropped good ones. Selling both outcomes lets the deal draw on two budgets and wins two internal allies."
     },
     "fraud-reports": {
@@ -156,8 +156,8 @@
         "status": "Documented",
         "url": "https://www.incode.com/",
         "title": "Logo wall stated as market share",
-        "what": "Customers are framed as rankings: 8 of the top 10 US banks, 8 of the top 9 US telcos, 3 of the top 3 global neobanks, 4 of the top 5 global marketplaces. Named logos include Citi, HSBC, Scotiabank, Chime, Nu, TikTok, AT&T, Experian, FanDuel and BetMGM.",
-        "metric": "8 of top 10 US banks \u00b7 8 of top 9 US telcos \u00b7 3 of 3 top neobanks",
+        "what": "Customers are framed as rankings: 8 of the top 10 US banks, 8 of the top 9 US telcos, 3 of the top 3 global neobanks, 4 of the top 5 global marketplaces. Logos across the site include Citi, Wells Fargo, HSBC, Scotiabank, Chime, Nu, Klarna, Binance, TikTok, AT&T, US Cellular, FanDuel, BetMGM, PokerStars and Liga MX.",
+        "metric": "8 of top 10 US banks · 8 of top 9 US telcos · 3 of 3 top neobanks · 4 of top 5 marketplaces",
         "take": "'8 of the top 10' says 'your peers already chose us' more strongly than any single logo. For a risk-averse bank, the safe choice is the one its competitors made."
     },
     "gartner-mq": {
@@ -170,8 +170,8 @@
         "status": "Documented",
         "url": "https://secure.businesswire.com/news/home/20260731130229/en/Incode-Named-a-Leader-in-the-2026-Gartner-Magic-Quadrant-for-Identity-Verification-for-the-Third-Consecutive-Year",
         "title": "Gartner Leader three years running",
-        "what": "Incode has been a Leader in every edition of the Gartner Magic Quadrant for Identity Verification: 2024 (the first one), 2025 and 2026. Incode points out that in 2025 only 5 of 11 vendors were named Leaders.",
-        "metric": "Leader 2024 \u00b7 2025 \u00b7 2026 \u00b7 5 of 11 vendors were Leaders in 2025",
+        "what": "Incode has been a Leader in every edition of the Gartner Magic Quadrant for Identity Verification: 2024 (the first one), 2025 and 2026. Incode points out that in 2025 only 5 of 11 vendors were named Leaders. The homepage card shows the Magic Quadrant chart itself and offers a 'Download the report' button.",
+        "metric": "Leader 2024 · 2025 · 2026 · 5 of 11 vendors were Leaders in 2025",
         "take": "Enterprise procurement starts its shortlist from the Magic Quadrant. Being a Leader every year keeps Incode on every list and gives the champion a safe answer to 'why them?'"
     },
     "ibeta-level3": {
@@ -185,7 +185,7 @@
         "url": "https://www.ibeta.com/ibeta-announces-incode-technologies-inc-is-first-to-pass-the-rigorous-ibeta-level-3-pad-testing-on-both-android-and-ios/",
         "title": "First to pass iBeta Level 3 on iOS and Android",
         "what": "The independent lab iBeta announced Incode as the first to pass Level 3 presentation attack (liveness) testing under ISO/IEC 30107-3 on both platforms, in early 2026. Incode reports 0% error rates at that level.",
-        "metric": "iBeta Level 3 PAD \u00b7 0% APCER \u00b7 0% BPCER (reported)",
+        "metric": "iBeta Level 3 PAD · 0% APCER · 0% BPCER (reported)",
         "take": "'First' is a claim a rival can't copy. A lab certificate answers the security team's toughest question with someone else's signature."
     },
     "g2-badges": {
@@ -214,7 +214,7 @@
         "url": "https://www.incode.com/ai-info/",
         "title": "Scale as a moat",
         "what": "Incode repeats its volume everywhere: over 4 billion identity checks a year (together with AuthenticID in 2024), 400M+ identity profiles, 700+ enterprise clients, 600+ staff.",
-        "metric": "4.1B+ trust checks a year \u00b7 400M+ identity profiles",
+        "metric": "4.1B+ trust checks a year · 400M+ identity profiles",
         "take": "In fraud, more data trains better models and spots repeat attackers across customers. The size itself becomes the argument that a smaller vendor can't match."
     },
     "deepsight-proof": {
@@ -228,7 +228,7 @@
         "url": "https://www.helpnetsecurity.com/2025/12/04/incode-deepsight-targets-deepfakes-and-synthetic-identity-threats/",
         "title": "University test plus live deployments for Deepsight",
         "what": "Deepsight claims are backed by an independent Purdue University evaluation and by named deployments at TikTok, Scotiabank and Nubank.",
-        "metric": "Purdue University evaluation \u00b7 live at TikTok, Scotiabank, Nubank",
+        "metric": "Purdue University evaluation · live at TikTok, Scotiabank, Nubank",
         "take": "A new product has no track record. Borrowing a university's credibility and three famous users fills that gap fast."
     },
     "government-refs": {
@@ -242,7 +242,7 @@
         "url": "https://www.incode.com/",
         "title": "Government references: DMVs and DOTs",
         "what": "Public-sector customers such as the California DMV and Wisconsin DOT sit alongside the banks.",
-        "metric": "California DMV \u00b7 Wisconsin DOT",
+        "metric": "California DMV · Wisconsin DOT",
         "take": "If a state trusts Incode with driver identity, a bank's risk committee has less to worry about. Government logos also open other public-sector deals."
     },
     "sales-led": {
@@ -256,8 +256,8 @@
         "status": "Documented",
         "url": "https://www.saasworthy.com/product/incode-omni/pricing",
         "title": "No price list, only a conversation",
-        "what": "There is no public price and no free plan. Pricing is custom, so every serious buyer has to talk to a rep.",
-        "metric": "Custom pricing \u00b7 no free plan",
+        "what": "There is no public price and no free plan. A blue 'Request a demo' button sits in the top navigation on every page, and pricing is custom, so every serious buyer has to talk to a rep.",
+        "metric": "'Request a demo' on every page · custom pricing · no free plan",
         "take": "Price depends on volume, countries and modules, so a quote needs a conversation. That talk is where the rep qualifies the deal and finds the economic buyer."
     },
     "demo-env": {
@@ -272,7 +272,7 @@
         "url": "https://devhub.omnihub.incode.com/get-started-with-incode/getting-credentials/",
         "title": "Time-boxed demo environment",
         "what": "New prospects get a shared demo environment with full Omni API access for testing without a production commitment. Access comes through a rep, and evaluation periods are time-limited.",
-        "metric": "Full API access \u00b7 time-limited evaluation",
+        "metric": "Full API access · time-limited evaluation",
         "take": "Full access lets engineers prove it works; the time limit keeps the deal moving. Because access runs through a rep, sales always knows who is testing."
     },
     "compliance-close": {
@@ -315,8 +315,8 @@
         "status": "Documented",
         "url": "https://www.incode.com/technology/identity-verification",
         "title": "Land on onboarding, expand across the identity lifecycle",
-        "what": "One platform covers onboarding (KYC), step-up checks, login authentication, age verification and deepfake protection. A customer that starts with onboarding can switch on the next module without a new vendor.",
-        "metric": "Onboarding \u2192 step-up \u2192 authentication \u2192 age \u2192 deepfake",
+        "what": "A 'Verify identity from every angle' section lists the modules: document verification (4.9K+ ID types in 190+ countries), biometric liveness, government record matching (state DMVs), KYC and AML screening (PEP and sanctions), business verification (KYB) and deepfake detection, for users, businesses and AI agents. A customer that starts with onboarding can switch on the next module without a new vendor.",
+        "metric": "6 capabilities · 4.9K+ document types · 190+ countries",
         "take": "The first module puts the face template and the integration in place. Each later module reuses both, so adding it is far easier than buying from someone else."
     },
     "workforce-crosssell": {
@@ -331,7 +331,7 @@
         "url": "https://www.incode.com/workforce",
         "title": "Workforce: the same tech sold to the CISO",
         "what": "Incode Workforce verifies the real person at risky moments inside a company: job interviews, new-hire onboarding, help-desk and MFA resets. It is offered jointly with Okta Workforce Identity.",
-        "metric": "Interviews \u00b7 onboarding \u00b7 help-desk resets",
+        "metric": "Interviews · onboarding · help-desk resets",
         "take": "A bank that uses Incode for customers has a security team fighting fake job candidates and help-desk scams. Same account, new buyer, new budget."
     },
     "acquisitions": {
@@ -346,7 +346,51 @@
         "url": "https://www.incode.com/blog/incode-acquires-authenticid",
         "title": "Buying rivals and their customers",
         "what": "Incode bought AuthenticID (August 2025), strong in regulated, high-volume deployments, and later Identiq for privacy-first fraud prevention. AuthenticID's site now carries an 'Incode' banner.",
-        "metric": "AuthenticID (Aug 2025) \u00b7 Identiq",
+        "metric": "AuthenticID (Aug 2025) · Identiq",
         "take": "Each deal removes a competitor, adds a customer base to cross-sell the full platform into, and fills a product gap without years of building."
+    },
+    "recognitions": {
+        "created": 13.5,
+        "stage": "prove",
+        "type": "Analyst validation",
+        "methods": [
+            "validation"
+        ],
+        "status": "Documented",
+        "url": "https://www.incode.com/",
+        "title": "Three analysts, one 'flagship recognitions' row",
+        "what": "A 'Built on trust' section puts three charts side by side: Leader in the Gartner Magic Quadrant for Identity Verification (third year running), Leading Vendor in Liminal's Link Index for KYC, and top-rated in G2's Index for Identity Verification. Each card shows the actual chart with Incode's dot, plus a 'Download the report' or 'Learn more' button.",
+        "metric": "Gartner Leader · Liminal Link Index Leading Vendor · G2 top-rated",
+        "take": "One analyst can be dismissed as a fluke; three different ones agreeing reads as consensus. Showing the real charts lets the buyer see the position for themselves, and the gated report download captures the lead."
+    },
+    "release-notes": {
+        "created": 10.5,
+        "stage": "educate",
+        "type": "Technical enablement",
+        "methods": [
+            "validation",
+            "consultative"
+        ],
+        "status": "Documented",
+        "url": "https://devhub.omnihub.incode.com/",
+        "title": "Public release notes every two weeks",
+        "what": "The developer hub publishes detailed platform release notes on a two-week rhythm (Oct 19, Oct 5, Sep 21, Sep 7…), tagged HOTFIX or UPDATE, plus separate notes for Web, iOS, Android, React Native, Flutter, Cordova and Xamarin SDKs, an SDK deprecation policy and an 'Ask AI' assistant over the docs.",
+        "metric": "New release notes every ~2 weeks · 7 SDKs covered",
+        "take": "Engineers judge a vendor by how it ships. Steady, specific fixes (down to Ontario health-card barcodes) prove the product is alive and maintained, which quietly answers 'will they still support this in three years?'"
+    },
+    "case-studies": {
+        "created": 11.5,
+        "stage": "prove",
+        "type": "Case studies",
+        "methods": [
+            "validation",
+            "value"
+        ],
+        "status": "Documented",
+        "url": "https://www.incode.com/",
+        "title": "Case studies: 'Real customers, measurable results'",
+        "what": "A case studies page pairs the headline 'Real customers, measurable results' with a moving wall of logos (Liga MX, Citi, PokerStars, FanDuel, Wells Fargo, Klarna, BetMGM, Citibanamex, US Cellular, Lemon, Binance), then a 'Results from every industry' grid of stories.",
+        "metric": "Stories sorted by industry · results promised up front",
+        "take": "Sorting stories by industry lets each buyer find a twin of their own company. 'Measurable results' sets the expectation that the proof is numbers, not praise."
     }
 }
