@@ -392,5 +392,20 @@
         "what": "A case studies page pairs the headline 'Real customers, measurable results' with a moving wall of logos (Liga MX, Citi, PokerStars, FanDuel, Wells Fargo, Klarna, BetMGM, Citibanamex, US Cellular, Lemon, Binance), then a 'Results from every industry' grid of stories.",
         "metric": "Stories sorted by industry · results promised up front",
         "take": "Sorting stories by industry lets each buyer find a twin of their own company. 'Measurable results' sets the expectation that the proof is numbers, not praise."
+    },
+    "blog-guides": {
+        "created": 9.5,
+        "stage": "educate",
+        "type": "SEO content",
+        "methods": [
+            "consultative",
+            "value"
+        ],
+        "status": "Documented",
+        "url": "https://www.incode.com/blog",
+        "title": "Blog guides that rank: 'Deepfakes 101'",
+        "what": "Long, search-friendly explainers such as 'Deepfakes 101: Examples and deepfake fraud prevention tips' (9 min read). The table of contents walks the reader from what deepfakes are, their types and famous examples, to why they are dangerous, how to spot them and how to prevent deepfake fraud. A 'Request a demo' button stays in the top bar, and share buttons make it easy to pass along.",
+        "metric": "9 min read · 9-step table of contents · demo button on every article",
+        "take": "People search 'what is a deepfake' long before they search for a vendor. The guide answers that question, builds the fear step by step, and ends on prevention, where Incode's product is the obvious next step. Share buttons let the reader spread it to colleagues for free."
     }
 }
