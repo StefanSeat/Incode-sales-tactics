@@ -26,7 +26,11 @@
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.5}
 .wrap{padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px));padding-block:24px 56px;max-width:1560px;margin:0 auto;display:flex;flex-direction:column;gap:28px}
-header{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between}
+header.top{width:100%;max-width:1200px;margin-inline:auto;display:flex;flex-wrap:wrap;gap:16px 24px;align-items:flex-end;justify-content:space-between;padding-bottom:20px;border-bottom:1px solid var(--line)}
+.brand{display:flex;flex-direction:column;gap:4px;min-width:0}
+.brand-title{margin:0;font-family:var(--display);font-weight:700;font-size:clamp(24px,3vw,30px);letter-spacing:-.03em;line-height:1.1}
+.brand-sub{margin:0;color:var(--muted);font-size:14.5px;max-width:64ch;text-wrap:pretty}
+.top-right{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
 .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .lede{color:var(--muted);max-width:68ch;margin:4px 0 0;font-size:14px}
 button,input,textarea,select{font:inherit;color:inherit}
@@ -81,7 +85,7 @@ button,input,textarea,select{font:inherit;color:inherit}
 .card .more::after{content:" →"}
 
 /* method lens */
-.lens{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.lens{display:flex;flex-wrap:wrap;align-items:center;gap:10px;width:100%;max-width:1200px;margin-inline:auto}
 .lens-label{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .lens-row{display:flex;flex-wrap:wrap;gap:6px}
 .lens-btn{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font-size:13px;cursor:pointer}
@@ -308,18 +312,21 @@ dialog form.ed .checks{display:flex;flex-wrap:wrap;gap:8px 16px}
 <body>
 
 <div class="wrap">
-  <header>
-    <div>
-      <div class="eyebrow">Sales tactics analysis · incode.com</div>
-      <p class="lede">How Incode sells identity verification to banks, telcos, marketplaces and governments, plus the tools to sell it as a BDR: a day planner and call tracker, and a playbook built from the Incode BDR role.</p>
+  <header class="top">
+    <div class="brand">
+      <div class="eyebrow">incode.com · sales analysis</div>
+      <p class="brand-title">Incode Sales Tactics</p>
+      <p class="brand-sub">How Incode sells identity verification, and the tools to sell it as a BDR.</p>
     </div>
-    <button class="btn primary" id="new" type="button" hidden>New tactic</button>
+    <div class="top-right">
+      <nav class="tabs" role="tablist" aria-label="Page sections">
+        <button class="tab" role="tab" type="button" data-view="map" aria-selected="true">Sales map</button>
+        <button class="tab" role="tab" type="button" data-view="desk" aria-selected="false">BDR desk</button>
+        <button class="tab" role="tab" type="button" data-view="play" aria-selected="false">Playbook</button>
+      </nav>
+      <button class="btn primary" id="new" type="button" hidden>New tactic</button>
+    </div>
   </header>
-  <nav class="tabs" role="tablist" aria-label="Page sections">
-    <button class="tab" role="tab" type="button" data-view="map" aria-selected="true">Sales map</button>
-    <button class="tab" role="tab" type="button" data-view="desk" aria-selected="false">BDR desk</button>
-    <button class="tab" role="tab" type="button" data-view="play" aria-selected="false">Playbook</button>
-  </nav>
   <div class="view" id="view-map">
   <div class="lens"><span class="lens-label">Sales method</span><div class="lens-row" id="lens"></div></div>
   <p class="note" id="note">Loading the map…</p>
@@ -718,7 +725,7 @@ function renderLens(){
   const mk=(id,name)=>{const b=el("button","lens-btn",name);b.type="button";b.setAttribute("aria-pressed",String(lens===id));
     const n=id?cards.filter(c=>(c.methods||[]).includes(id)).length:cards.length;b.append(el("span","n"," "+n));
     b.onclick=()=>{lens=id;openStage="";render()};return b};
-  bar.append(mk("","All tactics"),...METHODS.map(m=>mk(m.id,m.name)));
+  bar.append(mk("","All tactics"),...METHODS.filter(m=>cards.some(c=>(c.methods||[]).includes(m.id))).map(m=>mk(m.id,m.name)));
 }
 function renderMeddicc(){renderLensGrid("#meddicc-rows",MEDDICC);renderLensGrid("#bant-rows",BANT)}
 function renderLensGrid(sel,list){
