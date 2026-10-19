@@ -114,6 +114,14 @@ button,input,textarea,select{font:inherit;color:inherit}
 .m-link:hover{color:var(--accent)}
 .m-link:hover::after{transform:translateX(3px)}
 .bant{border-top:0;padding-top:24px;margin-top:0}
+.m-q{position:relative;display:flex;flex-direction:column;gap:6px}
+.m-q b,.m-v b{font-family:var(--mono);font-size:10.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.m-q ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px;font-size:13.5px;line-height:1.45;color:var(--fg)}
+.m-v{position:relative;display:flex;flex-direction:column;gap:3px;border-radius:10px;padding:10px 12px;font-size:13px;line-height:1.45}
+.m-v.yes{background:var(--tint);color:var(--tag-fg)}
+.m-v.yes b{color:var(--accent)}
+.m-v.flag{background:var(--sunk);color:var(--fg)}
+.m-v.flag b{color:var(--warn)}
 .bant .m-row{grid-column:span 3}
 .bant .m-ic{background:var(--accent);color:var(--on-accent);border-color:transparent}
 @media (max-width:1100px){.m-row,.m-row:nth-child(n+5),.bant .m-row{grid-column:span 6}#meddicc-rows .m-row:last-child{grid-column:span 12}}
@@ -193,9 +201,9 @@ textarea{min-height:70px;resize:vertical}
   </section>
   <section class="meddicc bant" aria-labelledby="bant-h">
     <div class="m-head">
-      <div class="eyebrow">Second lens</div>
-      <h2 id="bant-h">BANT: is this a <em>real</em> deal?</h2>
-      <p class="lede">BANT is the quicker four-question check: budget, authority, need, timing. Here is how Incode's site moves each one in its favor.</p>
+      <div class="eyebrow">Second lens · qualifying the customer</div>
+      <h2 id="bant-h">BANT: is this prospect a <em>real</em> buyer?</h2>
+      <p class="lede">MEDDICC above reads Incode's website. BANT turns to the customer: the questions an Incode rep asks a bank, telco or marketplace, what a qualified answer sounds like, the red flag to watch for, and the tactics that help win each point.</p>
       <div class="m-word" aria-hidden="true"><span>B</span><span>A</span><span>N</span><span>T</span></div>
     </div>
     <div class="m-rows" id="bant-rows"></div>
@@ -261,10 +269,26 @@ const MEDDICC=[
   {l:"C",n:"Competition",t:"Gartner Leader every year, top marks from Liminal and G2, 'first' to pass iBeta Level 3, and buying rivals such as AuthenticID shrink the field before the buyer compares.",ids:["recognitions","gartner-mq","ibeta-level3","acquisitions"]}
 ];
 const BANT=[
-  {l:"B",n:"Budget",t:"There is no price to object to. Quotes are custom and sized by volume and modules, and the pitch draws on two budgets at once: fraud losses avoided and sign-ups gained. Fines make the cost of doing nothing concrete.",ids:["sales-led","two-budgets","compliance-close"]},
-  {l:"A",n:"Authority",t:"The material is built for people who sign. A downloadable Gartner report and analyst badges speak to executives, invite-style events gather senior risk leaders, and Workforce brings the CISO in.",ids:["gartner-mq","recognitions","own-events","workforce-crosssell"]},
-  {l:"N",n:"Need",t:"Need is shown, not asked about. Deepfake demos, explainer guides, industry pages and case studies with results let the buyer see their own problem and the fix side by side.",ids:["deepfake-threat","blog-guides","industry-pages","case-studies"]},
-  {l:"T",n:"Timing",t:"Urgency comes from outside: new AI attacks, compliance deadlines and a time-limited demo environment keep the evaluation from drifting.",ids:["deepfake-guesser","compliance-close","demo-env"]}
+  {l:"B",n:"Budget",t:"Can this company pay for enterprise identity verification?",
+   ask:["What do fraud losses and failed sign-ups cost you a year?","How many identity checks do you run a month, and what do you pay per check today?","Does this come out of the fraud, compliance or growth budget?"],
+   yes:"High check volume, a fraud or compliance cost that dwarfs the contract, and an existing vendor bill to replace.",
+   flag:"A small startup looking for a free plan or a self-serve price.",
+   ids:["sales-led","two-budgets","compliance-close"]},
+  {l:"A",n:"Authority",t:"Are you talking to the people who can say yes?",
+   ask:["Who owns identity here: fraud, compliance, product or security?","Who signs a contract of this size, and who else must approve it?","Does legal or privacy need to approve the use of face biometrics?"],
+   yes:"Access to the head of fraud or risk, plus compliance and security, with a clear signer.",
+   flag:"Only a developer or analyst exploring, with no sponsor above them.",
+   ids:["gartner-mq","recognitions","own-events","workforce-crosssell"]},
+  {l:"N",n:"Need",t:"Does the customer have a problem Incode solves better than what they have?",
+   ask:["Have you seen deepfakes, injected cameras or synthetic identities get through?","What share of real users drop off or fail on the first try?","Which rules apply to you: KYC, AML, age verification?"],
+   yes:"A measurable pain: rising AI fraud, sign-up drop-off, or a rule they must meet.",
+   flag:"\"Just benchmarking vendors\" with no current problem or failing tool.",
+   ids:["deepfake-threat","blog-guides","industry-pages","case-studies"]},
+  {l:"T",n:"Timing",t:"Is there a reason to buy in the next few months?",
+   ask:["When does your current identity vendor contract renew?","Is there a regulatory deadline or a product launch coming?","Did a recent attack or audit finding trigger this search?"],
+   yes:"A renewal within 6 to 12 months, a compliance deadline, a launch date or a recent incident.",
+   flag:"No trigger event and no date. The deal will drift.",
+   ids:["deepfake-guesser","compliance-close","demo-env"]}
 ];
 const $=s=>document.querySelector(s);
 let cards=[],db=null,canWrite=false,editing=null,viewing=null,lens="",openStage="";
@@ -337,7 +361,9 @@ function renderLensGrid(sel,list){
   for(const r of list){
     const row=el("article","m-row");
     row.append(el("div","m-ic",r.l),el("h3",null,r.n),el("p",null,r.t));
-    const links=el("div","m-links");links.append(el("span","m-lbl","Tactics that answer it"));
+    if(r.ask){const q=el("div","m-q");q.append(el("b",null,"Ask the customer"));const ul=el("ul");for(const a of r.ask)ul.append(el("li",null,a));q.append(ul);row.append(q);
+      for(const [cls,lbl,txt] of [["yes","Qualified when",r.yes],["flag","Red flag",r.flag]]){const v=el("div","m-v "+cls);v.append(el("b",null,lbl),el("span",null,txt));row.append(v)}}
+    const links=el("div","m-links");links.append(el("span","m-lbl",r.ask?"Incode tactics that help":"Tactics that answer it"));
     for(const id of r.ids){const c=cards.find(x=>x.id===id);if(!c)continue;const b=el("button","m-link",c.title);b.type="button";b.onclick=()=>openDetail(c);links.append(b)}
     if(links.childElementCount>1)row.append(links);
     box.append(row);
