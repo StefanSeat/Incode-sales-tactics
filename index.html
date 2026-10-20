@@ -307,6 +307,128 @@ dialog form.ed .checks{display:flex;flex-wrap:wrap;gap:8px 16px}
 @media (max-width:860px){.d-grid,.p-grid,.p-grid.three,.tiers{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.obj{grid-template-columns:1fr}.week{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:520px){.week{grid-template-columns:1fr}.cadence{grid-template-columns:repeat(2,minmax(0,1fr))}.call{grid-template-columns:auto minmax(0,1fr)}.call .btns{grid-column:1/-1;flex-direction:row}.bar{grid-template-columns:90px minmax(0,1fr) 56px}}
 @media (prefers-reduced-motion:reduce){.bar .fill{transition:none}}
+
+/* v2: time blocks, readiness, A/B, playbook diagrams */
+.ic{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.ready{display:flex;flex-direction:column;gap:8px}
+.rq{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;padding:9px 12px;border-radius:10px;background:var(--bg);border:1px solid var(--line);font-size:14px}
+.rq b{font-weight:500}
+.rq span{font-size:13px;color:var(--muted)}
+.rq .ok{color:var(--accent);font-weight:600;font-size:13px;white-space:nowrap}
+.rq .miss{color:var(--warn);font-weight:600;font-size:13px;white-space:nowrap;border:0;background:none;cursor:pointer;padding:0;text-decoration:underline}
+.go{border-radius:12px;padding:14px;text-align:center;font-family:var(--display);font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:15px;background:var(--sunk);color:var(--muted)}
+.go.on{background:var(--ink);color:var(--on-ink)}
+.chan{display:inline-flex;align-items:center;gap:4px;font-family:var(--mono);font-size:11px;padding:2px 7px;border-radius:4px;background:var(--tint);color:var(--tag-fg)}
+.chan.mail{background:var(--sunk);color:var(--fg)}
+details.track{font-size:13px;margin-top:4px}
+details.track summary{cursor:pointer;color:var(--accent);font-weight:500;width:max-content}
+details.track summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.wwy{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+.wwy p{margin:0;padding:8px 10px;border-radius:8px;background:var(--surface);border:1px solid var(--line);line-height:1.5}
+.wwy p b{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:500;margin-bottom:2px}
+.mails{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.mails li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--bg);font-size:13.5px}
+.mails li small{color:var(--muted);display:block}
+.market{display:flex;flex-direction:row;gap:8px;align-items:center;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+.market select{border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:6px 8px;font-size:13px;color:var(--fg)}
+.blocks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.blk{display:grid;grid-template-columns:92px minmax(0,1fr) auto;gap:10px;align-items:center;padding:9px 12px;border-radius:10px;border:1px solid transparent;font-size:14px}
+.blk .t{font-family:var(--mono);font-size:12px;font-variant-numeric:tabular-nums;color:var(--muted);line-height:1.3}
+.blk .t small{display:block;font-size:10.5px;opacity:.8}
+.blk .n{display:flex;flex-direction:column;gap:1px;min-width:0}
+.blk .n b{font-weight:600}
+.blk .n span{font-size:12.5px;color:var(--muted)}
+.blk.sell{background:var(--tint);color:var(--tag-fg)}
+.blk.sell .n span,.blk.sell .t{color:var(--tag-fg)}
+.blk.prep{background:var(--sunk)}
+.blk.flex{background:var(--bg);border-color:var(--line)}
+.blk.lunch{background:transparent;border:1px dashed var(--line);color:var(--muted)}
+.blk.now{outline:2px solid var(--accent);outline-offset:1px}
+.blk .lock{display:flex;align-items:center;gap:4px;font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase}
+.blk .late{font-family:var(--mono);font-size:10px;color:var(--warn)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.legend .s{background:var(--accent)}.legend .p{background:var(--sunk);border:1px solid var(--line)}.legend .f{background:var(--bg);border:1px solid var(--line)}
+.tmr{display:flex;flex-direction:column;gap:6px;font-size:14px}
+.tmr p{margin:0}
+.mini-stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+.mini-stats .stat b{font-size:22px}
+/* playbook diagrams */
+.p-row{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:14px}
+.waste{border-radius:16px;padding:20px;background:color-mix(in srgb,var(--warn) 9%,var(--surface));border:1px solid color-mix(in srgb,var(--warn) 25%,var(--line));display:flex;flex-direction:column;gap:14px;min-width:0}
+.waste h3,.topbdr h3{margin:0;font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:500}
+.waste h3{color:var(--warn)}
+.steps{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
+.wstep{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 8px;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;font-size:12.5px;min-width:0}
+.wstep b{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums}
+.wstep.hit{border-color:var(--warn);color:var(--warn)}
+.gone{font-family:var(--mono);font-size:12px;color:var(--warn);display:flex;align-items:center;gap:8px}
+.gone::before,.gone::after{content:"";flex:1;height:1px;background:color-mix(in srgb,var(--warn) 45%,transparent)}
+.topbdr{border-radius:16px;padding:20px;background:var(--tint);color:var(--tag-fg);display:flex;flex-direction:column;gap:10px;justify-content:center;min-width:0}
+.topbdr h3{color:var(--accent)}
+.topbdr .big{font-family:var(--display);font-weight:700;font-size:clamp(28px,4vw,40px);letter-spacing:-.03em;line-height:1;color:var(--fg)}
+.topbdr ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;font-size:14px;color:var(--fg)}
+.topbdr li{display:flex;gap:8px;align-items:center}
+.topbdr li .ic{color:var(--accent)}
+.flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;position:relative}
+.fstep{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;min-width:0;position:relative}
+.fstep .bub{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;background:var(--tint);color:var(--accent)}
+.fstep:last-child .bub{background:var(--ink);color:var(--on-ink)}
+.fstep .bub .ic{width:26px;height:26px}
+.fstep b{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+.fstep span{font-size:13.5px;color:var(--muted);max-width:24ch}
+.fstep:not(:last-child)::after{content:"→";position:absolute;right:-12px;top:18px;color:var(--muted);font-size:18px}
+.spring{display:flex;align-items:center;gap:12px;font-size:13px;color:var(--muted);font-style:italic}
+.spring::before,.spring::after{content:"";flex:1;height:1px;background:var(--line)}
+.decide{display:flex;flex-direction:column;gap:8px}
+.dq{display:grid;grid-template-columns:minmax(0,1fr) 40px minmax(0,1fr);gap:10px;align-items:center;padding:12px 14px;border-radius:12px;background:var(--surface);border:1px solid var(--line)}
+.dq b{font-size:15px}
+.dq .arr{color:var(--muted);text-align:center}
+.dq span{color:var(--accent);font-weight:600;display:flex;gap:6px;align-items:center}
+.daybar{display:flex;flex-direction:column;gap:6px}
+.trig{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.trig div{border:1px solid var(--line);border-radius:12px;background:var(--surface);padding:12px 14px;font-size:14px;display:flex;gap:10px;align-items:flex-start}
+.trig div .ic{color:var(--accent);margin-top:1px}
+.vs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.vs .p-card:nth-child(2){border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.vs .p-card .who{color:var(--accent)}
+.banner{border-radius:14px;padding:16px 20px;background:var(--ink);color:var(--on-ink);font-family:var(--display);font-weight:600;font-size:18px;text-align:center;letter-spacing:-.01em}
+.banner em{font-style:normal;text-decoration:underline;text-decoration-color:var(--accent);text-decoration-thickness:3px;text-underline-offset:5px}
+.frames{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}
+.frame{border-radius:14px;border:1px solid var(--line);background:var(--surface);overflow:hidden;display:flex;flex-direction:column}
+.frame h4{margin:0;padding:10px 16px;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:500;background:var(--sunk);color:var(--muted)}
+.frame.strong{border-color:var(--accent)}
+.frame.strong h4{background:var(--tint);color:var(--tag-fg)}
+.frame ul{margin:0;padding:12px 16px 16px;list-style:none;display:flex;flex-direction:column;gap:10px}
+.frame li{font-size:14.5px;line-height:1.45}
+.frame li q{font-style:italic}
+.frame .tone{font-size:12.5px;color:var(--muted);border-top:1px solid var(--line);padding:10px 16px}
+.two-line{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}
+.ln{border-radius:14px;overflow:hidden;border:1px solid var(--line);background:var(--surface)}
+.ln h4{margin:0;padding:10px 16px;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:500}
+.ln.first h4{background:var(--accent);color:var(--on-accent)}
+.ln.second h4{background:var(--ink);color:var(--on-ink)}
+.ln .lb{padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.ln .lb b{font-family:var(--display);font-size:18px;font-weight:600}
+.ln .lb span{font-size:13.5px;color:var(--muted)}
+.objs{display:flex;flex-direction:column;gap:10px}
+.obj2{display:grid;grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr) minmax(0,1fr);gap:12px;border:1px solid var(--line);border-radius:14px;background:var(--surface);padding:14px 16px;font-size:14px;line-height:1.5}
+.obj2 h4{margin:0;font-family:var(--display);font-weight:600;font-size:16px}
+.obj2 p{margin:0}
+.obj2 p b{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;font-weight:500;margin-bottom:2px}
+.obj2 .a b{color:var(--accent)}
+.obj2 .c b{color:var(--muted)}
+.abab{display:grid;grid-template-columns:90px repeat(5,minmax(0,1fr));gap:8px;align-items:stretch}
+.abab .h{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:center;padding-bottom:4px;border-bottom:1px solid var(--line)}
+.abab .g{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;display:grid;place-items:center;border-radius:10px;background:var(--sunk);padding:14px 4px}
+.abab .c{border-radius:10px;display:flex;align-items:center;justify-content:center;gap:6px;padding:14px 4px;font-weight:600;font-size:14px}
+.abab .c.call{background:var(--tint);color:var(--tag-fg)}
+.abab .c.mail{background:var(--surface);border:1px solid var(--line);color:var(--fg)}
+.clean{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}
+.clean .p-card ol{margin:0;padding-left:20px;font-size:14px;display:flex;flex-direction:column;gap:4px}
+@media (max-width:1100px){.steps{grid-template-columns:repeat(3,minmax(0,1fr))}.trig{grid-template-columns:repeat(2,minmax(0,1fr))}.obj2{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.obj2 h4{grid-column:1/-1}}
+@media (max-width:860px){.p-row,.vs,.frames,.two-line,.clean{grid-template-columns:1fr}.flow{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:22px}.fstep:nth-child(2)::after{display:none}.obj2{grid-template-columns:1fr}.dq{grid-template-columns:1fr;gap:4px}.dq .arr{display:none}}
+@media (max-width:520px){.steps{grid-template-columns:repeat(2,minmax(0,1fr))}.trig{grid-template-columns:1fr}.abab{grid-template-columns:56px repeat(5,minmax(0,1fr));gap:4px}.abab .c{font-size:11.5px;padding:10px 2px;flex-direction:column;gap:2px}.abab .g{font-size:10px}.blk{grid-template-columns:78px minmax(0,1fr)}.blk .lock{grid-column:2}}
 </style>
 </head>
 <body>
@@ -377,9 +499,18 @@ dialog form.ed .checks{display:flex;flex-wrap:wrap;gap:8px 16px}
 
       <div id="sub-today" class="d-grid">
         <div class="d-col">
+          <section class="panel" aria-labelledby="rd-h">
+            <h3 id="rd-h">Ready to execute? <small>no decisions in selling hours</small></h3>
+            <div class="ready" id="ready"></div>
+          </section>
           <section class="panel" aria-labelledby="calls-h">
-            <h3 id="calls-h">Call list for today <small id="calls-n"></small></h3>
+            <h3 id="calls-h">Call list <small id="calls-n"></small></h3>
+            <p class="store-note" id="ab-note"></p>
             <ol class="calls" id="calls"></ol>
+          </section>
+          <section class="panel" aria-labelledby="mails-h">
+            <h3 id="mails-h">Email list <small id="mails-n"></small></h3>
+            <ul class="mails" id="mails"></ul>
           </section>
           <section class="panel" aria-labelledby="hyg-h">
             <h3 id="hyg-h">Pipeline hygiene <small>CRM excellence</small></h3>
@@ -391,8 +522,14 @@ dialog form.ed .checks{display:flex;flex-wrap:wrap;gap:8px 16px}
           </section>
         </div>
         <div class="d-col">
+          <section class="panel" aria-labelledby="day-h">
+            <h3 id="day-h">Your day <small>protect the selling blocks</small></h3>
+            <label class="market" for="mkt">Calling into<select id="mkt"></select></label>
+            <ol class="blocks" id="blocks"></ol>
+            <div class="legend"><span><i class="s"></i>Sell · locked</span><span><i class="p"></i>Prep</span><span><i class="f"></i>Flex</span></div>
+          </section>
           <section class="panel" aria-labelledby="rt-h">
-            <h3 id="rt-h">Daily routine <small id="rt-n"></small></h3>
+            <h3 id="rt-h">Fit around the blocks <small id="rt-n"></small></h3>
             <ul class="routine" id="routine"></ul>
             <form class="add-row" id="rt-form">
               <input id="rt-new" placeholder="Add a task for today" maxlength="120" aria-label="Add a task for today">
@@ -403,6 +540,10 @@ dialog form.ed .checks{display:flex;flex-wrap:wrap;gap:8px 16px}
             <h3 id="tg-h">Today's activity targets <small>logged today</small></h3>
             <div class="bars" id="bars"></div>
           </section>
+          <section class="panel" aria-labelledby="tm-h">
+            <h3 id="tm-h">Close the loop <small>tomorrow</small></h3>
+            <div class="tmr" id="tmr"></div>
+          </section>
           <p class="store-note" id="store-note"></p>
         </div>
       </div>
@@ -410,7 +551,8 @@ dialog form.ed .checks{display:flex;flex-wrap:wrap;gap:8px 16px}
       <div id="sub-pipe" hidden>
         <div class="d-col">
           <div class="pipe" id="pipe-filter"></div>
-          <div class="table-wrap"><table class="pros"><thead><tr><th>Company</th><th>Contact</th><th>Stage</th><th>BANT</th><th>Next step</th><th>Last touch</th></tr></thead><tbody id="pros-body"></tbody></table></div>
+          <div class="pipe" id="seg-filter"></div>
+          <div class="table-wrap"><table class="pros"><thead><tr><th>Company</th><th>Contact</th><th>Segment</th><th>Stage</th><th>BANT</th><th>Cadence</th><th>Next step</th><th>Last touch</th></tr></thead><tbody id="pros-body"></tbody></table></div>
           <div id="pipe-empty"></div>
         </div>
       </div>
@@ -424,6 +566,7 @@ dialog form.ed .checks{display:flex;flex-wrap:wrap;gap:8px 16px}
 
       <div id="sub-lessons" hidden>
         <div class="d-col">
+          <div class="mini-stats" id="ask-stats"></div>
           <div class="pipe" id="obj-filter"></div>
           <div class="lessons" id="lessons"></div>
         </div>
@@ -435,73 +578,108 @@ dialog form.ed .checks{display:flex;flex-wrap:wrap;gap:8px 16px}
     <div class="play">
       <section class="p-sec">
         <div class="eyebrow">BDR playbook · built from the Incode BDR job description</div>
-        <h2>Open the call, earn the meeting, <em>hand it to the AE</em></h2>
-        <p class="lede">Talk tracks, objection handling, a multichannel cadence, AI prompts and an event plan for an Incode BDR. Each part maps to a skill the role asks for: cold calling, account research, discovery, AI-enabled prospecting, events and AE partnership.</p>
-        <div class="pitch"><b>30-second pitch.</b> "Incode verifies that a person is real and is who they say they are, in seconds, for banks, telcos, marketplaces and governments. Most of our customers come to us for one of two reasons: AI fraud like deepfakes is getting past their current checks, or good customers are dropping out of sign-up. We already work with 8 of the top 10 US banks and companies like Citi, Nubank, TikTok and FanDuel, who use us to cut fraud without adding friction. Would it be crazy to compare notes for 15 minutes on how you handle that today?"</div>
+        <h2>Prep once, <em>execute</em>, hand it to the AE</h2>
+        <p class="lede">How an Incode BDR plans the day, opens the call, handles pushback and follows up. Each part maps to a skill the role asks for: cold calling, account research, discovery, AI-enabled prospecting, events and AE partnership.</p>
+        <div class="pitch"><b>30-second pitch.</b> "Incode verifies that a person is real and is who they say they are, in seconds, for banks, telcos, marketplaces and governments. Most of our customers come to us for one of two reasons: AI fraud like deepfakes is getting past their current checks, or good customers are dropping out of sign-up. We already work with 8 of the top 10 US banks and companies like Citi, Nubank, TikTok and FanDuel, who use us to cut fraud without adding friction. I was looking to find 30 minutes this week to show you how. Does Thursday or Friday work?"</div>
+      </section>
+
+      <section class="p-sec">
+        <div class="eyebrow">Plan the day</div>
+        <h2>Most BDRs lose the <em>first 90 minutes</em></h2>
+        <p class="lede">Too much prep, not enough selling. Do the prep the afternoon before, so the morning starts with calls.</p>
+        <div class="p-row">
+          <div class="waste">
+            <h3>Average BDR</h3>
+            <div class="steps" id="waste-steps"></div>
+            <div class="gone">90 minutes gone</div>
+          </div>
+          <div class="topbdr">
+            <h3>Top BDR · 8:00</h3>
+            <div class="big">Execute</div>
+            <ul id="top-list"></ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="p-sec">
+        <h2>Coil the spring <em>before</em> you prospect</h2>
+        <p class="lede">Pick one segment, find its trigger, build the list and load the message. Then the selling block is pure execution. Example for Incode:</p>
+        <div class="flow" id="flow"></div>
+        <div class="spring">Do the prep up front, so you can execute</div>
+        <div class="trig" id="triggers"></div>
+      </section>
+
+      <section class="p-sec">
+        <h2>Eliminate decisions during <em>selling hours</em></h2>
+        <p class="lede">Before the first block, every question below should already be answered. The desk's "Ready to execute" check asks the same four.</p>
+        <div class="decide" id="decide"></div>
+        <div class="banner">Ready to execute</div>
+      </section>
+
+      <section class="p-sec">
+        <h2>Your best hours go to <em>buyers</em></h2>
+        <p class="lede">Lock three prospecting blocks in the prospect's time zone and fit research, admin, CRM and internal meetings around them. The desk shows these blocks in your local time for the market you're calling.</p>
+        <ol class="blocks" id="pb-blocks"></ol>
+        <div class="legend"><span><i class="s"></i>Sell · locked</span><span><i class="p"></i>Prep</span><span><i class="f"></i>Flex</span></div>
+      </section>
+
+      <section class="p-sec">
+        <div class="eyebrow">Open the call</div>
+        <h2>The value statement: <em>Who → Why → What</em></h2>
+        <p class="lede">Give the prospect context before you ask them to engage. Keep the Why to about three short sentences in their language.</p>
+        <div class="vs">
+          <article class="p-card"><div class="who">Who</div><h3>Who you are</h3><p>Your name, Incode, and the team or segment you support.</p></article>
+          <article class="p-card"><div class="who">Why</div><h3>Why you're calling</h3><p>Their segment, two or three pains you solve, and peers they know who already use Incode.</p></article>
+          <article class="p-card"><div class="who">What</div><h3>What you want</h3><p>A short, specific slot on their calendar, with two days to choose from.</p></article>
+        </div>
+        <div class="banner">You're selling a <em>30-minute meeting</em>, not the whole product.</div>
+      </section>
+
+      <section class="p-sec">
+        <h2>Keep an <em>assumptive</em> frame</h2>
+        <p class="lede">Confidence carries a cold call. Lead the next step instead of asking permission.</p>
+        <div class="frames">
+          <div class="frame"><h4>Weak frame</h4><ul id="weak"></ul><div class="tone">Upward inflection · passive language · prospect has to lead</div></div>
+          <div class="frame strong"><h4>Strong frame</h4><ul id="strong"></ul><div class="tone">Downward inflection · assumptive language · you lead the next step</div></div>
+        </div>
       </section>
 
       <section class="p-sec">
         <h2>Talk tracks by <em>persona</em></h2>
-        <p class="lede">Lead with their problem, back it with peers they know, ask one good question, then ask for a short meeting. Pick names from their own industry: a bank cares what Citi does, not what TikTok does.</p>
-        <div class="p-card"><h3>Peers first, awards later</h3><p>On a cold call, social proof from companies the prospect knows works better than analyst awards: it says "your competitors already solved this". Save Gartner, Liminal, G2 and the iBeta certificate for the follow-up email and for executives or procurement, who need a safe, defensible choice.</p></div>
-        <div class="p-grid">
-          <article class="p-card"><div class="who">Bank or fintech</div><h3>Head of Fraud / Risk</h3><dl>
-            <dt>Opener</dt><dd class="quote">"Hi Maria, it's Stefan from Incode. You weren't expecting my call, so I'll be quick: I'm calling fraud leaders because deepfakes and injected camera attacks are starting to pass selfie checks. Is that on your radar yet?"</dd>
-            <dt>Peers to name</dt><dd>"We work with 8 of the top 10 US banks, plus Citi, Scotiabank and Nubank." Banks follow other banks.</dd><dt>Save for the follow-up</dt><dd>Gartner Leader three years running; first to pass iBeta Level 3 liveness on iOS and Android.</dd>
-            <dt>Discovery</dt><dd><ul><li>How do you catch synthetic or injected identities today?</li><li>What share of fraud starts at onboarding versus account takeover?</li></ul></dd>
-            <dt>Ask</dt><dd>"Worth 20 minutes with our team to see how your current checks score against a deepfake test?"</dd></dl></article>
-          <article class="p-card"><div class="who">Any enterprise</div><h3>CISO / Head of Security</h3><dl>
-            <dt>Opener</dt><dd class="quote">"Hi James, Stefan from Incode. I'm calling security leaders about help-desk resets and fake job candidates, where someone with a deepfake gets an MFA reset or a job offer. Has that come up on your team?"</dd>
-            <dt>Peers to name</dt><dd>"The same identity platform Citi and TikTok use, built into Okta and Microsoft Entra." For security leaders the tools they already trust are part of the proof.</dd><dt>Save for the follow-up</dt><dd>Plugs into Okta, Entra, Ping and ServiceNow; setup Incode says takes under an hour.</dd>
-            <dt>Discovery</dt><dd><ul><li>How does your help desk verify a caller before resetting MFA?</li><li>Do you check identity at interview or only at onboarding?</li></ul></dd>
-            <dt>Ask</dt><dd>"Could I show you a 15-minute demo of a verified MFA reset in Okta?"</dd></dl></article>
-          <article class="p-card"><div class="who">Regulated business</div><h3>Compliance / KYC lead</h3><dl>
-            <dt>Opener</dt><dd class="quote">"Hi Priya, Stefan from Incode. I work with KYC teams who need to meet KYC and AML rules without slowing sign-up. How are you handling PEP and sanctions screening in the same flow as ID checks?"</dd>
-            <dt>Peers to name</dt><dd>"Banks like HSBC and Citibanamex, and credit bureaus like Experian and Equifax, run identity checks on Incode." Compliance teams trust what regulated peers already use.</dd><dt>Save for the follow-up</dt><dd>One flow for documents (4.9K+ types, 190+ countries), liveness, government records, and KYC/AML screening.</dd>
-            <dt>Discovery</dt><dd><ul><li>Which regulations or audits are driving priorities this year?</li><li>How many vendors are stitched together in your KYC flow?</li></ul></dd>
-            <dt>Ask</dt><dd>"Open to a short call to map your flow against a single platform?"</dd></dl></article>
-          <article class="p-card"><div class="who">Marketplace, gaming, telco</div><h3>Head of Product / Growth</h3><dl>
-            <dt>Opener</dt><dd class="quote">"Hi Alex, Stefan from Incode. I'm calling growth leaders because identity checks are often where good users drop off. Do you know your pass rate on the first try?"</dd>
-            <dt>Peers to name</dt><dd>Pick by vertical: TikTok and Rappi for marketplaces, FanDuel and BetMGM for gaming, AT&amp;T and US Cellular for telco ("8 of the top 9 US telcos").</dd><dt>Save for the follow-up</dt><dd>Incode reports 98% of users verified on the first try and up to 20% conversion uplift when checking against government records.</dd>
-            <dt>Discovery</dt><dd><ul><li>Where in sign-up do you lose the most users?</li><li>How long does verification take today?</li></ul></dd>
-            <dt>Ask</dt><dd>"Worth comparing your funnel numbers with ours in a 20-minute call?"</dd></dl></article>
-        </div>
+        <p class="lede">Each one follows Who, Why, What. Name peers from the prospect's own industry: a bank cares what Citi does, not what TikTok does. Save analyst awards for the follow-up email, executives and procurement.</p>
+        <div class="p-grid" id="pb-personas"></div>
       </section>
 
       <section class="p-sec">
-        <h2>Handling the <em>usual objections</em></h2>
-        <p class="lede">Acknowledge, ask a question, then reframe. Log each objection in the desk so the Lessons tab shows which ones you hear most.</p>
-        <div class="d-col">
-          <div class="obj"><h4>"We already have a vendor."</h4><p>"Makes sense, most teams we talk to do. Out of curiosity, has your current setup been tested against deepfakes or injected cameras? Many teams run Incode side by side on a slice of traffic to compare. Would a benchmark be useful when your contract comes up?"</p></div>
-          <div class="obj"><h4>"Just send me an email."</h4><p>"Happy to. So I send something useful and not a brochure: is your bigger worry fraud getting through, or real users dropping out? … Great, I'll send that, and can I put 15 minutes on Thursday to walk through it?"</p></div>
-          <div class="obj"><h4>"No budget right now."</h4><p>"Understood. Budget usually shows up after a fraud spike or an audit finding. What would fraud losses or failed sign-ups need to look like for this to become a priority? I can share how others built the business case."</p></div>
-          <div class="obj"><h4>"Not my area."</h4><p>"Thanks for telling me. Who owns identity verification there: fraud, compliance or product? Would you mind if I mention you pointed me their way?"</p></div>
-          <div class="obj"><h4>"We built it in-house."</h4><p>"Impressive. How are you keeping up with new attack types like injected video? Many in-house teams use Incode as the liveness and deepfake layer under their own flow rather than replacing it."</p></div>
-          <div class="obj"><h4>"Bad timing, call me next quarter."</h4><p>"Will do. What happens next quarter that makes it a better time? … I'll call on the 3rd. Mind if I send one short case study before then?" Log the date as the next step.</p></div>
+        <div class="eyebrow">Handle pushback</div>
+        <h2>When they object, <em>sell the meeting first</em></h2>
+        <p class="lede">Don't turn a cold call into a debate about their current setup or the whole product. Stay calm, acknowledge, ask again. After the second pushback, stop and set a dated follow-up.</p>
+        <div class="two-line">
+          <div class="ln first"><h4>First line · ARA</h4><div class="lb"><b>Acknowledge → Reassert → Advance</b><span>Agree, give one specific reason to meet, then offer two days.</span></div></div>
+          <div class="ln second"><h4>Second line · ACE</h4><div class="lb"><b>Ask → Clarify → Expand</b><span>Only if they push back again: ask about the gap, then ask once more.</span></div></div>
         </div>
+        <div class="objs" id="pb-objs"></div>
       </section>
 
       <section class="p-sec">
-        <h2>A 12-day <em>multichannel</em> cadence</h2>
-        <p class="lede">Outbound prospecting across phone, email and LinkedIn. Every touch adds something new; none just says "following up".</p>
-        <ol class="cadence">
-          <li><span>Day 1</span><b>Call + LinkedIn</b>Call, leave a 20-second voicemail, view their profile.</li>
-          <li><span>Day 2</span><b>Email 1</b>Problem-led email with one proof point tied to their industry.</li>
-          <li><span>Day 4</span><b>Call</b>Second call at a different time of day.</li>
-          <li><span>Day 6</span><b>LinkedIn</b>Connection request with a one-line, non-salesy note.</li>
-          <li><span>Day 8</span><b>Call + Email 2</b>Share a relevant case study or blog guide.</li>
-          <li><span>Day 12</span><b>Break-up email</b>"Should I close your file?" Polite and short; often gets replies.</li>
-        </ol>
+        <div class="eyebrow">Follow up</div>
+        <h2>Simple beats <em>sophisticated</em></h2>
+        <p class="lede">The cadence isn't magic; the consistency is. Split each segment into groups A and B and alternate email and call, so every day has a call list and an email list ready.</p>
+        <div class="abab" id="abab"></div>
+        <div class="clean">
+          <article class="p-card"><h3>Easy to remember, measure and repeat</h3><ol><li>Email</li><li>Call</li><li>Email</li><li>Call</li><li>…for up to 8 touches, then a short break-up email and move to nurture</li></ol></article>
+          <article class="p-card"><h3>Adapted for enterprise buyers</h3><ul><li>Calls can run daily: most go unanswered and nobody notices a missed call.</li><li>Emails are capped at 2 a week per person. On a third email day, the desk moves them to the call list instead.</li><li>LinkedIn is a light layer (view, react), not a step.</li></ul></article>
+        </div>
       </section>
 
       <section class="p-sec">
         <h2>AI prompt kit for <em>prospecting</em></h2>
         <p class="lede">The role asks for an AI-forward mindset. Paste these into Claude with a company or person filled in. Always check facts before using them on a call.</p>
         <div class="p-grid">
-          <article class="p-card"><h3>Account research</h3><pre class="prompt" id="pr1">Research [Company] for an identity verification sales call. Give me: what they sell and to whom, recent news (funding, launches, fraud incidents, regulatory actions) from the last 12 months, which regulations likely apply (KYC, AML, age verification), who probably owns fraud, compliance and security, and 3 reasons they might need better identity verification now. Flag anything you are unsure of.</pre><button class="btn sm copy" type="button" data-copy="pr1">Copy prompt</button></article>
-          <article class="p-card"><h3>Personalized opener</h3><pre class="prompt" id="pr2">Write a 2-sentence cold call opener for [Name], [Title] at [Company]. Reference [trigger, e.g. their new app launch]. Connect it to one problem Incode solves (deepfakes, sign-up drop-off, KYC compliance or help-desk fraud). Sound like a person, not a script. Then write one discovery question to ask next.</pre><button class="btn sm copy" type="button" data-copy="pr2">Copy prompt</button></article>
+          <article class="p-card"><h3>Account research</h3><pre class="prompt" id="pr1">Research [Company] for an identity verification sales call. Give me: what they sell and to whom, recent news (funding, launches, fraud incidents, regulatory actions) from the last 12 months, which regulations likely apply (KYC, AML, age verification), who probably owns fraud, compliance and security, and the single best trigger to mention on a cold call. Flag anything you are unsure of.</pre><button class="btn sm copy" type="button" data-copy="pr1">Copy prompt</button></article>
+          <article class="p-card"><h3>Value statement</h3><pre class="prompt" id="pr2">Write a cold call value statement for [Name], [Title] at [Company], in three parts. Who: one line introducing me from Incode. Why: at most three short sentences naming their segment, two pains Incode solves for it (deepfakes, sign-up drop-off, KYC compliance or help-desk fraud) and one or two Incode customers from their industry. What: an assumptive ask for 30 minutes this week offering two specific days. Sound like a person, not a script.</pre><button class="btn sm copy" type="button" data-copy="pr2">Copy prompt</button></article>
           <article class="p-card"><h3>Email that gets replies</h3><pre class="prompt" id="pr3">Write a cold email under 90 words to [Name], [Title] at [Company]. Subject line under 5 words. Open with their likely problem, add one proof point, and end with a soft question, not a meeting link. For the proof point, name 1 or 2 Incode customers from their industry (e.g. Citi or Nubank for banks, FanDuel for gaming), not an award. No buzzwords.</pre><button class="btn sm copy" type="button" data-copy="pr3">Copy prompt</button></article>
-          <article class="p-card"><h3>Call recap for the AE</h3><pre class="prompt" id="pr4">Turn these call notes into a handoff for my Account Executive: [notes]. Format: company and contact, the pain in their words, BANT status (budget, authority, need, timing) with evidence, objections raised, agreed next step and date, and suggested angle for the first meeting.</pre><button class="btn sm copy" type="button" data-copy="pr4">Copy prompt</button></article>
+          <article class="p-card"><h3>Call recap for the AE</h3><pre class="prompt" id="pr4">Turn these call notes into a handoff for my Account Executive: [notes]. Format: company and contact, the pain in their words, BANT status (budget, authority, need, timing) with evidence, objections raised and how I handled them, agreed next step and date, and suggested angle for the first meeting.</pre><button class="btn sm copy" type="button" data-copy="pr4">Copy prompt</button></article>
         </div>
       </section>
 
@@ -573,16 +751,23 @@ dialog form.ed .checks{display:flex;flex-wrap:wrap;gap:8px 16px}
       <label>Role<input id="p-role" maxlength="80" placeholder="Head of Fraud"></label>
     </div>
     <div class="row">
+      <label>Segment<input id="p-segment" maxlength="80" list="seg-list" placeholder="Fraud leads, US regional banks"><datalist id="seg-list"></datalist></label>
+      <label>Talk track<select id="p-persona"></select></label>
+    </div>
+    <div class="row">
       <label>Stage<select id="p-stage"></select></label>
       <label>Tier<select id="p-tier"><option value="A">A · call this week</option><option value="B">B · work in cadence</option><option value="C">C · park</option></select></label>
     </div>
-    <label>Trigger or research angle<input id="p-trigger" maxlength="160" placeholder="New app launch, fraud incident, regulation…"></label>
+    <div class="row">
+      <label>Cadence group<select id="p-group"><option value="A">Group A (email Mon, Wed, Fri)</option><option value="B">Group B (call Mon, Wed, Fri)</option></select></label>
+      <label>Account Executive<input id="p-ae" maxlength="80"></label>
+    </div>
+    <label>Trigger: why call them now<input id="p-trigger" maxlength="160" placeholder="New app launch, fraud incident, new regulation…"></label>
     <div class="row">
       <label>Next step<input id="p-next" maxlength="160" placeholder="Call back about deepfake test"></label>
       <label>Next step date<input id="p-date" type="date"></label>
     </div>
     <fieldset class="methods"><legend>BANT confirmed</legend><div class="checks" id="p-bant"></div></fieldset>
-    <label>Account Executive<input id="p-ae" maxlength="80"></label>
     <label>Notes<textarea id="p-notes" maxlength="2000"></textarea></label>
     <p class="note err" id="p-err" hidden></p>
     <div class="actions">
@@ -603,7 +788,11 @@ dialog form.ed .checks{display:flex;flex-wrap:wrap;gap:8px 16px}
       <label>Type<select id="a-type"></select></label>
       <label>Outcome<select id="a-out"></select></label>
     </div>
-    <label>Objection heard<select id="a-obj"></select></label>
+    <div class="row">
+      <label>How you asked<select id="a-ask"><option>Two-day ask</option><option>Open ask</option><option>No ask</option></select></label>
+      <label>Objection heard<select id="a-obj"></select></label>
+    </div>
+    <label>Handled with<select id="a-hand"><option value="">No objection</option><option>ARA (first line)</option><option>ACE (second line)</option><option>Stopped, set follow-up</option></select></label>
     <fieldset class="methods"><legend>BANT confirmed so far</legend><div class="checks" id="a-bant"></div></fieldset>
     <div class="row">
       <label>Next step<input id="a-next" maxlength="160"></label>
@@ -799,37 +988,168 @@ function showView(v){
 }
 document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>showView(t.dataset.view));
 
+/* ---------- icons ---------- */
+const ICONS={
+  doc:'<path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4M10 12h6M10 16h6"/>',
+  mail:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>',
+  chat:'<path d="M4 5h16v11H9l-5 4z"/>',
+  search:'<circle cx="11" cy="11" r="6"/><path d="m20 20-4.5-4.5"/>',
+  user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/>',
+  phone:'<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/>',
+  target:'<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1"/>',
+  list:'<path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1"/><circle cx="4.5" cy="12" r="1"/><circle cx="4.5" cy="18" r="1"/>',
+  check:'<circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/>',
+  lock:'<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',
+  bolt:'<path d="M13 3 5 14h6l-1 7 8-11h-6z"/>',
+  flag:'<path d="M5 21V4M5 4h11l-2 4 2 4H5"/>',
+  cash:'<rect x="3" y="6" width="18" height="12" rx="2"/><circle cx="12" cy="12" r="3"/>',
+  rocket:'<path d="M12 15 9 12c1-5 4-8 9-9-1 5-4 8-9 9z"/><path d="M9 12H5l3-4h4M12 15v4l4-3v-4"/>',
+  refresh:'<path d="M20 11a8 8 0 0 0-14-5l-2 2M4 13a8 8 0 0 0 14 5l2-2"/><path d="M4 4v4h4M20 20v-4h-4"/>',
+  hire:'<circle cx="9" cy="8" r="3.5"/><path d="M3 20c1-3.5 3.3-5 6-5s5 1.5 6 5M17 8v6M14 11h6"/>'
+};
+const icon=(n,cls="ic")=>{const s=document.createElementNS("http://www.w3.org/2000/svg","svg");s.setAttribute("viewBox","0 0 24 24");s.setAttribute("class",cls);s.setAttribute("aria-hidden","true");s.innerHTML=ICONS[n]||"";return s};
+
+/* ---------- playbook data ---------- */
+const PERSONAS={
+  fraud:{name:"Head of Fraud / Risk",where:"Bank or fintech",
+    who:"Hey Maria, this is Stefan calling from Incode, how's it going?",
+    why:"I'm on the team that works with fraud and risk leaders at US banks. We focus on deepfakes and injected cameras getting past selfie checks, synthetic identities at account opening, and good customers dropping out of sign-up. Banks like Citi and Scotiabank use us to stop that without adding friction.",
+    what:"I know I'm calling out of the blue, so I won't go deep now. I was looking to find 30 minutes later this week to introduce you to my team and show how other banks handle this. How does Thursday or Friday look?",
+    disc:["How do you catch synthetic or injected identities today?","What share of fraud starts at onboarding versus account takeover?"],
+    later:"Gartner Leader three years running; first to pass iBeta Level 3 liveness on iOS and Android."},
+  security:{name:"CISO / Head of Security",where:"Any enterprise",
+    who:"Hey James, this is Stefan calling from Incode, how's it going?",
+    why:"I'm on the team that works with security leaders on identity at high-risk moments: help-desk and MFA resets, new-hire onboarding, and job candidates using deepfakes in interviews. Companies like Citi and TikTok use Incode, and it plugs straight into Okta and Microsoft Entra.",
+    what:"Happy to expand, but I know you're busy. I was looking to find 30 minutes this week to show you a verified MFA reset in Okta. Does Wednesday or Thursday work?",
+    disc:["How does your help desk verify a caller before resetting MFA?","Do you check identity at interview or only at onboarding?"],
+    later:"Plugs into Okta, Entra, Ping and ServiceNow; setup Incode says takes under an hour."},
+  compliance:{name:"Compliance / KYC lead",where:"Regulated business",
+    who:"Hey Priya, this is Stefan calling from Incode, how's it going?",
+    why:"I'm on the team that supports KYC and compliance leads at regulated companies. We focus on meeting KYC and AML rules without slowing sign-up: ID documents, liveness, government record checks and PEP and sanctions screening in one flow. HSBC, Citibanamex, Experian and Equifax run identity checks on Incode.",
+    what:"I was looking to find 30 minutes this week to map your current flow against a single platform. How does Thursday or Friday look?",
+    disc:["Which regulations or audits are driving priorities this year?","How many vendors are stitched together in your KYC flow?"],
+    later:"4.9K+ document types in 190+ countries; G2 badges in AML and Age Verification."},
+  growth:{name:"Head of Product / Growth",where:"Marketplace, gaming, telco",
+    who:"Hey Alex, this is Stefan calling from Incode, how's it going?",
+    why:"I'm on the team that works with product and growth leaders at marketplaces and gaming companies. Identity checks are often where good users drop off, so we focus on first-try pass rates, verification speed and stopping fake accounts. TikTok, Rappi and FanDuel use us.",
+    what:"I know it's the middle of your day, so I won't go deep. I was looking to find 30 minutes later this week to compare your funnel numbers with what we see. Thursday or Friday?",
+    disc:["Where in sign-up do you lose the most users?","How long does verification take today?"],
+    later:"Incode reports 98% verified on the first try and up to 20% conversion uplift with government record checks."}
+};
+const OBJ2=[
+  {o:"\"We already have a vendor.\"",a:"Got it, that's actually why I called. Most of the fraud teams I talk to already have a vendor in place. It still makes sense to connect briefly so you know how other banks are handling deepfakes before your next renewal. Does Thursday or Friday work?",c:"Does that also cover injected cameras and deepfakes, or mostly document and selfie checks? Teams covered at onboarding often still have gaps around deepfakes and help-desk resets."},
+  {o:"\"Just send me an email.\"",a:"Happy to. Emails get buried, so let's put 15 minutes on Thursday or Friday and I'll send it beforehand so you can skim it first.",c:"So I send the right thing: is your bigger concern fraud getting through, or good users dropping out?"},
+  {o:"\"No budget right now.\"",a:"Makes sense, most teams aren't buying right now. The call is to compare notes before budget season, so you have the numbers ready. Thursday or Friday?",c:"What would fraud losses or failed sign-ups need to look like for this to get budget?"},
+  {o:"\"Not my area.\"",a:"Referral instead of ARA: \"Thanks for telling me. Who owns identity verification there: fraud, compliance or product?\"",c:"\"Would you mind if I mention you pointed me their way?\" Then call that person with your name drop."},
+  {o:"\"We built it in-house.\"",a:"Got it, that's why I called. Teams with their own flow often add a dedicated deepfake and liveness layer underneath it. Worth 30 minutes to compare: Thursday or Friday?",c:"How are you keeping up with new attacks like injected video? What happens when the model needs retraining?"},
+  {o:"\"Bad timing, call me next quarter.\"",a:"Understood. Let's lock a short slot for when it's better so it doesn't slip. Is the first week of next month OK?",c:"What changes next month that makes it a better time? Log the date as the next step."}
+];
+const FRAMES=[
+  ["If you're interested, I'd love to set up some time…","I'm looking to find some time this week to…"],
+  ["Would you be open to a quick call sometime?","Does Thursday or Friday work for you?"],
+  ["Sorry to bother you, do you have a minute?","I know I'm calling out of the blue, so I'll be brief."],
+  ["Just checking in to see if…","I'm calling because [their trigger]."]
+];
+const TRIGGERS=[["rocket","New app or account-opening launch"],["flag","Fraud incident or data breach in the news"],["doc","New KYC, AML or age-verification rule"],["cash","Funding round or expansion into a new country"],["hire","Hiring for fraud, identity or trust & safety roles"],["refresh","Identity vendor contract coming up for renewal"]];
+const BLOCKS=[
+  {s:"07:45",e:"08:00",n:"Plan + load",d:"Check Ready to execute; open today's talk tracks",k:"prep"},
+  {s:"08:00",e:"09:30",n:"Prospecting block 1",d:"Calls, emails, conversations",k:"sell"},
+  {s:"09:30",e:"10:30",n:"Responses + follow-ups",d:"Reply to emails, send what you promised",k:"prep"},
+  {s:"10:30",e:"12:00",n:"Prospecting block 2",d:"Calls, emails, conversations",k:"sell"},
+  {s:"12:00",e:"12:30",n:"CRM + log activity",d:"Log every touch and lesson",k:"flex"},
+  {s:"12:30",e:"13:30",n:"Lunch",d:"Away from the desk",k:"lunch"},
+  {s:"13:30",e:"15:00",n:"Meetings, admin, territory",d:"AE sync, internal meetings, research",k:"flex"},
+  {s:"15:00",e:"15:30",n:"Account plan + load",d:"Build tomorrow's segment list and triggers",k:"prep"},
+  {s:"15:30",e:"17:30",n:"Prospecting block 3",d:"Calls, emails, conversations",k:"sell"},
+  {s:"17:30",e:"17:45",n:"Close the loop",d:"Check tomorrow's lists are ready",k:"prep"}
+];
+const MARKETS=[["","My own time zone"],["America/New_York","US East (New York)"],["America/Chicago","US Central (Chicago)"],["America/Los_Angeles","US West (Los Angeles)"],["America/Mexico_City","Mexico (Mexico City)"],["America/Sao_Paulo","Brazil (São Paulo)"],["Europe/London","UK (London)"],["Europe/Berlin","Central Europe (Berlin)"]];
+
+function renderPlaybook(){
+  const ws=$("#waste-steps");ws.replaceChildren();
+  for(const [t,ic,n,hit] of [["8:00","doc","Build a list"],["8:20","mail","Rewrite messaging"],["8:40","chat","Check Slack"],["9:00","search","Research accounts"],["9:20","user","Decide who to call"],["9:30","phone","Finally prospecting",1]]){const d=el("div","wstep"+(hit?" hit":""));d.append(el("b",null,t),icon(ic),el("span",null,n));ws.append(d)}
+  const tl=$("#top-list");tl.replaceChildren();for(const t of ["Lists loaded the afternoon before","Talk tracks ready per persona","Targets prioritized by tier and trigger"]){const li=el("li");li.append(icon("check"),document.createTextNode(t));tl.append(li)}
+  const fl=$("#flow");fl.replaceChildren();
+  for(const [ic,t,d] of [["target","Segment","Fraud leads at US regional banks"],["list","Build list","40 contacts, split into groups A and B"],["chat","Target message","Deepfakes and sign-up drop-off; Citi and Scotiabank as peers"],["check","Ready to execute","List, talk track and cadence loaded"]]){const s=el("div","fstep");const b=el("div","bub");b.append(icon(ic));s.append(b,el("b",null,t),el("span",null,d));fl.append(s)}
+  const tg=$("#triggers");tg.replaceChildren();for(const [ic,t] of TRIGGERS){const d=el("div");d.append(icon(ic),el("span",null,t));tg.append(d)}
+  const dc=$("#decide");dc.replaceChildren();
+  for(const [q,a] of [["Who am I contacting?","Segmented list"],["Why am I contacting them?","Reason or trigger"],["What am I saying?","Talk track for their persona"],["What channel am I using?","Pre-set A/B cadence"]]){const r=el("div","dq");const s=el("span");s.append(icon("check"),document.createTextNode(a));r.append(el("b",null,q),el("span","arr","→"),s);dc.append(r)}
+  renderBlocks($("#pb-blocks"),"",true);
+  $("#weak").replaceChildren(...FRAMES.map(f=>{const li=el("li");li.append(el("q",null,f[0]));return li}));
+  $("#strong").replaceChildren(...FRAMES.map(f=>{const li=el("li");li.append(el("q",null,f[1]));return li}));
+  const pp=$("#pb-personas");pp.replaceChildren();
+  for(const k in PERSONAS){const p=PERSONAS[k];const c=el("article","p-card");c.append(el("div","who",p.where),el("h3",null,p.name),wwy(p));
+    const dl=el("dl");const d1=el("dt",null,"Discovery, once they engage");const dd=el("dd");const ul=el("ul");p.disc.forEach(x=>ul.append(el("li",null,x)));dd.append(ul);
+    dl.append(d1,dd,el("dt",null,"Save for the follow-up"),el("dd",null,p.later));c.append(dl);pp.append(c)}
+  const ob=$("#pb-objs");ob.replaceChildren();
+  for(const x of OBJ2){const r=el("div","obj2");const a=el("p","a");a.append(el("b",null,"First line · ARA"),document.createTextNode(x.a));const c=el("p","c");c.append(el("b",null,"If they push again · ACE"),document.createTextNode(x.c));r.append(el("h4",null,x.o),a,c);ob.append(r)}
+  const ab=$("#abab");ab.replaceChildren(el("span"));
+  const days=["Mon","Tue","Wed","Thu","Fri"];days.forEach(d=>ab.append(el("div","h",d)));
+  for(const g of ["A","B"]){ab.append(el("div","g","Group "+g));days.forEach((d,i)=>{const ch=channelFor(g,i);const c=el("div","c "+(ch==="Call"?"call":"mail"));c.append(icon(ch==="Call"?"phone":"mail"),el("span",null,ch+" "+g));ab.append(c)})}
+}
+function wwy(p){const w=el("div","wwy");for(const [k,t] of [["Who",p.who],["Why",p.why],["What",p.what]]){const q=el("p");q.append(el("b",null,k),document.createTextNode(t));w.append(q)}return w}
+const channelFor=(g,wd)=>wd>4?null:((wd%2===0)===(g==="A")?"Email":"Call");
+
+/* ---------- time zones ---------- */
+function tzOffset(tz,ts){const f=new Intl.DateTimeFormat("en-US",{timeZone:tz,hourCycle:"h23",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",second:"2-digit"});const p=Object.fromEntries(f.formatToParts(new Date(ts)).map(x=>[x.type,x.value]));return Date.UTC(+p.year,+p.month-1,+p.day,+p.hour%24,+p.minute,+p.second)-ts}
+function wallTime(tz,ds,hm){const [y,m,d]=ds.split("-").map(Number);const [h,mi]=hm.split(":").map(Number);if(!tz)return new Date(y,m-1,d,h,mi);const guess=Date.UTC(y,m-1,d,h,mi);let t=guess-tzOffset(tz,guess);t=guess-tzOffset(tz,t);return new Date(t)}
+const hm=d=>pad(d.getHours())+":"+pad(d.getMinutes());
+function marketTz(){try{return localStorage.getItem("incode-market")||""}catch(e){return ""}}
+function renderBlocks(box,tz,static_){
+  box.replaceChildren();const now=new Date(),ds=today();
+  for(const b of BLOCKS){
+    const li=el("li","blk "+b.k);
+    let tcell;
+    if(static_){tcell=el("span","t",b.s+"–"+b.e)}
+    else{const s=wallTime(tz,ds,b.s),e=wallTime(tz,ds,b.e);tcell=el("span","t",hm(s)+"–"+hm(e));
+      if(tz){tcell.append(el("small",null,b.s+" there"))}
+      if(now>=s&&now<e)li.classList.add("now");
+      const mins=s.getHours()*60+s.getMinutes(),mine=e.getHours()*60+e.getMinutes();
+      if(tz&&(mins<7*60||mine>21*60+30||e.getDate()!==s.getDate()))li.dataset.late="1"}
+    const n=el("div","n");n.append(el("b",null,b.n+(li.classList.contains("now")?" · now":"")),el("span",null,b.d));
+    li.append(tcell,n);
+    if(b.k==="sell"){const l=el("span","lock");l.append(icon("lock"),document.createTextNode("Locked"));li.append(l)}
+    else if(li.dataset.late){li.append(el("span","late","late for you"))}else li.append(el("span"));
+    if(b.k==="sell"&&li.dataset.late){li.querySelector(".n span").textContent=b.d+" · late in your day"}
+    box.append(li);
+  }
+}
+
 /* ---------- desk data ---------- */
 const STAGES_P=["New","Researching","Contacted","Conversation","Meeting booked","Qualified (to AE)","Nurture","Disqualified"];
 const CLOSED=["Qualified (to AE)","Disqualified"];
+const CADENCE_STAGES=["New","Researching","Contacted"];
+const MAX_TOUCHES=8;
 const INDUSTRIES=["Bank","Fintech / neobank","Telco","Marketplace","Gaming / betting","Government","Healthcare","Other"];
 const TYPES=["Call","Email","LinkedIn","Event","Meeting"];
 const OUTCOMES={Call:["No answer","Voicemail","Gatekeeper","Conversation","Meeting booked","Not interested"],Email:["Sent","Replied","Meeting booked","Not interested"],LinkedIn:["Viewed profile","Connection sent","Connected","Replied","Meeting booked"],Event:["Conversation","Meeting booked","Card swapped"],Meeting:["Held","No-show","Qualified (to AE)","Rescheduled"]};
 const OBJECTIONS=["None","Already have a vendor","Send me an email","No budget","Not my area","Built in-house","Bad timing","Other"];
-const ROUTINE=[
-  {id:"research",t:"Research and tier 5 new target accounts",s:"Account research & prioritization"},
-  {id:"ai",t:"Use AI to prep openers for today's call list",s:"AI-enabled prospecting"},
-  {id:"calls",t:"Power hour: work through today's call list",s:"Cold calling excellence"},
-  {id:"touch",t:"Send follow-up emails and LinkedIn touches",s:"Outbound prospecting"},
-  {id:"crm",t:"Clean CRM pipeline: every prospect has a stage and a dated next step",s:"CRM excellence"},
+const FLEX=[
+  {id:"research",t:"Research and tier tomorrow's segment",s:"Account research & prioritization"},
+  {id:"ai",t:"Use AI to draft value statements for tomorrow's list",s:"AI-enabled prospecting"},
+  {id:"crm",t:"Clean CRM pipeline: stage and dated next step on every prospect",s:"CRM excellence"},
   {id:"ae",t:"Share qualified opportunities and notes with your AE",s:"Sales partnership"},
   {id:"event",t:"Plan one event or networking touch this week",s:"Event & networking"},
   {id:"lessons",t:"Write down today's lessons",s:"Discovery & qualification"}
 ];
 const TARGETS=[{id:"calls",n:"Calls",goal:40},{id:"convos",n:"Conversations",goal:5},{id:"emails",n:"Emails",goal:20},{id:"li",n:"LinkedIn touches",goal:10},{id:"meet",n:"Meetings booked",goal:1}];
 const Store={mode:null,base:null,data:{prospects:{},activities:{},days:{}}};
-let sub="today",pipeFilter="open",objFilter="",weekOff=0,editingP=null;
+let sub="today",pipeFilter="open",segFilter="",objFilter="",weekOff=0,editingP=null;
 
 const pad=n=>String(n).padStart(2,"0");
 const ymd=d=>d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
 const today=()=>ymd(new Date());
 const parse=s=>{const [y,m,d]=s.split("-").map(Number);return new Date(y,m-1,d)};
+const addDays=(s,n)=>{const d=parse(s);d.setDate(d.getDate()+n);return ymd(d)};
 const daysBetween=(a,b)=>Math.round((parse(b)-parse(a))/864e5);
 const fmtDay=s=>parse(s).toLocaleDateString(undefined,{weekday:"short",day:"numeric",month:"short"});
+const wday=s=>(parse(s).getDay()+6)%7;
 const uid=p=>p+Date.now().toString(36)+Math.random().toString(36).slice(2,7);
 const list=c=>Object.values(Store.data[c]);
 const isOpen=p=>!CLOSED.includes(p.stage);
 function weekStart(off){const d=new Date();const wd=(d.getDay()+6)%7;d.setDate(d.getDate()-wd+off*7);return d}
+const touches=(id,acts)=>acts.filter(a=>a.prospectId===id&&(a.type==="Call"||a.type==="Email")).length;
+const inCadence=(p,acts)=>isOpen(p)&&CADENCE_STAGES.includes(p.stage||"New")&&touches(p.id,acts)<MAX_TOUCHES;
 
 async function initStore(){
   if(db){try{const u=await claude.use("user");const id=u?await u.id():null;
@@ -842,8 +1162,8 @@ async function initStore(){
 }
 function saveLocal(){try{localStorage.setItem("incode-desk",JSON.stringify(Store.data))}catch(e){}}
 async function put(c,id,obj){
-  if(Store.mode==="db"){Store.data[c][id]={id,...obj};renderDesk();await Store.base.collection(c).doc(id).set(obj)}
-  else{Store.data[c][id]={id,...obj};saveLocal();renderDesk()}
+  Store.data[c][id]={id,...obj};renderDesk();
+  if(Store.mode==="db")await Store.base.collection(c).doc(id).set(obj);else saveLocal();
 }
 async function drop(c,id){
   delete Store.data[c][id];renderDesk();
@@ -851,22 +1171,37 @@ async function drop(c,id){
 }
 const strip=o=>{const {id,...r}=o;return r};
 
+/* the day's lists: due follow-ups + A/B cadence, with an email cap of 2 a week */
+function dayLists(ds,pros,acts){
+  const wd=wday(ds),ws=addDays(ds,-wd);
+  const touchedOn=id=>acts.some(a=>a.prospectId===id&&a.date===ds&&(a.type==="Call"||a.type==="Email"));
+  const emailsWeek=id=>acts.filter(a=>a.prospectId===id&&a.type==="Email"&&a.date>=ws&&a.date<=ds).length;
+  const calls=[],mails=[],seen=new Set();
+  const due=pros.filter(p=>isOpen(p)&&p.nextDate&&p.nextDate<=ds).sort((a,b)=>a.nextDate.localeCompare(b.nextDate)||(a.tier||"B").localeCompare(b.tier||"B"));
+  for(const p of due){calls.push({p,why:"follow-up"});seen.add(p.id)}
+  if(wd<=4){
+    const cad=pros.filter(p=>!seen.has(p.id)&&inCadence(p,acts)&&!touchedOn(p.id)&&(p.tier||"B")!=="C"&&(!segFilter||p.segment===segFilter)).sort((a,b)=>(a.tier||"B").localeCompare(b.tier||"B"));
+    for(const p of cad){const ch=channelFor(p.group||"A",wd);
+      if(ch==="Email"&&emailsWeek(p.id)>=2)calls.push({p,why:"email cap"});
+      else if(ch==="Email")mails.push({p,why:"cadence"});else calls.push({p,why:"cadence"})}
+  }
+  return {calls,mails,wd};
+}
+
 /* ---------- desk render ---------- */
 function renderDesk(){
+  if(!$("#view-play").hidden)renderPlaybook();
   if($("#view-desk").hidden||!Store.mode)return;
   const t=today(),pros=list("prospects"),acts=list("activities");
   $("#d-date").textContent=new Date().toLocaleDateString(undefined,{weekday:"long",day:"numeric",month:"long"});
   const h=new Date().getHours();$("#d-hello").textContent=(h<12?"Good morning":h<18?"Good afternoon":"Good evening")+", here's your day";
-  const due=pros.filter(p=>isOpen(p)&&p.nextDate&&p.nextDate<=t).sort((a,b)=>a.nextDate.localeCompare(b.nextDate)||(a.tier||"B").localeCompare(b.tier||"B"));
-  const late=due.filter(p=>p.nextDate<t).length;
-  const day=Store.data.days[t]||{done:{},extra:[]};
-  const tasks=[...ROUTINE.map(r=>({...r,done:!!day.done?.[r.id]})),...(day.extra||[]).map(x=>({id:x.id,t:x.t,s:"Added today",done:!!x.done,extra:true}))];
-  const left=tasks.filter(x=>!x.done).length;
-  $("#d-sum").textContent=pros.length?`You have ${due.length} call${due.length===1?"":"s"} due${late?` (${late} overdue)`:""} and ${left} routine task${left===1?"":"s"} left today.`:"Add your first prospect, or load three examples to see how the desk works.";
+  const L=dayLists(t,pros,acts);
+  const late=L.calls.filter(x=>x.p.nextDate&&x.p.nextDate<t).length;
+  $("#d-sum").textContent=pros.length?`${L.calls.length} call${L.calls.length===1?"":"s"}${late?` (${late} overdue)`:""} and ${L.mails.length} email${L.mails.length===1?"":"s"} ready today.`:"Add your first prospect, or load three examples to see how the desk works.";
   $("#store-note").textContent=Store.mode==="db"?"Saved privately to your Claude account. Only you can see your desk.":"Saved in this browser only. Use the Claude version of this page to keep your desk across devices.";
   for(const s of ["today","pipe","cal","lessons"])$("#sub-"+s).hidden=s!==sub;
   document.querySelectorAll(".subtab").forEach(b=>b.setAttribute("aria-selected",String(b.dataset.sub===sub)));
-  if(sub==="today")renderToday(t,pros,acts,due,day,tasks);
+  if(sub==="today")renderToday(t,pros,acts,L);
   if(sub==="pipe")renderPipe(t,pros,acts);
   if(sub==="cal")renderCal(t,pros,acts);
   if(sub==="lessons")renderLessons(acts);
@@ -874,42 +1209,76 @@ function renderDesk(){
 function bantDots(p){const w=el("span","bant-dots");w.setAttribute("aria-label","BANT: "+(["b","a","n","t"].filter(k=>p.bant?.[k]).map(k=>k.toUpperCase()).join(", ")||"none"));for(const k of ["b","a","n","t"]){w.append(el("i",p.bant?.[k]?"on":"",k.toUpperCase()))}return w}
 function dueChip(d,t){if(!d)return el("span","due","No date");const n=daysBetween(d,t);return n>0?el("span","due late",n+"d overdue"):n===0?el("span","due today","Today"):el("span","due","in "+(-n)+"d")}
 function lastTouch(id,acts){const a=acts.filter(x=>x.prospectId===id).sort((a,b)=>b.date.localeCompare(a.date))[0];return a?a.date:null}
+const notReady=p=>!p.trigger||!p.persona||!p.group||!p.segment;
 
-function renderToday(t,pros,acts,due,day,tasks){
-  const ol=$("#calls");ol.replaceChildren();$("#calls-n").textContent=due.length+" due";
-  if(!due.length){
+function renderReady(box,items){
+  box.replaceChildren();
+  const ps=items.map(x=>x.p);
+  const rows=[["Who am I contacting?","Segmented list",ps.length>0&&ps.every(p=>p.segment),ps.length?ps.filter(p=>!p.segment).length:-1],
+    ["Why am I contacting them?","Reason or trigger",ps.length>0&&ps.every(p=>p.trigger),ps.filter(p=>!p.trigger).length],
+    ["What am I saying?","Talk track for their persona",ps.length>0&&ps.every(p=>p.persona),ps.filter(p=>!p.persona).length],
+    ["What channel am I using?","A/B cadence group",ps.length>0&&ps.every(p=>p.group),ps.filter(p=>!p.group).length]];
+  for(const [q,a,ok,miss] of rows){const r=el("div","rq");const l=el("div");l.append(el("b",null,q),document.createElement("br"),el("span",null,a));r.append(l);
+    if(ok)r.append(el("span","ok","✓ Ready"));
+    else if(!ps.length)r.append(el("span","miss","No list yet"));
+    else{const b=el("button","miss",miss+" missing");b.type="button";b.onclick=()=>{sub="pipe";pipeFilter="notready";renderDesk()};r.append(b)}
+    box.append(r)}
+  const go=el("div","go"+(rows.every(r=>r[2])?" on":""),rows.every(r=>r[2])?"Ready to execute":"Load before the first block");box.append(go);
+}
+function renderToday(t,pros,acts,L){
+  renderReady($("#ready"),[...L.calls,...L.mails]);
+  const wdName=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"][L.wd];
+  $("#ab-note").textContent=L.wd>4?"Weekend: no cadence touches today. Only dated follow-ups show here.":`${wdName}: call group ${channelFor("A",L.wd)==="Call"?"A":"B"}, email group ${channelFor("A",L.wd)==="Email"?"A":"B"}. Dated follow-ups come first.`+(segFilter?` Working segment: ${segFilter}.`:"");
+  const ol=$("#calls");ol.replaceChildren();$("#calls-n").textContent=L.calls.length+" to call";
+  if(!L.calls.length){
     const e=el("li","empty-state");
-    e.append(el("span",null,pros.length?"No calls due today. Pick Tier A accounts from your pipeline and give them a dated next step.":"Your call list fills itself from prospects whose next step is due today or overdue."));
+    e.append(el("span",null,pros.length?"No calls queued. Add prospects to a segment and group, or give follow-ups a date.":"Your call list fills itself from dated follow-ups and today's A/B cadence group."));
     const row=el("div","d-actions");
     if(!pros.length){const ex=el("button","btn sm","Load 3 example prospects");ex.type="button";ex.onclick=loadExamples;row.append(ex)}
     const ad=el("button","btn sm primary","Add prospect");ad.type="button";ad.onclick=()=>openP(null);row.append(ad);
     e.append(row);ol.append(e);
   }
-  due.forEach((p,i)=>{
-    const li=el("li","call");
+  L.calls.forEach((x,i)=>{
+    const p=x.p,li=el("li","call");
     li.append(el("span","num",String(i+1)));
     const who=el("div","who");who.append(el("b",null,p.company+(p.example?" (example)":"")),el("span",null,[p.contact,p.role].filter(Boolean).join(" · ")||"No contact yet"));
-    if(p.nextStep)who.append(el("span","step",p.nextStep));
-    const meta=el("div","meta");meta.append(dueChip(p.nextDate,t),el("span","tier "+(p.tier||"B"),"Tier "+(p.tier||"B")),bantDots(p));if(p.trigger)meta.append(el("span","due",p.trigger));
-    who.append(meta);li.append(who);
-    const b=el("div","btns");const lg=el("button","btn sm primary","Log call");lg.type="button";lg.onclick=()=>openA(p);const ed=el("button","btn sm","Open");ed.type="button";ed.onclick=()=>openP(p);b.append(lg,ed);li.append(b);
+    if(p.nextStep&&x.why==="follow-up")who.append(el("span","step",p.nextStep));
+    if(p.trigger)who.append(el("span","step","Trigger: "+p.trigger));
+    const meta=el("div","meta");
+    if(x.why==="follow-up")meta.append(dueChip(p.nextDate,t));
+    else{const c=el("span","chan");c.append(icon("phone","ic"),document.createTextNode((x.why==="email cap"?"Call (email cap) · ":"Call · ")+"touch "+(touches(p.id,acts)+1)+"/"+MAX_TOUCHES));c.querySelector("svg").style.cssText="width:12px;height:12px";meta.append(c)}
+    meta.append(el("span","tier "+(p.tier||"B"),"Tier "+(p.tier||"B")),bantDots(p));
+    who.append(meta);
+    if(p.persona&&PERSONAS[p.persona]){const d=el("details","track");d.append(el("summary",null,"Talk track: "+PERSONAS[p.persona].name),wwy(PERSONAS[p.persona]));who.append(d)}
+    li.append(who);
+    const b=el("div","btns");const lg=el("button","btn sm primary","Log call");lg.type="button";lg.onclick=()=>openA(p,"Call");const ed=el("button","btn sm","Open");ed.type="button";ed.onclick=()=>openP(p);b.append(lg,ed);li.append(b);
     ol.append(li);
   });
+  const ml=$("#mails");ml.replaceChildren();$("#mails-n").textContent=L.mails.length+" to email";
+  if(!L.mails.length)ml.append(el("li",null,L.wd>4?"No emails on weekends.":"No emails queued for today's email group."));
+  for(const x of L.mails){const p=x.p;const li=el("li");const d=el("div");d.append(document.createTextNode(p.company+(p.contact?" · "+p.contact:"")),el("small",null,"Email · touch "+(touches(p.id,acts)+1)+"/"+MAX_TOUCHES+(p.trigger?" · "+p.trigger:"")));const b=el("button","btn sm","Log email");b.type="button";b.onclick=()=>openA(p,"Email");li.append(d,b);ml.append(li)}
   // hygiene
   const open=pros.filter(isOpen);
-  const noNext=open.filter(p=>!p.nextDate).length;
-  const stale=open.filter(p=>{const l=lastTouch(p.id,acts)||p.created&&ymd(new Date(p.created));return l&&daysBetween(l,t)>=14}).length;
-  const hy=$("#hygiene");hy.replaceChildren();hy.className="hygiene"+(noNext||stale?"":" ok");
-  hy.append(el("span",null,!open.length?"No open prospects yet.":noNext||stale?[noNext&&`${noNext} prospect${noNext>1?"s have":" has"} no dated next step`,stale&&`${stale} not touched in 14+ days`].filter(Boolean).join(" · "):"Clean: every open prospect has a dated next step."));
-  if(noNext||stale){const b=el("button","btn sm","Review");b.type="button";b.onclick=()=>{sub="pipe";pipeFilter="hygiene";renderDesk()};hy.append(b)}
+  const noNext=open.filter(p=>!p.nextDate&&!inCadence(p,acts)).length;
+  const nr=open.filter(notReady).length;
+  const done=open.filter(p=>CADENCE_STAGES.includes(p.stage||"New")&&touches(p.id,acts)>=MAX_TOUCHES).length;
+  const hy=$("#hygiene");hy.replaceChildren();const issues=[noNext&&`${noNext} out of cadence with no dated next step`,nr&&`${nr} missing segment, trigger, talk track or group`,done&&`${done} finished the cadence: move to nurture`].filter(Boolean);
+  hy.className="hygiene"+(issues.length?"":" ok");
+  hy.append(el("span",null,!open.length?"No open prospects yet.":issues.length?issues.join(" · "):"Clean: every open prospect is in cadence or has a dated next step."));
+  if(issues.length){const b=el("button","btn sm","Review");b.type="button";b.onclick=()=>{sub="pipe";pipeFilter="hygiene";renderDesk()};hy.append(b)}
   // week stats
-  const ws=ymd(weekStart(0)),we=ymd(new Date(weekStart(0).getTime()+6*864e5));
+  const ws=ymd(weekStart(0)),we=addDays(ws,6);
   const wa=acts.filter(a=>a.date>=ws&&a.date<=we);
   const calls=wa.filter(a=>a.type==="Call"),conv=calls.filter(a=>a.outcome==="Conversation"||a.outcome==="Meeting booked");
   const meet=wa.filter(a=>a.outcome==="Meeting booked").length,qual=wa.filter(a=>a.stage==="Qualified (to AE)"||a.outcome==="Qualified (to AE)").length;
   const st=$("#wstats");st.replaceChildren();
   for(const [v,l] of [[calls.length,"Calls"],[calls.length?Math.round(conv.length/calls.length*100)+"%":"–","Connect rate"],[meet,"Meetings booked"],[qual,"Qualified to AE"]]){const s=el("div","stat");s.append(el("b",null,String(v)),el("span",null,l));st.append(s)}
-  // routine
+  // day blocks
+  const mk=$("#mkt");if(!mk.options.length){mk.replaceChildren(...MARKETS.map(([v,n])=>new Option(n,v)));mk.onchange=()=>{try{localStorage.setItem("incode-market",mk.value)}catch(e){}renderDesk()}}
+  mk.value=marketTz();renderBlocks($("#blocks"),mk.value,false);
+  // flex work
+  const day=Store.data.days[t]||{done:{},extra:[]};
+  const tasks=[...FLEX.map(r=>({...r,done:!!day.done?.[r.id]})),...(day.extra||[]).map(x=>({id:x.id,t:x.t,s:"Added today",done:!!x.done,extra:true}))];
   const ul=$("#routine");ul.replaceChildren();$("#rt-n").textContent=tasks.filter(x=>x.done).length+" of "+tasks.length+" done";
   for(const x of tasks){
     const li=el("li",x.done?"done":"");const cb=el("input");cb.type="checkbox";cb.id="rt-"+x.id;cb.checked=x.done;
@@ -924,6 +1293,13 @@ function renderToday(t,pros,acts,due,day,tasks){
   const cnt={calls:ta.filter(a=>a.type==="Call").length,convos:ta.filter(a=>["Conversation","Meeting booked"].includes(a.outcome)&&a.type!=="Email").length,emails:ta.filter(a=>a.type==="Email").length,li:ta.filter(a=>a.type==="LinkedIn").length,meet:ta.filter(a=>a.outcome==="Meeting booked").length};
   const bars=$("#bars");bars.replaceChildren();
   for(const g of TARGETS){const r=el("div","bar");const tr=el("div","track");const f=el("div","fill");f.style.width=Math.min(100,cnt[g.id]/g.goal*100)+"%";tr.append(f);r.append(el("span",null,g.n),tr,el("span","val",cnt[g.id]+" / "+g.goal));bars.append(r)}
+  // tomorrow
+  let nd=addDays(t,1);while(wday(nd)>4)nd=addDays(nd,1);
+  const T=dayLists(nd,pros,acts),tItems=[...T.calls,...T.mails],tMiss=tItems.filter(x=>notReady(x.p)).length;
+  const tm=$("#tmr");tm.replaceChildren();
+  tm.append(el("p",null,`${fmtDay(nd)}: ${T.calls.length} call${T.calls.length===1?"":"s"} and ${T.mails.length} email${T.mails.length===1?"":"s"} queued.`));
+  tm.append(el("p",null,!tItems.length?"Nothing queued yet. Build a segment list in the Account plan + load block.":tMiss?`${tMiss} still need a segment, trigger, talk track or group. Fix them before you log off.`:"All loaded. Tomorrow starts with calls, not prep."));
+  if(tMiss){const b=el("button","btn sm","Fix them");b.type="button";b.onclick=()=>{sub="pipe";pipeFilter="notready";renderDesk()};tm.append(b)}
 }
 async function toggleTask(t,x,on){
   const d=structuredClone(Store.data.days[t]?strip(Store.data.days[t]):{done:{},extra:[]});d.done=d.done||{};d.extra=d.extra||[];
@@ -936,20 +1312,27 @@ $("#rt-form").addEventListener("submit",async e=>{e.preventDefault();const v=$("
 
 function renderPipe(t,pros,acts){
   const f=$("#pipe-filter");f.replaceChildren();
-  const groups=[["open","All open",p=>isOpen(p)],["hygiene","Needs cleaning",p=>isOpen(p)&&(!p.nextDate||((lastTouch(p.id,acts)||ymd(new Date(p.created||Date.now())))&&daysBetween(lastTouch(p.id,acts)||ymd(new Date(p.created||Date.now())),t)>=14))],...STAGES_P.map(s=>[s,s,p=>p.stage===s])];
-  for(const [id,name,fn] of groups){const n=pros.filter(fn).length;if(!n&&id!==pipeFilter&&!["open","hygiene"].includes(id))continue;const b=el("button",null,name);b.type="button";b.setAttribute("aria-pressed",String(pipeFilter===id));b.append(el("span","n"," "+n));b.onclick=()=>{pipeFilter=id;renderDesk()};f.append(b)}
+  const hyg=p=>isOpen(p)&&((!p.nextDate&&!inCadence(p,acts))||notReady(p)||(CADENCE_STAGES.includes(p.stage||"New")&&touches(p.id,acts)>=MAX_TOUCHES));
+  const groups=[["open","All open",p=>isOpen(p)],["hygiene","Needs cleaning",hyg],["notready","Not ready",p=>isOpen(p)&&notReady(p)],["A","Group A",p=>isOpen(p)&&(p.group||"A")==="A"],["B","Group B",p=>isOpen(p)&&p.group==="B"],...STAGES_P.map(s=>[s,s,p=>p.stage===s])];
+  for(const [id,name,fn] of groups){const n=pros.filter(fn).length;if(!n&&id!==pipeFilter&&!["open","hygiene","notready"].includes(id))continue;const b=el("button",null,name);b.type="button";b.setAttribute("aria-pressed",String(pipeFilter===id));b.append(el("span","n"," "+n));b.onclick=()=>{pipeFilter=id;renderDesk()};f.append(b)}
+  const segs=[...new Set(pros.map(p=>p.segment).filter(Boolean))].sort();
+  const sf=$("#seg-filter");sf.replaceChildren();
+  if(segs.length){sf.append(el("span","lens-label","Segment"));for(const [id,name] of [["","All segments"],...segs.map(s=>[s,s])]){const b=el("button",null,name);b.type="button";b.setAttribute("aria-pressed",String(segFilter===id));b.append(el("span","n"," "+(id?pros.filter(p=>p.segment===id).length:pros.length)));b.onclick=()=>{segFilter=id;renderDesk()};sf.append(b)}
+    if(segFilter)sf.append(el("span","store-note","The call and email lists also work this segment only."))}
   const fn=(groups.find(g=>g[0]===pipeFilter)||groups[0])[2];
-  const rows=pros.filter(fn).sort((a,b)=>(a.tier||"B").localeCompare(b.tier||"B")||(a.nextDate||"9").localeCompare(b.nextDate||"9"));
+  const rows=pros.filter(p=>fn(p)&&(!segFilter||p.segment===segFilter)).sort((a,b)=>(a.tier||"B").localeCompare(b.tier||"B")||(a.nextDate||"9").localeCompare(b.nextDate||"9"));
   const tb=$("#pros-body");tb.replaceChildren();
   for(const p of rows){
     const tr=el("tr");tr.tabIndex=0;tr.onclick=()=>openP(p);tr.onkeydown=e=>{if(e.key==="Enter")openP(p)};
     const c1=el("td");c1.append(el("b",null,p.company+(p.example?" (example)":"")),el("small",null,[p.industry,"Tier "+(p.tier||"B")].filter(Boolean).join(" · ")));
     const c2=el("td");c2.append(el("b",null,p.contact||"–"),el("small",null,p.role||""));
-    const c3=el("td");c3.append(el("span","stage-chip"+(["Meeting booked","Qualified (to AE)","Conversation"].includes(p.stage)?" hot":""),p.stage||"New"));
-    const c4=el("td");c4.append(bantDots(p));
-    const c5=el("td");c5.append(el("b",null,p.nextStep||"No next step"),dueChip(p.nextDate,t));
-    const lt=lastTouch(p.id,acts);const c6=el("td",null,lt?fmtDay(lt):"Never");
-    tr.append(c1,c2,c3,c4,c5,c6);tb.append(tr);
+    const c3=el("td");c3.append(el("b",null,p.segment||"No segment"),el("small",null,p.persona&&PERSONAS[p.persona]?PERSONAS[p.persona].name:"No talk track"));
+    const c4=el("td");c4.append(el("span","stage-chip"+(["Meeting booked","Qualified (to AE)","Conversation"].includes(p.stage)?" hot":""),p.stage||"New"));
+    const c5=el("td");c5.append(bantDots(p));
+    const tc=touches(p.id,acts);const c6=el("td");c6.append(el("b",null,"Group "+(p.group||"–")),el("small",null,CADENCE_STAGES.includes(p.stage||"New")?`touch ${Math.min(tc,MAX_TOUCHES)}/${MAX_TOUCHES}`:"out of cadence"));
+    const c7=el("td");c7.append(el("b",null,p.nextStep||"No next step"),dueChip(p.nextDate,t));
+    const lt=lastTouch(p.id,acts);const c8=el("td",null,lt?fmtDay(lt):"Never");
+    tr.append(c1,c2,c3,c4,c5,c6,c7,c8);tb.append(tr);
   }
   const em=$("#pipe-empty");em.replaceChildren();
   if(!rows.length){const e=el("div","empty-state");e.append(el("span",null,pros.length?"Nothing in this view.":"No prospects yet. Add one, or load three examples."));if(!pros.length){const ex=el("button","btn sm","Load 3 example prospects");ex.type="button";ex.onclick=loadExamples;e.append(ex)}em.append(e)}
@@ -961,16 +1344,21 @@ function renderCal(t,pros,acts){
   const w=$("#week");w.replaceChildren();
   for(const d of days){
     const box=el("div","day"+(d===t?" is-today":""));const h=el("h4");h.append(el("span",null,parse(d).toLocaleDateString(undefined,{weekday:"short"})),el("b",null,String(parse(d).getDate())));box.append(h);
+    if(wday(d)<=4){const c=el("div","ev");c.textContent="Call "+(channelFor("A",wday(d))==="Call"?"A":"B")+" · Email "+(channelFor("A",wday(d))==="Email"?"A":"B");box.append(c)}
     for(const p of pros.filter(p=>isOpen(p)&&p.nextDate===d)){const b=el("button","ev fu"+(d<t?" late":""));b.type="button";b.append(document.createTextNode(p.company),el("small",null,p.nextStep||"Follow-up"));b.onclick=()=>openP(p);box.append(b)}
     const da=acts.filter(a=>a.date===d);
-    for(const ty of TYPES){const n=da.filter(a=>a.type===ty).length;if(n){const e=el("div","ev");e.textContent=n+" "+ty.toLowerCase()+(n>1&&ty!=="LinkedIn"?"s":"");box.append(e)}}
-    if(box.childElementCount===1)box.append(el("span","due","Nothing planned"));
+    for(const ty of TYPES){const n=da.filter(a=>a.type===ty).length;if(n){const e=el("div","ev");e.textContent=n+" "+ty.toLowerCase()+(n>1&&ty!=="LinkedIn"?"s":"")+" logged";box.append(e)}}
     w.append(box);
   }
 }
 $("#wk-prev").onclick=()=>{weekOff--;renderDesk()};$("#wk-next").onclick=()=>{weekOff++;renderDesk()};$("#wk-today").onclick=()=>{weekOff=0;renderDesk()};
 
 function renderLessons(acts){
+  // what books meetings: ask style and objection handling
+  const conv=acts.filter(a=>["Conversation","Meeting booked"].includes(a.outcome));
+  const box0=$("#ask-stats");box0.replaceChildren();
+  const rate=(arr)=>arr.length?Math.round(arr.filter(a=>a.outcome==="Meeting booked").length/arr.length*100)+"%":"–";
+  for(const [lbl,fn] of [["Two-day ask",a=>a.ask==="Two-day ask"],["Open ask",a=>a.ask==="Open ask"],["Handled with ARA",a=>(a.handled||"").startsWith("ARA")],["Handled with ACE",a=>(a.handled||"").startsWith("ACE")]]){const arr=conv.filter(fn);const s=el("div","stat");s.append(el("b",null,rate(arr)),el("span",null,`${lbl}: meetings booked from ${arr.length} conversation${arr.length===1?"":"s"}`));box0.append(s)}
   const withL=acts.filter(a=>a.lesson||(a.objection&&a.objection!=="None")).sort((a,b)=>b.date.localeCompare(a.date)||(b.created||0)-(a.created||0));
   const f=$("#obj-filter");f.replaceChildren();
   const mk=(id,name,n)=>{const b=el("button",null,name);b.type="button";b.setAttribute("aria-pressed",String(objFilter===id));b.append(el("span","n"," "+n));b.onclick=()=>{objFilter=id;renderDesk()};f.append(b)};
@@ -980,7 +1368,7 @@ function renderLessons(acts){
   const box=$("#lessons");box.replaceChildren();
   const rows=objFilter?withL.filter(a=>a.objection===objFilter):withL;
   if(!rows.length){const e=el("div","empty-state");e.textContent="Lessons appear here when you log an activity with a lesson or an objection. Patterns show up after a week of calls.";box.append(e)}
-  for(const a of rows){const p=Store.data.prospects[a.prospectId];const c=el("article","lesson");const h=el("div","lh");h.append(el("span",null,fmtDay(a.date)),el("span","chip",a.type+" · "+(a.outcome||"")),el("span",null,p?p.company:"Deleted prospect"));if(a.objection&&a.objection!=="None")h.append(el("span","chip warn",a.objection));c.append(h);if(a.lesson)c.append(el("p",null,a.lesson));box.append(c)}
+  for(const a of rows){const p=Store.data.prospects[a.prospectId];const c=el("article","lesson");const h=el("div","lh");h.append(el("span",null,fmtDay(a.date)),el("span","chip",a.type+" · "+(a.outcome||"")),el("span",null,p?p.company:"Deleted prospect"));if(a.objection&&a.objection!=="None")h.append(el("span","chip warn",a.objection));if(a.handled)h.append(el("span","chip method",a.handled));if(a.ask)h.append(el("span","chip method",a.ask));c.append(h);if(a.lesson)c.append(el("p",null,a.lesson));box.append(c)}
 }
 
 document.querySelectorAll(".subtab").forEach(b=>b.onclick=()=>{sub=b.dataset.sub;renderDesk()});
@@ -991,9 +1379,12 @@ function bantChecks(box,p){$(box).replaceChildren(...[["b","Budget"],["a","Autho
 const readBant=box=>Object.fromEntries([...document.querySelectorAll(box+" input")].map(i=>[i.value,i.checked]));
 function openP(p){
   editingP=p;$("#p-title").textContent=p?"Edit prospect":"New prospect";
-  opts("#p-industry",INDUSTRIES);opts("#p-stage",STAGES_P);
+  opts("#p-industry",INDUSTRIES);opts("#p-stage",STAGES_P);opts("#p-persona",[["","Pick a talk track"],...Object.entries(PERSONAS).map(([k,v])=>[k,v.name])]);
+  $("#seg-list").replaceChildren(...[...new Set(list("prospects").map(x=>x.segment).filter(Boolean))].map(s=>new Option(s)));
+  const pros=list("prospects"),na=pros.filter(x=>x.group==="A").length,nb=pros.filter(x=>x.group==="B").length;
   $("#p-company").value=p?.company||"";$("#p-industry").value=p?.industry||"Bank";$("#p-contact").value=p?.contact||"";$("#p-role").value=p?.role||"";
-  $("#p-stage").value=p?.stage||"New";$("#p-tier").value=p?.tier||"A";$("#p-trigger").value=p?.trigger||"";$("#p-next").value=p?.nextStep||"";$("#p-date").value=p?.nextDate||today();
+  $("#p-segment").value=p?.segment||segFilter||"";$("#p-persona").value=p?.persona||"";$("#p-group").value=p?.group||(na>nb?"B":"A");
+  $("#p-stage").value=p?.stage||"New";$("#p-tier").value=p?.tier||"A";$("#p-trigger").value=p?.trigger||"";$("#p-next").value=p?.nextStep||"";$("#p-date").value=p?.nextDate||"";
   $("#p-ae").value=p?.ae||"";$("#p-notes").value=p?.notes||"";bantChecks("#p-bant",p);
   $("#p-del").hidden=!p;$("#p-del").textContent="Delete";$("#p-del").dataset.armed="";$("#p-err").hidden=true;
   $("#pdlg").showModal();$("#p-company").focus();
@@ -1001,27 +1392,27 @@ function openP(p){
 $("#pform").addEventListener("submit",async e=>{e.preventDefault();
   const company=$("#p-company").value.trim();if(!company){$("#p-err").textContent="Give the prospect a company name.";$("#p-err").hidden=false;return}
   const id=editingP?.id||uid("p");
-  const data={...(editingP?strip(editingP):{created:Date.now()}),company,industry:$("#p-industry").value,contact:$("#p-contact").value.trim(),role:$("#p-role").value.trim(),stage:$("#p-stage").value,tier:$("#p-tier").value,trigger:$("#p-trigger").value.trim(),nextStep:$("#p-next").value.trim(),nextDate:$("#p-date").value,ae:$("#p-ae").value.trim(),notes:$("#p-notes").value.trim(),bant:readBant("#p-bant"),updated:Date.now()};
+  const data={...(editingP?strip(editingP):{created:Date.now()}),company,industry:$("#p-industry").value,contact:$("#p-contact").value.trim(),role:$("#p-role").value.trim(),segment:$("#p-segment").value.trim(),persona:$("#p-persona").value,group:$("#p-group").value,stage:$("#p-stage").value,tier:$("#p-tier").value,trigger:$("#p-trigger").value.trim(),nextStep:$("#p-next").value.trim(),nextDate:$("#p-date").value,ae:$("#p-ae").value.trim(),notes:$("#p-notes").value.trim(),bant:readBant("#p-bant"),updated:Date.now()};
   try{await put("prospects",id,data);$("#pdlg").close()}catch(err){$("#p-err").textContent="Saving failed ("+(err?.code||"error")+"). Try again.";$("#p-err").hidden=false}
 });
 $("#p-del").onclick=async()=>{const b=$("#p-del");if(!b.dataset.armed){b.dataset.armed="1";b.textContent="Click again to delete";return}try{await drop("prospects",editingP.id);$("#pdlg").close()}catch(err){$("#p-err").textContent="Delete failed.";$("#p-err").hidden=false}};
 $("#p-cancel").onclick=()=>$("#pdlg").close();
 
-function openA(p){
+function openA(p,type){
   const pros=list("prospects").sort((a,b)=>a.company.localeCompare(b.company));
   if(!pros.length){openP(null);return}
   opts("#a-pros",pros.map(x=>[x.id,x.company+(x.contact?" · "+x.contact:"")]));opts("#a-type",TYPES);opts("#a-obj",OBJECTIONS);opts("#a-stage",[["","Keep current stage"],...STAGES_P]);
-  const sel=p||pros[0];$("#a-pros").value=sel.id;$("#a-date").value=today();$("#a-type").value="Call";
+  const sel=p||pros[0];$("#a-pros").value=sel.id;$("#a-date").value=today();$("#a-type").value=type||"Call";
   const fillOut=()=>opts("#a-out",OUTCOMES[$("#a-type").value]);fillOut();$("#a-type").onchange=fillOut;
   const fillP=()=>{const q=Store.data.prospects[$("#a-pros").value];bantChecks("#a-bant",q);$("#a-next").value=q?.nextStep||"";$("#a-ndate").value="";$("#a-stage").value=""};fillP();$("#a-pros").onchange=fillP;
-  $("#a-obj").value="None";$("#a-lesson").value="";$("#a-err").hidden=true;
+  $("#a-obj").value="None";$("#a-hand").value="";$("#a-ask").value="Two-day ask";$("#a-lesson").value="";$("#a-err").hidden=true;
   $("#adlg").showModal();
 }
 $("#aform").addEventListener("submit",async e=>{e.preventDefault();
   const pid=$("#a-pros").value,p=Store.data.prospects[pid];if(!p)return;
   const outcome=$("#a-out").value;let stage=$("#a-stage").value;
   if(!stage){if(outcome==="Meeting booked")stage="Meeting booked";else if(outcome==="Qualified (to AE)")stage="Qualified (to AE)";else if(outcome==="Conversation"&&["New","Researching","Contacted"].includes(p.stage))stage="Conversation";else if(["New","Researching"].includes(p.stage))stage="Contacted"}
-  const act={prospectId:pid,date:$("#a-date").value||today(),type:$("#a-type").value,outcome,objection:$("#a-obj").value,lesson:$("#a-lesson").value.trim(),stage:stage||"",created:Date.now()};
+  const act={prospectId:pid,date:$("#a-date").value||today(),type:$("#a-type").value,outcome,ask:$("#a-ask").value,objection:$("#a-obj").value,handled:$("#a-hand").value,lesson:$("#a-lesson").value.trim(),stage:stage||"",created:Date.now()};
   const nd=$("#a-ndate").value;
   const pd={...strip(p),bant:readBant("#a-bant"),nextStep:$("#a-next").value.trim(),nextDate:nd||(p.nextDate&&p.nextDate>act.date?p.nextDate:""),stage:stage||p.stage,updated:Date.now()};
   try{await put("activities",uid("a"),act);await put("prospects",pid,pd);$("#adlg").close()}catch(err){$("#a-err").textContent="Saving failed ("+(err?.code||"error")+"). Try again.";$("#a-err").hidden=false}
@@ -1031,16 +1422,16 @@ $("#d-add").onclick=()=>openP(null);
 $("#d-log").onclick=()=>openA(null);
 
 async function loadExamples(){
-  const t=today(),y=ymd(new Date(Date.now()-864e5)),ago=n=>ymd(new Date(Date.now()-n*864e5));
+  const t=today(),y=addDays(t,-1),ago=n=>addDays(t,-n);
   const ex=[
-    {company:"Northwind Bank",industry:"Bank",contact:"Maria Lopez",role:"Head of Fraud",stage:"Conversation",tier:"A",trigger:"Launching a new mobile account opening flow",nextStep:"Call back to book a deepfake benchmark",nextDate:y,bant:{b:false,a:true,n:true,t:false}},
-    {company:"Bluewave Telecom",industry:"Telco",contact:"James Okafor",role:"CISO",stage:"Contacted",tier:"A",trigger:"SIM-swap fraud in the news",nextStep:"Second call: help-desk MFA reset angle",nextDate:t,bant:{b:false,a:true,n:false,t:false}},
-    {company:"Cartly Marketplace",industry:"Marketplace",contact:"Alex Chen",role:"Head of Growth",stage:"New",tier:"B",trigger:"Seller sign-up drop-off",nextStep:"First call: ask about first-try pass rate",nextDate:t,bant:{b:false,a:false,n:false,t:false}}
+    {company:"Northwind Bank",industry:"Bank",contact:"Maria Lopez",role:"Head of Fraud",segment:"Fraud leads, US regional banks",persona:"fraud",group:"A",stage:"Conversation",tier:"A",trigger:"Launching a new mobile account opening flow",nextStep:"Call back to book a deepfake benchmark",nextDate:y,bant:{b:false,a:true,n:true,t:false}},
+    {company:"Bluewave Telecom",industry:"Telco",contact:"James Okafor",role:"CISO",segment:"Security leads, US telcos",persona:"security",group:"B",stage:"Contacted",tier:"A",trigger:"SIM-swap fraud in the news",nextStep:"",nextDate:"",bant:{b:false,a:true,n:false,t:false}},
+    {company:"Cartly Marketplace",industry:"Marketplace",contact:"Alex Chen",role:"Head of Growth",segment:"Growth leads, marketplaces",persona:"growth",group:"A",stage:"New",tier:"B",trigger:"Seller sign-up drop-off",nextStep:"",nextDate:"",bant:{b:false,a:false,n:false,t:false}}
   ];
   const ids=[];
   for(const p of ex){const id=uid("p");ids.push(id);await put("prospects",id,{...p,example:true,notes:"Example prospect. Delete it when you add real ones.",created:Date.now(),updated:Date.now()})}
-  await put("activities",uid("a"),{prospectId:ids[0],date:ago(3),type:"Call",outcome:"Conversation",objection:"Already have a vendor",lesson:"Asking whether their vendor had been tested against deepfakes opened the conversation. Lead with that question next time.",stage:"Conversation",created:Date.now()});
-  await put("activities",uid("a"),{prospectId:ids[1],date:ago(1),type:"Call",outcome:"Gatekeeper",objection:"Send me an email",lesson:"Assistant asked for an email. Sent the Workforce one-pager and asked for 15 minutes Thursday.",stage:"Contacted",created:Date.now()});
+  await put("activities",uid("a"),{prospectId:ids[0],date:ago(3),type:"Call",outcome:"Conversation",ask:"Two-day ask",objection:"Already have a vendor",handled:"ARA (first line)",lesson:"Asking whether their vendor had been tested against deepfakes opened the conversation. Lead with that next time.",stage:"Conversation",created:Date.now()});
+  await put("activities",uid("a"),{prospectId:ids[1],date:ago(1),type:"Call",outcome:"Gatekeeper",ask:"No ask",objection:"Send me an email",handled:"ARA (first line)",lesson:"Assistant asked for an email. Offered Thursday or Friday and promised to send it beforehand.",stage:"Contacted",created:Date.now()});
 }
 
 /* ---------- playbook copy buttons ---------- */
