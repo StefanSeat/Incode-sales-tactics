@@ -461,7 +461,7 @@ details.track summary:focus-visible{outline:2px solid var(--accent);outline-offs
     <div class="m-head">
       <div class="eyebrow">Qualifying the customer</div>
       <h2 id="bant-h">BANT: is this prospect a <em>real</em> buyer?</h2>
-      <p class="lede">BANT turns to the customer: the questions an Incode rep asks a bank, telco or marketplace, what a qualified answer sounds like, the red flag to watch for, and the tactics that help win each point. MEDDICC below then reads Incode's own website.</p>
+      <p class="lede">BANT turns to the customer: the questions an Incode rep asks a bank, telco or marketplace, what a qualified answer sounds like, and the red flag to watch for. MEDDICC below then reads Incode's own website.</p>
       <div class="m-word" aria-hidden="true"><span>B</span><span>A</span><span>N</span><span>T</span></div>
     </div>
     <div class="m-rows" id="bant-rows"></div>
@@ -909,7 +909,7 @@ function renderLensGrid(sel,list){
       for(const [cls,lbl,txt] of [["yes","Qualified when",r.yes],["flag","Red flag",r.flag]]){const v=el("div","m-v "+cls);v.append(el("b",null,lbl),el("span",null,txt));row.append(v)}}
     const links=el("div","m-links");links.append(el("span","m-lbl",r.ask?"Incode tactics that help":"Tactics that answer it"));
     for(const id of r.ids){const c=cards.find(x=>x.id===id);if(!c)continue;const b=el("button","m-link",c.title);b.type="button";b.onclick=()=>openDetail(c);links.append(b)}
-    if(links.childElementCount>1)row.append(links);
+    if(links.childElementCount>1&&!r.ask)row.append(links);
     box.append(row);
   }
 }
