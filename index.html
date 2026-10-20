@@ -579,7 +579,7 @@ details.track summary:focus-visible{outline:2px solid var(--accent);outline-offs
         <div class="eyebrow">BDR playbook</div>
         <h2>Prep once, <em>execute</em>, hand it to the AE</h2>
         <p class="lede">How an Incode BDR plans the day, opens the call, handles pushback and follows up. It covers cold calling, account research, discovery, AI-enabled prospecting, events and AE partnership.</p>
-        <div class="pitch"><b>30-second pitch.</b> "Incode verifies that a person is real and is who they say they are, in seconds, for banks, telcos, marketplaces and governments. Most of our customers come to us for one of two reasons: AI fraud like deepfakes is getting past their current checks, or good customers are dropping out of sign-up. We already work with 8 of the top 10 US banks and companies like Citi, Nubank, TikTok and FanDuel, who use us to cut fraud without adding friction. I was looking to find 30 minutes this week to show you how. Does Thursday or Friday work?"</div>
+        <div class="pitch"><b>30-second pitch.</b> "Incode verifies that a person is real and is who they say they are, in seconds, for banks, telcos, marketplaces and governments. Most of our customers come to us for one of two reasons: AI fraud like deepfakes is getting past their current checks, or good customers are dropping out of sign-up. We already work with companies like HSBC, Klarna, SIXT and TikTok, who use us to cut fraud without adding friction. I was looking to find 30 minutes this week to show you how. Does Thursday or Friday work?"</div>
       </section>
 
       <section class="p-sec">
@@ -600,7 +600,7 @@ details.track summary:focus-visible{outline:2px solid var(--accent);outline-offs
 
       <section class="p-sec">
         <h2>Your best hours go to <em>buyers</em></h2>
-        <p class="lede">Lock three prospecting blocks in the prospect's time zone and fit research, admin, CRM and internal meetings around them. If you call the US from Europe, that means your afternoon and evening.</p>
+        <p class="lede">Lock three prospecting blocks in the prospect's time zone and fit research, admin, CRM and internal meetings around them. Across EMEA, mind the spread: the UK is an hour behind Central Europe, and the Gulf is two to three hours ahead.</p>
         <ol class="blocks" id="pb-blocks"></ol>
         <div class="legend"><span><i class="s"></i>Sell · locked</span><span><i class="p"></i>Prep</span><span><i class="f"></i>Flex</span></div>
       </section>
@@ -628,7 +628,7 @@ details.track summary:focus-visible{outline:2px solid var(--accent);outline-offs
 
       <section class="p-sec">
         <h2>Talk tracks by <em>persona</em></h2>
-        <p class="lede">Each one follows Who, Why, What. Name peers from the prospect's own industry: a bank cares what Citi does, not what TikTok does. Save analyst awards for the follow-up email, executives and procurement.</p>
+        <p class="lede">Each one follows Who, Why, What. Name peers from the prospect's own industry: a bank cares what HSBC does, not what TikTok does. Save analyst awards for the follow-up email, executives and procurement.</p>
         <div class="p-grid" id="pb-personas"></div>
       </section>
 
@@ -660,7 +660,7 @@ details.track summary:focus-visible{outline:2px solid var(--accent);outline-offs
         <div class="p-grid">
           <article class="p-card"><h3>Account research</h3><pre class="prompt" id="pr1">Research [Company] for an identity verification sales call. Give me: what they sell and to whom, recent news (funding, launches, fraud incidents, regulatory actions) from the last 12 months, which regulations likely apply (KYC, AML, age verification), who probably owns fraud, compliance and security, and the single best trigger to mention on a cold call. Flag anything you are unsure of.</pre><button class="btn sm copy" type="button" data-copy="pr1">Copy prompt</button></article>
           <article class="p-card"><h3>Value statement</h3><pre class="prompt" id="pr2">Write a cold call value statement for [Name], [Title] at [Company], in three parts. Who: one line introducing me from Incode. Why: at most three short sentences naming their segment, two pains Incode solves for it (deepfakes, sign-up drop-off, KYC compliance or help-desk fraud) and one or two Incode customers from their industry. What: an assumptive ask for 30 minutes this week offering two specific days. Sound like a person, not a script.</pre><button class="btn sm copy" type="button" data-copy="pr2">Copy prompt</button></article>
-          <article class="p-card"><h3>Email that gets replies</h3><pre class="prompt" id="pr3">Write a cold email under 90 words to [Name], [Title] at [Company]. Subject line under 5 words. Open with their likely problem, add one proof point, and end with a soft question, not a meeting link. For the proof point, name 1 or 2 Incode customers from their industry (e.g. Citi or Nubank for banks, FanDuel for gaming), not an award. No buzzwords.</pre><button class="btn sm copy" type="button" data-copy="pr3">Copy prompt</button></article>
+          <article class="p-card"><h3>Email that gets replies</h3><pre class="prompt" id="pr3">Write a cold email under 90 words to [Name], [Title] at [Company]. Subject line under 5 words. Open with their likely problem, add one proof point, and end with a soft question, not a meeting link. For the proof point, name 1 or 2 Incode customers from their industry (e.g. HSBC for banks, Klarna for fintech, PokerStars for gaming), not an award. No buzzwords.</pre><button class="btn sm copy" type="button" data-copy="pr3">Copy prompt</button></article>
           <article class="p-card"><h3>Call recap for the AE</h3><pre class="prompt" id="pr4">Turn these call notes into a handoff for my Account Executive: [notes]. Format: company and contact, the pain in their words, BANT status (budget, authority, need, timing) with evidence, objections raised and how I handled them, agreed next step and date, and suggested angle for the first meeting.</pre><button class="btn sm copy" type="button" data-copy="pr4">Copy prompt</button></article>
         </div>
       </section>
@@ -995,25 +995,25 @@ const icon=(n,cls="ic")=>{const s=document.createElementNS("http://www.w3.org/20
 const PERSONAS={
   fraud:{name:"Head of Fraud / Risk",where:"Bank or fintech",
     who:"Hey Maria, this is Stefan calling from Incode, how's it going?",
-    why:"I'm on the team that works with fraud and risk leaders at US banks. We focus on deepfakes and injected cameras getting past selfie checks, synthetic identities at account opening, and good customers dropping out of sign-up. Banks like Citi and Scotiabank use us to stop that without adding friction.",
+    why:"I'm on the team that works with fraud and risk leaders at banks across Europe. We focus on deepfakes and injected cameras getting past selfie checks, synthetic identities at account opening, and good customers dropping out of sign-up. Banks like HSBC and fintechs like Klarna use us to stop that without adding friction.",
     what:"I know I'm calling out of the blue, so I won't go deep now. I was looking to find 30 minutes later this week to introduce you to my team and show how other banks handle this. How does Thursday or Friday look?",
     disc:["How do you catch synthetic or injected identities today?","What share of fraud starts at onboarding versus account takeover?"],
     later:"Gartner Leader three years running; first to pass iBeta Level 3 liveness on iOS and Android."},
   security:{name:"CISO / Head of Security",where:"Any enterprise",
     who:"Hey James, this is Stefan calling from Incode, how's it going?",
-    why:"I'm on the team that works with security leaders on identity at high-risk moments: help-desk and MFA resets, new-hire onboarding, and job candidates using deepfakes in interviews. Companies like Citi and TikTok use Incode, and it plugs straight into Okta and Microsoft Entra.",
+    why:"I'm on the team that works with security leaders on identity at high-risk moments: help-desk and MFA resets, new-hire onboarding, and job candidates using deepfakes in interviews. Companies like HSBC and TikTok use Incode, and it plugs straight into Okta and Microsoft Entra.",
     what:"Happy to expand, but I know you're busy. I was looking to find 30 minutes this week to show you a verified MFA reset in Okta. Does Wednesday or Thursday work?",
     disc:["How does your help desk verify a caller before resetting MFA?","Do you check identity at interview or only at onboarding?"],
     later:"Plugs into Okta, Entra, Ping and ServiceNow; setup Incode says takes under an hour."},
   compliance:{name:"Compliance / KYC lead",where:"Regulated business",
     who:"Hey Priya, this is Stefan calling from Incode, how's it going?",
-    why:"I'm on the team that supports KYC and compliance leads at regulated companies. We focus on meeting KYC and AML rules without slowing sign-up: ID documents, liveness, government record checks and PEP and sanctions screening in one flow. HSBC, Citibanamex, Experian and Equifax run identity checks on Incode.",
+    why:"I'm on the team that supports KYC and compliance leads at regulated companies. We focus on meeting KYC and AML rules, including the new EU AML regulation, without slowing sign-up: ID documents, liveness, government record checks and PEP and sanctions screening in one flow. HSBC, Klarna and Experian run identity checks on Incode.",
     what:"I was looking to find 30 minutes this week to map your current flow against a single platform. How does Thursday or Friday look?",
     disc:["Which regulations or audits are driving priorities this year?","How many vendors are stitched together in your KYC flow?"],
     later:"4.9K+ document types in 190+ countries; G2 badges in AML and Age Verification."},
   growth:{name:"Head of Product / Growth",where:"Marketplace, gaming, telco",
     who:"Hey Alex, this is Stefan calling from Incode, how's it going?",
-    why:"I'm on the team that works with product and growth leaders at marketplaces and gaming companies. Identity checks are often where good users drop off, so we focus on first-try pass rates, verification speed and stopping fake accounts. TikTok, Rappi and FanDuel use us.",
+    why:"I'm on the team that works with product and growth leaders at marketplaces and gaming companies. Identity checks are often where good users drop off, so we focus on first-try pass rates, verification speed and stopping fake accounts. TikTok, PokerStars and SIXT use us.",
     what:"I know it's the middle of your day, so I won't go deep. I was looking to find 30 minutes later this week to compare your funnel numbers with what we see. Thursday or Friday?",
     disc:["Where in sign-up do you lose the most users?","How long does verification take today?"],
     later:"Incode reports 98% verified on the first try and up to 20% conversion uplift with government record checks."}
@@ -1045,11 +1045,11 @@ const BLOCKS=[
   {s:"15:30",e:"17:30",n:"Prospecting block 3",d:"Calls, emails, conversations",k:"sell"},
   {s:"17:30",e:"17:45",n:"Close the loop",d:"Check tomorrow's lists are ready",k:"prep"}
 ];
-const MARKETS=[["","My own time zone"],["America/New_York","US East (New York)"],["America/Chicago","US Central (Chicago)"],["America/Los_Angeles","US West (Los Angeles)"],["America/Mexico_City","Mexico (Mexico City)"],["America/Sao_Paulo","Brazil (São Paulo)"],["Europe/London","UK (London)"],["Europe/Berlin","Central Europe (Berlin)"]];
+const MARKETS=[["","My own time zone"],["America/New_York","US East (New York)"],["America/Chicago","US Central (Chicago)"],["America/Los_Angeles","US West (Los Angeles)"],["America/Mexico_City","Mexico (Mexico City)"],["America/Sao_Paulo","Brazil (São Paulo)"],["Europe/London","UK (London)"],["Europe/Berlin","Central Europe (Berlin)"],["Asia/Dubai","Gulf (Dubai)"],["Africa/Johannesburg","South Africa (Johannesburg)"]];
 
 function renderPlaybook(){
   const fl=$("#flow");fl.replaceChildren();
-  for(const [ic,t,d] of [["target","Segment","Fraud leads at US regional banks"],["list","Build list","40 contacts, split into groups A and B"],["chat","Target message","Deepfakes and sign-up drop-off; Citi and Scotiabank as peers"],["check","Ready to execute","List, talk track and cadence loaded"]]){const s=el("div","fstep");const b=el("div","bub");b.append(icon(ic));s.append(b,el("b",null,t),el("span",null,d));fl.append(s)}
+  for(const [ic,t,d] of [["target","Segment","Fraud leads at EU banks"],["list","Build list","40 contacts, split into groups A and B"],["chat","Target message","Deepfakes and sign-up drop-off; HSBC and Klarna as peers"],["check","Ready to execute","List, talk track and cadence loaded"]]){const s=el("div","fstep");const b=el("div","bub");b.append(icon(ic));s.append(b,el("b",null,t),el("span",null,d));fl.append(s)}
   const tg=$("#triggers");tg.replaceChildren();for(const [ic,t] of TRIGGERS){const d=el("div");d.append(icon(ic),el("span",null,t));tg.append(d)}
   const dc=$("#decide");dc.replaceChildren();
   for(const [q,a] of [["Who am I contacting?","Segmented list"],["Why am I contacting them?","Reason or trigger"],["What am I saying?","Talk track for their persona"],["What channel am I using?","Pre-set A/B cadence"]]){const r=el("div","dq");const s=el("span");s.append(icon("check"),document.createTextNode(a));r.append(el("b",null,q),el("span","arr","→"),s);dc.append(r)}
@@ -1403,9 +1403,9 @@ $("#d-log").onclick=()=>openA(null);
 async function loadExamples(){
   const t=today(),y=addDays(t,-1),ago=n=>addDays(t,-n);
   const ex=[
-    {company:"Northwind Bank",industry:"Bank",contact:"Maria Lopez",role:"Head of Fraud",segment:"Fraud leads, US regional banks",persona:"fraud",group:"A",stage:"Conversation",tier:"A",trigger:"Launching a new mobile account opening flow",nextStep:"Call back to book a deepfake benchmark",nextDate:y,bant:{b:false,a:true,n:true,t:false}},
-    {company:"Bluewave Telecom",industry:"Telco",contact:"James Okafor",role:"CISO",segment:"Security leads, US telcos",persona:"security",group:"B",stage:"Contacted",tier:"A",trigger:"SIM-swap fraud in the news",nextStep:"",nextDate:"",bant:{b:false,a:true,n:false,t:false}},
-    {company:"Cartly Marketplace",industry:"Marketplace",contact:"Alex Chen",role:"Head of Growth",segment:"Growth leads, marketplaces",persona:"growth",group:"A",stage:"New",tier:"B",trigger:"Seller sign-up drop-off",nextStep:"",nextDate:"",bant:{b:false,a:false,n:false,t:false}}
+    {company:"Northwind Bank",industry:"Bank",contact:"Maria Lopez",role:"Head of Fraud",segment:"Fraud leads, EU banks",persona:"fraud",group:"A",stage:"Conversation",tier:"A",trigger:"Launching a new mobile account opening flow",nextStep:"Call back to book a deepfake benchmark",nextDate:y,bant:{b:false,a:true,n:true,t:false}},
+    {company:"Bluewave Telecom",industry:"Telco",contact:"James Okafor",role:"CISO",segment:"Security leads, EU telcos",persona:"security",group:"B",stage:"Contacted",tier:"A",trigger:"SIM-swap fraud in the news",nextStep:"",nextDate:"",bant:{b:false,a:true,n:false,t:false}},
+    {company:"Cartly Marketplace",industry:"Marketplace",contact:"Alex Chen",role:"Head of Growth",segment:"Growth leads, EU marketplaces",persona:"growth",group:"A",stage:"New",tier:"B",trigger:"Seller sign-up drop-off",nextStep:"",nextDate:"",bant:{b:false,a:false,n:false,t:false}}
   ];
   const ids=[];
   for(const p of ex){const id=uid("p");ids.push(id);await put("prospects",id,{...p,example:true,notes:"Example prospect. Delete it when you add real ones.",created:Date.now(),updated:Date.now()})}
