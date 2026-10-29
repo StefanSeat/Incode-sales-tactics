@@ -444,7 +444,7 @@ details.track summary:focus-visible{outline:2px solid var(--accent);outline-offs
 .tcard .row2{display:flex;gap:6px;margin-top:auto}
 .tcard .words{font-family:var(--mono);font-size:10.5px;color:var(--muted)}
 /* presenting: top two-thirds of the screen */
-.tp{position:fixed;left:0;right:0;top:0;height:66.6vh;z-index:50;background:var(--bg);border-bottom:2px solid var(--accent);box-shadow:0 12px 40px rgba(0,0,0,.25);display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px)}
+.tp{position:fixed;left:0;right:0;top:0;height:var(--tph,80vh);z-index:50;background:var(--bg);border-bottom:2px solid var(--accent);box-shadow:0 12px 40px rgba(0,0,0,.25);display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px)}
 .tp-bar{display:flex;align-items:center;gap:8px;padding:8px max(16px,env(safe-area-inset-left,0px));border-bottom:1px solid var(--line);flex-wrap:wrap}
 .tp-bar .tp-title{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-right:auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .tp-dots{display:flex;gap:4px}
@@ -457,12 +457,13 @@ details.track summary:focus-visible{outline:2px solid var(--accent);outline-offs
 @media (max-width:1100px){.talk-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:520px){.talk-grid{grid-template-columns:1fr}.tp-hint{display:none}}
 /* all cards at once, top two-thirds */
-.tpa{position:fixed;left:0;right:0;top:0;height:66.6vh;z-index:51;background:var(--bg);border-bottom:2px solid var(--accent);box-shadow:0 12px 40px rgba(0,0,0,.25);padding:10px max(12px,env(safe-area-inset-right,0px)) 34px max(12px,env(safe-area-inset-left,0px));padding-top:calc(10px + env(safe-area-inset-top,0px))}
+.tpa{position:fixed;left:0;right:0;top:0;height:var(--tph,80vh);z-index:51;background:var(--bg);border-bottom:2px solid var(--accent);box-shadow:0 12px 40px rgba(0,0,0,.25);padding:10px max(12px,env(safe-area-inset-right,0px)) 34px max(12px,env(safe-area-inset-left,0px));padding-top:calc(10px + env(safe-area-inset-top,0px))}
 .tpa-cols{height:100%;overflow:hidden;column-gap:16px;column-rule:1px solid var(--line);column-fill:auto;line-height:1.26;font-family:var(--body);color:var(--fg)}
 .tpa-card{margin:0 0 .55em}
 .tpa-card h4{margin:0 0 .15em;break-after:avoid;font-family:var(--display);font-weight:700;font-size:1em;display:flex;gap:6px;align-items:baseline;color:var(--accent)}
 .tpa-card h4 b{flex:none;min-width:1.5em;height:1.5em;border-radius:.35em;background:var(--accent);color:var(--on-accent);display:inline-grid;place-items:center;font-size:.85em}
-.tpa-card p{margin:0 0 .2em}
+.tpa-card p{margin:0 0 .2em;orphans:3;widows:3}
+.tpa-card.keep{break-inside:avoid}
 .tpa-card p:last-child{margin:0}
 .tpa-tools{position:absolute;right:max(10px,env(safe-area-inset-right,0px));bottom:5px;display:flex;gap:4px;z-index:2}
 .tpa-tools button{border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;opacity:.75}
@@ -620,7 +621,7 @@ body.presenting .wrap{visibility:hidden}
         <div>
           <div class="eyebrow">Private to you · not on the public page</div>
           <h2>Interview cards</h2>
-          <p class="d-sum">One card per slide. Show all cards puts every card in the top two-thirds of your screen at once, so you can glance up without clicking. One card at a time shows a single card there instead. Move with → / ← or Page Down / Page Up (a clicker works), number keys 1 to 0 to jump, Esc to close.</p>
+          <p class="d-sum">One card per slide. Show all cards puts every card at the top of your screen at once (use Taller / Shorter to fit around your webcam), so you can glance up without clicking. One card at a time shows a single card there instead. Move with → / ← or Page Down / Page Up (a clicker works), number keys 1 to 0 to jump, Esc to close.</p>
         </div>
         <div class="d-actions"><button class="btn" type="button" id="talk-go">One card at a time</button><button class="btn" type="button" id="talk-fs">Full screen</button><button class="btn primary" type="button" id="talk-all">Show all cards</button></div>
       </div>
@@ -785,7 +786,7 @@ body.presenting .wrap{visibility:hidden}
     <div class="actions"><div><button class="btn" type="button" id="t-cancel">Cancel</button><button class="btn primary" type="submit">Save card</button></div></div>
   </form>
 </dialog>
-<div class="tpa" id="tpa" hidden role="dialog" aria-modal="false" aria-label="All interview cards"><div class="tpa-cols" id="tpa-cols"></div><div class="tpa-tools"><button type="button" id="tpa-dn" aria-label="Smaller text">A−</button><button type="button" id="tpa-up" aria-label="Larger text">A+</button><button type="button" id="tpa-fs">Full screen</button><button type="button" id="tpa-x">Close</button></div></div>
+<div class="tpa" id="tpa" hidden role="dialog" aria-modal="false" aria-label="All interview cards"><div class="tpa-cols" id="tpa-cols"></div><div class="tpa-tools"><button type="button" id="tpa-sh" aria-label="Make the cards area shorter">▲ Shorter</button><button type="button" id="tpa-ta" aria-label="Make the cards area taller">▼ Taller</button><button type="button" id="tpa-dn" aria-label="Smaller text">A−</button><button type="button" id="tpa-up" aria-label="Larger text">A+</button><button type="button" id="tpa-fs">Full screen</button><button type="button" id="tpa-x">Close</button></div></div>
 <div class="tp" id="tp" hidden role="dialog" aria-modal="false" aria-label="Interview card">
   <div class="tp-bar">
     <span class="tp-title" id="tp-title"></span>
@@ -1533,7 +1534,7 @@ $("#talk-go").onclick=()=>present(0);
 let tpaAdj=0;
 function showAll(){
   const box=$("#tpa-cols");box.replaceChildren();
-  for(let k=0;k<TALK_N;k++){const c=tCard(k);if(!c.text)continue;const d=el("div","tpa-card");const h=el("h4");h.append(el("b",null,String(k+1)),document.createTextNode(c.title||"Card "+(k+1)));d.append(h);
+  for(let k=0;k<TALK_N;k++){const c=tCard(k);if(!c.text)continue;const d=el("div","tpa-card"+(c.text.trim().split(/\s+/).length<150?" keep":""));const h=el("h4");h.append(el("b",null,String(k+1)),document.createTextNode(c.title||"Card "+(k+1)));d.append(h);
     for(const para of c.text.split(/\n\s*\n|\n/).filter(x=>x.trim()))d.append(el("p",null,para.trim()));box.append(d)}
   $("#tpa").hidden=false;fitAll();
 }
@@ -1552,7 +1553,12 @@ const fsLabel=()=>{const t=document.fullscreenElement?"Exit full screen":"Full s
 document.addEventListener("fullscreenchange",()=>{fsLabel();if(!$("#tpa").hidden)setTimeout(fitAll,150);if(!$("#tp").hidden)setTimeout(()=>showCard(Talk.cur),150)});
 $("#talk-fs").onclick=toggleFs;$("#tpa-fs").onclick=toggleFs;
 $("#tpa-x").onclick=()=>{$("#tpa").hidden=true};
-$("#tpa-up").onclick=()=>{tpaAdj+=1;fitAll()};$("#tpa-dn").onclick=()=>{tpaAdj-=1;fitAll()};
+$("#tpa-up").onclick=()=>{tpaAdj+=1;fitAll()};
+/* height of the cards area, remembered in this browser */
+let tph=80;try{tph=+localStorage.getItem("incode-tph")||80}catch(e){}
+const applyTph=()=>{document.documentElement.style.setProperty("--tph",tph+"vh");try{localStorage.setItem("incode-tph",tph)}catch(e){}};applyTph();
+const nudgeTph=d=>{tph=Math.max(50,Math.min(96,tph+d));applyTph();if(!$("#tpa").hidden)fitAll();if(!$("#tp").hidden)showCard(Talk.cur)};
+$("#tpa-ta").onclick=()=>nudgeTph(4);$("#tpa-sh").onclick=()=>nudgeTph(-4);$("#tpa-dn").onclick=()=>{tpaAdj-=1;fitAll()};
 addEventListener("resize",()=>{if(!$("#tpa").hidden)fitAll()});
 
 function present(i){$("#tp").hidden=false;showCard(i);$("#tp-text").focus({preventScroll:true})}
