@@ -816,7 +816,7 @@ body.presenting .wrap{visibility:hidden}
 <dialog id="qdlg">
   <form class="ed" id="qform" method="dialog">
     <h2 id="q-head">Question</h2>
-    <label>Section<select id="q-sec"><option value="brush">Cold call brush-offs</option><option value="interview">Interview questions</option></select></label>
+    <label>Section<select id="q-sec"><option value="brush">Cold call brush-offs</option><option value="prospect">Tough prospect questions</option><option value="interview">Interview questions</option></select></label>
     <label>Question or objection<input id="q-q" maxlength="200"></label>
     <label>Context (optional)<input id="q-ctx" maxlength="300"></label>
     <label>Why they say it (optional)<input id="q-why" maxlength="300"></label>
@@ -1562,7 +1562,7 @@ function renderQA(){
   const body=$("#qa-body");if(!body)return;body.replaceChildren();
   const all=Object.values(QA.items).sort((a,b)=>(a.order||0)-(b.order||0));
   if(!all.length){const e=el("div","empty-state","No questions yet. Use Add question to start.");body.append(e);return}
-  const SECS=[["brush","Cold call brush-offs"],["interview","Interview questions"]];
+  const SECS=[["brush","Cold call brush-offs"],["prospect","Tough prospect questions"],["interview","Interview questions"]];
   for(const [sid,sname] of SECS){
     const items=all.filter(x=>(x.sec||"brush")===sid);if(!items.length&&sid!=="brush")continue;
     const sec=el("section","qa-sec");sec.append(el("h3",null,sname));
