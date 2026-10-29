@@ -1520,11 +1520,13 @@ function showCard(i){
   $("#tp-title").textContent=(Talk.cur+1)+" / "+TALK_N+(c.title?" · "+c.title:"");
   const dots=$("#tp-dots");dots.replaceChildren();
   for(let k=0;k<TALK_N;k++){const b=el("button",tCard(k).text?"":"none",String(k+1));b.type="button";b.setAttribute("aria-current",String(k===Talk.cur));b.setAttribute("aria-label","Card "+(k+1));b.onclick=()=>showCard(k);dots.append(b)}
-  const t=$("#tp-text");t.textContent=c.text||"(No text for this card yet.)";fitText(t);
+  const t=$("#tp-text");t.style.fontSize=uniformSize(t)+"px";t.textContent=c.text||"(No text for this card yet.)";
 }
-function fitText(t){let lo=14,hi=64;for(let n=0;n<9;n++){const mid=(lo+hi)/2;t.style.fontSize=mid+"px";if(t.scrollHeight>t.clientHeight)hi=mid;else lo=mid}t.style.fontSize=Math.floor(lo)+"px"}
+/* one font size for every card: the largest that lets the longest card fit */
+function fitText(t){let lo=14,hi=48;for(let n=0;n<9;n++){const mid=(lo+hi)/2;t.style.fontSize=mid+"px";if(t.scrollHeight>t.clientHeight)hi=mid;else lo=mid}return Math.floor(lo)}
+function uniformSize(t){let best=48;for(let k=0;k<TALK_N;k++){const x=tCard(k).text;if(!x)continue;t.textContent=x;best=Math.min(best,fitText(t))}return best}
 $("#tp-prev").onclick=()=>showCard(Talk.cur-1);$("#tp-next").onclick=()=>showCard(Talk.cur+1);$("#tp-close").onclick=()=>{$("#tp").hidden=true};
-addEventListener("resize",()=>{if(!$("#tp").hidden)fitText($("#tp-text"))});
+addEventListener("resize",()=>{if(!$("#tp").hidden)showCard(Talk.cur)});
 addEventListener("keydown",e=>{
   if($("#tp").hidden||e.target.closest?.("input,textarea,select,dialog"))return;
   if(["ArrowRight","PageDown"," ","ArrowDown"].includes(e.key)){e.preventDefault();showCard(Talk.cur+1)}
