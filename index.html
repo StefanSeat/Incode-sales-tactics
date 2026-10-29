@@ -619,8 +619,9 @@ details.track summary:focus-visible{outline:2px solid var(--accent);outline-offs
           <h2>Interview cards</h2>
           <p class="d-sum">One card per slide. Show all cards puts every card in the top two-thirds of your screen at once, so you can glance up without clicking. One card at a time shows a single card there instead. Move with → / ← or Page Down / Page Up (a clicker works), number keys 1 to 0 to jump, Esc to close.</p>
         </div>
-        <div class="d-actions"><button class="btn" type="button" id="talk-go">One card at a time</button><button class="btn primary" type="button" id="talk-all">Show all cards</button></div>
+        <div class="d-actions"><button class="btn" type="button" id="talk-go">One card at a time</button><button class="btn" type="button" id="talk-fs">Full screen</button><button class="btn primary" type="button" id="talk-all">Show all cards</button></div>
       </div>
+      <p class="note err" id="talk-fs-note" hidden style="text-align:left">Your browser blocked full screen here. Press F11 (Windows) or Ctrl+Cmd+F (Mac) to make the whole browser full screen instead.</p>
       <div class="talk-grid" id="talk-grid"></div>
     </div>
   </div>
@@ -781,7 +782,7 @@ details.track summary:focus-visible{outline:2px solid var(--accent);outline-offs
     <div class="actions"><div><button class="btn" type="button" id="t-cancel">Cancel</button><button class="btn primary" type="submit">Save card</button></div></div>
   </form>
 </dialog>
-<div class="tpa" id="tpa" hidden role="dialog" aria-modal="false" aria-label="All interview cards"><div class="tpa-cols" id="tpa-cols"></div><div class="tpa-tools"><button type="button" id="tpa-dn" aria-label="Smaller text">A−</button><button type="button" id="tpa-up" aria-label="Larger text">A+</button><button type="button" id="tpa-x">Close</button></div></div>
+<div class="tpa" id="tpa" hidden role="dialog" aria-modal="false" aria-label="All interview cards"><div class="tpa-cols" id="tpa-cols"></div><div class="tpa-tools"><button type="button" id="tpa-dn" aria-label="Smaller text">A−</button><button type="button" id="tpa-up" aria-label="Larger text">A+</button><button type="button" id="tpa-fs">Full screen</button><button type="button" id="tpa-x">Close</button></div></div>
 <div class="tp" id="tp" hidden role="dialog" aria-modal="false" aria-label="Interview card">
   <div class="tp-bar">
     <span class="tp-title" id="tp-title"></span>
@@ -1540,6 +1541,12 @@ function fitAll(){
   box.style.columnCount=best.n;box.style.fontSize=Math.max(7,Math.floor(best.f*10)/10+tpaAdj)+"px";
 }
 $("#talk-all").onclick=showAll;
+/* full screen hides the Claude window around the page (desktop browsers) */
+async function toggleFs(){try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen()}catch(e){alertFs()}}
+function alertFs(){const n=$("#talk-fs-note");if(n){n.hidden=false}}
+const fsLabel=()=>{const t=document.fullscreenElement?"Exit full screen":"Full screen";$("#talk-fs").textContent=t;$("#tpa-fs").textContent=t};
+document.addEventListener("fullscreenchange",()=>{fsLabel();if(!$("#tpa").hidden)setTimeout(fitAll,150);if(!$("#tp").hidden)setTimeout(()=>showCard(Talk.cur),150)});
+$("#talk-fs").onclick=toggleFs;$("#tpa-fs").onclick=toggleFs;
 $("#tpa-x").onclick=()=>{$("#tpa").hidden=true};
 $("#tpa-up").onclick=()=>{tpaAdj+=1;fitAll()};$("#tpa-dn").onclick=()=>{tpaAdj-=1;fitAll()};
 addEventListener("resize",()=>{if(!$("#tpa").hidden)fitAll()});
