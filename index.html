@@ -467,6 +467,9 @@ details.track summary:focus-visible{outline:2px solid var(--accent);outline-offs
 .tpa-tools{position:absolute;right:max(10px,env(safe-area-inset-right,0px));bottom:5px;display:flex;gap:4px;z-index:2}
 .tpa-tools button{border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;opacity:.75}
 .tpa-tools button:hover{opacity:1}
+/* while presenting, only the cards show; the rest of the screen stays empty */
+body.presenting{overflow:hidden}
+body.presenting .wrap{visibility:hidden}
 </style>
 </head>
 <body>
@@ -1541,6 +1544,7 @@ function fitAll(){
   box.style.columnCount=best.n;box.style.fontSize=Math.max(7,Math.floor(best.f*10)/10+tpaAdj)+"px";
 }
 $("#talk-all").onclick=showAll;
+{const sync=()=>document.body.classList.toggle("presenting",!$("#tpa").hidden||!$("#tp").hidden);const mo=new MutationObserver(sync);mo.observe($("#tpa"),{attributes:true,attributeFilter:["hidden"]});mo.observe($("#tp"),{attributes:true,attributeFilter:["hidden"]})}
 /* full screen hides the Claude window around the page (desktop browsers) */
 async function toggleFs(){try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen()}catch(e){alertFs()}}
 function alertFs(){const n=$("#talk-fs-note");if(n){n.hidden=false}}
