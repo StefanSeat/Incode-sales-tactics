@@ -473,6 +473,27 @@ details.track summary:focus-visible{outline:2px solid var(--accent);outline-offs
 /* while presenting, only the cards show; the rest of the screen stays empty */
 body.presenting{overflow:hidden}
 body.presenting .wrap{visibility:hidden}
+/* Q&A (private) */
+.qa{width:100%;max-width:1200px;margin-inline:auto;display:flex;flex-direction:column;gap:24px}
+.qa-sec{display:flex;flex-direction:column;gap:12px}
+.qa-sec>h3{margin:0;font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:500}
+.qa-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.qa-item{border:1px solid var(--line);border-radius:16px;background:var(--surface);padding:18px 20px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.qa-item .qh{display:flex;gap:10px;align-items:flex-start}
+.qa-item .qh b{flex:none;width:28px;height:28px;border-radius:8px;background:var(--accent);color:var(--on-accent);display:grid;place-items:center;font-family:var(--display);font-variant-numeric:tabular-nums}
+.qa-item h4{margin:0;font-family:var(--display);font-weight:600;font-size:18px;letter-spacing:-.015em;line-height:1.25;flex:1;min-width:0}
+.qa-item .ctx{margin:0;font-size:13px;color:var(--muted);font-style:italic}
+.qa-item .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:2px}
+.qa-item .why{font-size:14px}
+.qa-item .ans{border-left:2px solid var(--accent);padding:2px 0 2px 12px;display:flex;flex-direction:column;gap:8px}
+.qa-item .ans p{margin:0;font-size:14.5px;line-height:1.55}
+.qa-item .ans p.dir{font-size:12.5px;color:var(--muted);font-style:italic}
+.qa-item .ed{align-self:flex-start}
+.qa-formula{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.qa-formula div{border-radius:14px;padding:14px 16px;background:var(--tint);color:var(--tag-fg);font-size:14px;display:flex;flex-direction:column;gap:4px}
+.qa-formula div b{font-family:var(--display);font-size:16px;color:var(--fg)}
+.qa-formula div span{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+@media (max-width:860px){.qa-grid,.qa-formula{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -617,6 +638,19 @@ body.presenting .wrap{visibility:hidden}
     </div>
   </div>
 
+  <div class="view" id="view-qa" hidden>
+    <div class="qa">
+      <div class="talk-top">
+        <div>
+          <div class="eyebrow">Private to you · not on the public page</div>
+          <h2>Q&amp;A prep</h2>
+          <p class="d-sum">Common cold call brush-offs and interview questions, with how to answer each one.</p>
+        </div>
+        <div class="d-actions"><button class="btn primary" type="button" id="qa-add">Add question</button></div>
+      </div>
+      <div id="qa-body"></div>
+    </div>
+  </div>
   <div class="view" id="view-talk" hidden>
     <div class="talk">
       <div class="talk-top">
@@ -779,6 +813,18 @@ body.presenting .wrap{visibility:hidden}
   </form>
 </dialog>
 
+<dialog id="qdlg">
+  <form class="ed" id="qform" method="dialog">
+    <h2 id="q-head">Question</h2>
+    <label>Section<select id="q-sec"><option value="brush">Cold call brush-offs</option><option value="interview">Interview questions</option></select></label>
+    <label>Question or objection<input id="q-q" maxlength="200"></label>
+    <label>Context (optional)<input id="q-ctx" maxlength="300"></label>
+    <label>Why they say it (optional)<input id="q-why" maxlength="300"></label>
+    <label>How to answer (one paragraph per line; start a line with ( for a stage direction)<textarea id="q-a" maxlength="4000" style="min-height:200px"></textarea></label>
+    <p class="note err" id="q-err" hidden></p>
+    <div class="actions"><button class="btn danger" type="button" id="q-del" hidden>Delete</button><div><button class="btn" type="button" id="q-cancel">Cancel</button><button class="btn primary" type="submit">Save</button></div></div>
+  </form>
+</dialog>
 <dialog id="tdlg">
   <form class="ed" id="tform" method="dialog">
     <h2 id="t-head">Card 1</h2>
@@ -1041,11 +1087,11 @@ const VIEWS=["map","play"];
 let curView="map";
 function showView(v){
   if(!VIEWS.includes(v))v="map";curView=v;
-  for(const x of ["map","desk","play","talk"]){$("#view-"+x).hidden=x!==v}
+  for(const x of ["map","desk","play","talk","qa"]){$("#view-"+x).hidden=x!==v}
   document.querySelectorAll(".tab").forEach(t=>t.setAttribute("aria-selected",String(t.dataset.view===v)));
   $("#new").hidden=v!=="map"||!canWrite;
   try{localStorage.setItem("incode-view",v)}catch(e){}
-  if(v==="map")render();else if(v==="talk")renderTalk();else renderDesk();
+  if(v==="map")render();else if(v==="talk")renderTalk();else if(v==="qa")renderQA();else renderDesk();
 }
 document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>showView(t.dataset.view));
 
@@ -1497,6 +1543,47 @@ document.querySelectorAll("[data-copy]").forEach(b=>b.onclick=async()=>{const pr
   try{await navigator.clipboard.writeText(txt);b.textContent="Copied"}catch(e){const r=document.createRange();r.selectNodeContents(pre);const s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent="Selected: press Ctrl+C"}
   setTimeout(()=>b.textContent="Copy prompt",2000)});
 
+
+/* ---------- Q&A: private, Claude version only ---------- */
+const QA={ref:null,items:{},meta:{},editing:null};
+async function initQA(){
+  if(!db)return;let id=null;try{const u=await claude.use("user");id=u?await u.id():null}catch(e){}
+  if(!id)return;
+  const base=db.doc("data/users/"+id+"/qa");QA.ref=base.collection("items");QA.metaRef=base.collection("meta");
+  const nav=document.querySelector(".tabs");
+  if(!nav.querySelector('[data-view="qa"]')){const b=el("button","tab","Q&A");b.type="button";b.setAttribute("role","tab");b.dataset.view="qa";b.setAttribute("aria-selected","false");b.onclick=()=>showView("qa");nav.append(b)}
+  if(!VIEWS.includes("qa"))VIEWS.push("qa");
+  QA.ref.onSnapshot(s=>{QA.items=Object.fromEntries(s.docs.map(d=>[d.id,{id:d.id,...d.data()}]));renderQA()},()=>{});
+  QA.metaRef.onSnapshot(s=>{QA.meta=Object.fromEntries(s.docs.map(d=>[d.id,d.data()]));renderQA()},()=>{});
+  let want=location.hash.slice(1);if(want!=="qa"){try{want=localStorage.getItem("incode-view")}catch(e){}}
+  if(want==="qa")showView("qa");
+}
+function renderQA(){
+  const body=$("#qa-body");if(!body)return;body.replaceChildren();
+  const all=Object.values(QA.items).sort((a,b)=>(a.order||0)-(b.order||0));
+  if(!all.length){const e=el("div","empty-state","No questions yet. Use Add question to start.");body.append(e);return}
+  const SECS=[["brush","Cold call brush-offs"],["interview","Interview questions"]];
+  for(const [sid,sname] of SECS){
+    const items=all.filter(x=>(x.sec||"brush")===sid);if(!items.length&&sid!=="brush")continue;
+    const sec=el("section","qa-sec");sec.append(el("h3",null,sname));
+    if(sid==="brush"&&QA.meta.formula){const fm=QA.meta.formula;const g=el("div","qa-formula");for(const st of fm.steps||[]){const c=el("div");c.append(el("span",null,st.k),el("b",null,st.t),document.createTextNode(st.d));g.append(c)}sec.append(g)}
+    const grid=el("div","qa-grid");
+    items.forEach((x,i)=>{const c=el("article","qa-item");const h=el("div","qh");h.append(el("b",null,String(i+1)),el("h4",null,x.q||""));c.append(h);
+      if(x.ctx)c.append(el("p","ctx",x.ctx));
+      if(x.why){const w=el("div","why");w.append(el("div","lbl","Why they say it"),document.createTextNode(x.why));c.append(w)}
+      if(x.a){const lab=el("div","lbl",sid==="brush"?"How to answer":"Your answer");const a=el("div","ans");for(const line of x.a.split(/\n+/).map(t=>t.trim()).filter(Boolean))a.append(el("p",line.startsWith("(")?"dir":"",line));c.append(lab,a)}
+      const e=el("button","btn sm ed","Edit");e.type="button";e.onclick=()=>openQ(x);c.append(e);grid.append(c)});
+    sec.append(grid);body.append(sec);
+  }
+}
+function openQ(x){QA.editing=x;$("#q-head").textContent=x?"Edit question":"New question";$("#q-sec").value=x?.sec||"brush";$("#q-q").value=x?.q||"";$("#q-ctx").value=x?.ctx||"";$("#q-why").value=x?.why||"";$("#q-a").value=x?.a||"";$("#q-del").hidden=!x;$("#q-del").textContent="Delete";$("#q-del").dataset.armed="";$("#q-err").hidden=true;$("#qdlg").showModal();$("#q-q").focus()}
+$("#qform").addEventListener("submit",async e=>{e.preventDefault();const x=QA.editing;const id=x?.id||("q"+Date.now().toString(36));
+  const data={sec:$("#q-sec").value,q:$("#q-q").value.trim(),ctx:$("#q-ctx").value.trim(),why:$("#q-why").value.trim(),a:$("#q-a").value.trim(),order:x?.order??(Math.max(0,...Object.values(QA.items).map(i=>i.order||0))+1)};
+  if(!data.q){$("#q-err").textContent="Write the question first.";$("#q-err").hidden=false;return}
+  try{QA.items[id]={id,...data};renderQA();await QA.ref.doc(id).set(data);$("#qdlg").close()}catch(err){$("#q-err").textContent="Saving failed ("+(err?.code||"error")+"). Try again.";$("#q-err").hidden=false}});
+$("#q-del").onclick=async()=>{const b=$("#q-del");if(!b.dataset.armed){b.dataset.armed="1";b.textContent="Click again to delete";return}try{await QA.ref.doc(QA.editing.id).delete();delete QA.items[QA.editing.id];renderQA();$("#qdlg").close()}catch(e){$("#q-err").textContent="Delete failed.";$("#q-err").hidden=false}};
+$("#q-cancel").onclick=()=>$("#qdlg").close();
+$("#qa-add").onclick=()=>openQ(null);
 /* ---------- interview cards: private, Claude version only ---------- */
 const TALK_N=10;
 const Talk={ref:null,cards:{},cur:0,editing:0};
@@ -1627,7 +1714,7 @@ render();
     initStore();
     try{const r=await fetch("cards.json");if(!r.ok)throw 0;const j=await r.json();cards=Object.entries(j).map(([id,d])=>({id,...d}));note.hidden=true;render();return}catch(e){}
     note.textContent="Sign in to claude.ai to see this map.";note.classList.add("err");return}
-  initStore();initTalk();
+  initStore();initTalk().then(initQA);
   try{const user=await claude.use("user");const w=user?await user.can("data.write"):null;canWrite=w!==false}catch(e){canWrite=true}
   $("#new").hidden=!canWrite||curView!=="map";
   db.collection("cards").onSnapshot(s=>{
