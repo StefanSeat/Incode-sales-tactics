@@ -494,6 +494,10 @@ body.presenting .wrap{visibility:hidden}
 .qa-formula div b{font-family:var(--display);font-size:16px;color:var(--fg)}
 .qa-formula div span{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
 @media (max-width:860px){.qa-grid,.qa-formula{grid-template-columns:1fr}}
+/* near-camera mode: notes sit at the bottom edge, centered over the webcam */
+.tpa{left:calc((100% - var(--tpw,100%)) / 2);right:calc((100% - var(--tpw,100%)) / 2)}
+.tpa.bottom{top:auto;bottom:0;border-bottom:0;border-top:2px solid var(--accent);border-left:1px solid var(--line);border-right:1px solid var(--line);border-radius:12px 12px 0 0;box-shadow:0 -12px 40px rgba(0,0,0,.25);padding-top:34px;padding-bottom:calc(8px + env(safe-area-inset-bottom,0px))}
+.tpa.bottom .tpa-tools{bottom:auto;top:5px}
 </style>
 </head>
 <body>
@@ -834,7 +838,7 @@ body.presenting .wrap{visibility:hidden}
     <div class="actions"><div><button class="btn" type="button" id="t-cancel">Cancel</button><button class="btn primary" type="submit">Save card</button></div></div>
   </form>
 </dialog>
-<div class="tpa" id="tpa" hidden role="dialog" aria-modal="false" aria-label="All interview cards"><div class="tpa-cols" id="tpa-cols"></div><div class="tpa-tools"><button type="button" id="tpa-sh" aria-label="Make the cards area shorter">▲ Shorter</button><button type="button" id="tpa-ta" aria-label="Make the cards area taller">▼ Taller</button><button type="button" id="tpa-nu" aria-label="Raise the camera gap">Camera gap ▲</button><button type="button" id="tpa-nd" aria-label="Lower the camera gap">Camera gap ▼</button><button type="button" id="tpa-dn" aria-label="Smaller text">A−</button><button type="button" id="tpa-up" aria-label="Larger text">A+</button><button type="button" id="tpa-fs">Full screen</button><button type="button" id="tpa-x">Close</button></div></div>
+<div class="tpa" id="tpa" hidden role="dialog" aria-modal="false" aria-label="All interview cards"><div class="tpa-cols" id="tpa-cols"></div><div class="tpa-tools"><button type="button" id="tpa-pos">Near camera</button><button type="button" id="tpa-nw" aria-label="Narrower">◂▸ Narrower</button><button type="button" id="tpa-ww" aria-label="Wider">◂ ▸ Wider</button><button type="button" id="tpa-sh" aria-label="Make the cards area shorter">▲ Shorter</button><button type="button" id="tpa-ta" aria-label="Make the cards area taller">▼ Taller</button><button type="button" id="tpa-nu" aria-label="Raise the camera gap">Camera gap ▲</button><button type="button" id="tpa-nd" aria-label="Lower the camera gap">Camera gap ▼</button><button type="button" id="tpa-dn" aria-label="Smaller text">A−</button><button type="button" id="tpa-up" aria-label="Larger text">A+</button><button type="button" id="tpa-fs">Full screen</button><button type="button" id="tpa-x">Close</button></div></div>
 <div class="tp" id="tp" hidden role="dialog" aria-modal="false" aria-label="Interview card">
   <div class="tp-bar">
     <span class="tp-title" id="tp-title"></span>
@@ -1635,7 +1639,7 @@ function layout(box,blocks,n,f){
   box.replaceChildren();box.style.fontSize=f+"px";
   const W=box.clientWidth,H=box.clientHeight,gap=16,cw=(W-gap*(n-1))/n;
   const vh=innerHeight/100,nh=Math.min(H,notch*vh-box.getBoundingClientRect().top);
-  const cols=[];for(let i=0;i<n;i++){const x0=i*(cw+gap)/W,x1=(i*(cw+gap)+cw)/W;const c=el("div","tpa-col");const inNotch=notch<+getComputedStyle(document.documentElement).getPropertyValue("--tph").replace("vh","")&&x1>NOTCH_X[0]&&x0<NOTCH_X[1];c.style.height=(inNotch?Math.max(40,nh):H)+"px";box.append(c);cols.push(c)}
+  const cols=[];for(let i=0;i<n;i++){const x0=i*(cw+gap)/W,x1=(i*(cw+gap)+cw)/W;const c=el("div","tpa-col");const inNotch=tpaPos!=="bottom"&&notch<+getComputedStyle(document.documentElement).getPropertyValue("--tph").replace("vh","")&&x1>NOTCH_X[0]&&x0<NOTCH_X[1];c.style.height=(inNotch?Math.max(40,nh):H)+"px";box.append(c);cols.push(c)}
   let ci=0;const fits=c=>c.scrollHeight<=c.clientHeight+1;
   const card=(b,cont)=>{const d=el("div","tpa-card");const h=el("h4");h.append(el("b",null,String(b.k+1)),document.createTextNode(b.title+(cont?" (cont.)":"")));d.append(h);return d};
   for(const b of blocks){
@@ -1679,6 +1683,12 @@ let tph=80;try{tph=+localStorage.getItem("incode-tph")||80}catch(e){}
 const applyTph=()=>{document.documentElement.style.setProperty("--tph",tph+"vh");try{localStorage.setItem("incode-tph",tph)}catch(e){}};applyTph();
 const nudgeTph=d=>{tph=Math.max(50,Math.min(96,tph+d));applyTph();if(!$("#tpa").hidden)fitAll();if(!$("#tp").hidden)showCard(Talk.cur)};
 $("#tpa-ta").onclick=()=>nudgeTph(4);
+/* position (top, or bottom near the webcam) and width, remembered in this browser */
+let tpaPos="top",tpw=100;try{tpaPos=localStorage.getItem("incode-tpos")||"top";tpw=+localStorage.getItem("incode-tpw")||100}catch(e){}
+function applyPos(){$("#tpa").classList.toggle("bottom",tpaPos==="bottom");document.documentElement.style.setProperty("--tpw",tpw+"%");$("#tpa-pos").textContent=tpaPos==="bottom"?"Move to top":"Near camera";$("#tpa-nu").hidden=$("#tpa-nd").hidden=tpaPos==="bottom";try{localStorage.setItem("incode-tpos",tpaPos);localStorage.setItem("incode-tpw",tpw)}catch(e){}}
+applyPos();
+$("#tpa-pos").onclick=()=>{tpaPos=tpaPos==="bottom"?"top":"bottom";if(tpaPos==="bottom"){if(tph>62)tph=56;if(tpw>80)tpw=70}else{tpw=100;tph=80}applyTph();applyPos();fitAll()};
+$("#tpa-nw").onclick=()=>{tpw=Math.max(30,tpw-10);applyPos();fitAll()};$("#tpa-ww").onclick=()=>{tpw=Math.min(100,tpw+10);applyPos();fitAll()};
 const nudgeNotch=d=>{notch=Math.max(30,Math.min(100,notch+d));try{localStorage.setItem("incode-notch",notch)}catch(e){}if(!$("#tpa").hidden)fitAll()};
 $("#tpa-nu").onclick=()=>nudgeNotch(-3);$("#tpa-nd").onclick=()=>nudgeNotch(3);$("#tpa-sh").onclick=()=>nudgeTph(-4);$("#tpa-dn").onclick=()=>{tpaAdj-=1;fitAll()};
 addEventListener("resize",()=>{if(!$("#tpa").hidden)fitAll()});
