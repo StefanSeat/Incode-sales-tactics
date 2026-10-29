@@ -458,7 +458,9 @@ details.track summary:focus-visible{outline:2px solid var(--accent);outline-offs
 @media (max-width:520px){.talk-grid{grid-template-columns:1fr}.tp-hint{display:none}}
 /* all cards at once, top two-thirds */
 .tpa{position:fixed;left:0;right:0;top:0;height:var(--tph,80vh);z-index:51;background:var(--bg);border-bottom:2px solid var(--accent);box-shadow:0 12px 40px rgba(0,0,0,.25);padding:10px max(12px,env(safe-area-inset-right,0px)) 34px max(12px,env(safe-area-inset-left,0px));padding-top:calc(10px + env(safe-area-inset-top,0px))}
-.tpa-cols{height:100%;overflow:hidden;column-gap:16px;column-rule:1px solid var(--line);column-fill:auto;line-height:1.26;font-family:var(--body);color:var(--fg)}
+.tpa-cols{height:100%;overflow:hidden;display:flex;gap:16px;align-items:flex-start;line-height:1.26;font-family:var(--body);color:var(--fg)}
+.tpa-col{flex:1 1 0;min-width:0;overflow:hidden}
+.tpa-col+.tpa-col{border-left:1px solid var(--line);padding-left:8px;margin-left:-8px}
 .tpa-card{margin:0 0 .55em}
 .tpa-card h4{margin:0 0 .15em;break-after:avoid;font-family:var(--display);font-weight:700;font-size:1em;display:flex;gap:6px;align-items:baseline;color:var(--accent)}
 .tpa-card h4 b{flex:none;min-width:1.5em;height:1.5em;border-radius:.35em;background:var(--accent);color:var(--on-accent);display:inline-grid;place-items:center;font-size:.85em}
@@ -786,7 +788,7 @@ body.presenting .wrap{visibility:hidden}
     <div class="actions"><div><button class="btn" type="button" id="t-cancel">Cancel</button><button class="btn primary" type="submit">Save card</button></div></div>
   </form>
 </dialog>
-<div class="tpa" id="tpa" hidden role="dialog" aria-modal="false" aria-label="All interview cards"><div class="tpa-cols" id="tpa-cols"></div><div class="tpa-tools"><button type="button" id="tpa-sh" aria-label="Make the cards area shorter">▲ Shorter</button><button type="button" id="tpa-ta" aria-label="Make the cards area taller">▼ Taller</button><button type="button" id="tpa-dn" aria-label="Smaller text">A−</button><button type="button" id="tpa-up" aria-label="Larger text">A+</button><button type="button" id="tpa-fs">Full screen</button><button type="button" id="tpa-x">Close</button></div></div>
+<div class="tpa" id="tpa" hidden role="dialog" aria-modal="false" aria-label="All interview cards"><div class="tpa-cols" id="tpa-cols"></div><div class="tpa-tools"><button type="button" id="tpa-sh" aria-label="Make the cards area shorter">▲ Shorter</button><button type="button" id="tpa-ta" aria-label="Make the cards area taller">▼ Taller</button><button type="button" id="tpa-nu" aria-label="Raise the camera gap">Camera gap ▲</button><button type="button" id="tpa-nd" aria-label="Lower the camera gap">Camera gap ▼</button><button type="button" id="tpa-dn" aria-label="Smaller text">A−</button><button type="button" id="tpa-up" aria-label="Larger text">A+</button><button type="button" id="tpa-fs">Full screen</button><button type="button" id="tpa-x">Close</button></div></div>
 <div class="tp" id="tp" hidden role="dialog" aria-modal="false" aria-label="Interview card">
   <div class="tp-bar">
     <span class="tp-title" id="tp-title"></span>
@@ -1530,19 +1532,50 @@ $("#tform").addEventListener("submit",async e=>{e.preventDefault();const i=Talk.
   try{Talk.cards[tKey(i)]=data;renderTalk();await Talk.ref.doc(tKey(i)).set(data);$("#tdlg").close()}catch(err){$("#t-err").textContent="Saving failed ("+(err?.code||"error")+"). Try again.";$("#t-err").hidden=false}});
 $("#t-cancel").onclick=()=>$("#tdlg").close();
 $("#talk-go").onclick=()=>present(0);
-/* all cards view: pick the column count that allows the biggest text */
+/* all cards view: own column layout, so the middle columns can stop above the webcam */
 let tpaAdj=0;
-function showAll(){
-  const box=$("#tpa-cols");box.replaceChildren();
-  for(let k=0;k<TALK_N;k++){const c=tCard(k);if(!c.text)continue;const d=el("div","tpa-card"+(c.text.trim().split(/\s+/).length<150?" keep":""));const h=el("h4");h.append(el("b",null,String(k+1)),document.createTextNode(c.title||"Card "+(k+1)));d.append(h);
-    for(const para of c.text.split(/\n\s*\n|\n/).filter(x=>x.trim()))d.append(el("p",null,para.trim()));box.append(d)}
-  $("#tpa").hidden=false;fitAll();
+let notch=66;try{notch=+localStorage.getItem("incode-notch")||66}catch(e){}
+const NOTCH_X=[0.42,0.70]; /* where the webcam sits, as a share of the screen width */
+function tpaBlocks(){
+  const out=[];
+  for(let k=0;k<TALK_N;k++){const c=tCard(k);if(!c.text)continue;
+    const paras=c.text.split(/\n\s*\n|\n/).map(x=>x.trim()).filter(Boolean);
+    out.push({k,title:c.title||"Card "+(k+1),paras,keep:c.text.trim().split(/\s+/).length<150})}
+  return out;
+}
+function showAll(){$("#tpa").hidden=false;fitAll()}
+function layout(box,blocks,n,f){
+  box.replaceChildren();box.style.fontSize=f+"px";
+  const W=box.clientWidth,H=box.clientHeight,gap=16,cw=(W-gap*(n-1))/n;
+  const vh=innerHeight/100,nh=Math.min(H,notch*vh-box.getBoundingClientRect().top);
+  const cols=[];for(let i=0;i<n;i++){const x0=i*(cw+gap)/W,x1=(i*(cw+gap)+cw)/W;const c=el("div","tpa-col");const inNotch=notch<+getComputedStyle(document.documentElement).getPropertyValue("--tph").replace("vh","")&&x1>NOTCH_X[0]&&x0<NOTCH_X[1];c.style.height=(inNotch?Math.max(40,nh):H)+"px";box.append(c);cols.push(c)}
+  let ci=0;const fits=c=>c.scrollHeight<=c.clientHeight+1;
+  const card=(b,cont)=>{const d=el("div","tpa-card");const h=el("h4");h.append(el("b",null,String(b.k+1)),document.createTextNode(b.title+(cont?" (cont.)":"")));d.append(h);return d};
+  for(const b of blocks){
+    if(ci>=n)return false;
+    if(b.keep){
+      while(ci<n){const d=card(b);b.paras.forEach(p=>d.append(el("p",null,p)));cols[ci].append(d);if(fits(cols[ci]))break;d.remove();ci++}
+      if(ci>=n)return false;continue;
+    }
+    let d=card(b),started=false;cols[ci].append(d);
+    if(!fits(cols[ci])){d.remove();ci++;if(ci>=n)return false;d=card(b);cols[ci].append(d)}
+    for(const p of b.paras){
+      const pe=el("p",null,p);d.append(pe);
+      if(fits(cols[ci])){started=true;continue}
+      pe.remove();if(!started)d.remove();
+      ci++;if(ci>=n)return false;
+      d=card(b,started);d.append(pe);cols[ci].append(d);started=true;
+      if(!fits(cols[ci]))return false;
+    }
+  }
+  return true;
 }
 function fitAll(){
-  const box=$("#tpa-cols"),over=()=>box.scrollWidth>box.clientWidth+1||box.scrollHeight>box.clientHeight+1;
-  const w=box.clientWidth,opts=[3,4,5,6,7,8].filter(n=>w/n>=150);let best={n:4,f:8};
-  for(const n of opts){box.style.columnCount=n;let lo=8,hi=30;for(let i=0;i<9;i++){const mid=(lo+hi)/2;box.style.fontSize=mid+"px";if(over())hi=mid;else lo=mid}if(lo>best.f)best={n,f:lo}}
-  box.style.columnCount=best.n;box.style.fontSize=Math.max(7,Math.floor(best.f*10)/10+tpaAdj)+"px";
+  const box=$("#tpa-cols"),blocks=tpaBlocks();
+  const w=box.clientWidth,opts=[3,4,5,6,7].filter(n=>w/n>=170);let best={n:opts[0]||3,f:7};
+  for(const n of opts){let lo=7,hi=30;for(let i=0;i<8;i++){const mid=(lo+hi)/2;if(layout(box,blocks,n,mid))lo=mid;else hi=mid}if(lo>best.f)best={n,f:lo}}
+  const f=Math.floor(best.f*10)/10;
+  if(!layout(box,blocks,best.n,Math.max(7,f+tpaAdj)))layout(box,blocks,best.n,f);
 }
 $("#talk-all").onclick=showAll;
 {const sync=()=>document.body.classList.toggle("presenting",!$("#tpa").hidden||!$("#tp").hidden);const mo=new MutationObserver(sync);mo.observe($("#tpa"),{attributes:true,attributeFilter:["hidden"]});mo.observe($("#tp"),{attributes:true,attributeFilter:["hidden"]})}
@@ -1558,7 +1591,9 @@ $("#tpa-up").onclick=()=>{tpaAdj+=1;fitAll()};
 let tph=80;try{tph=+localStorage.getItem("incode-tph")||80}catch(e){}
 const applyTph=()=>{document.documentElement.style.setProperty("--tph",tph+"vh");try{localStorage.setItem("incode-tph",tph)}catch(e){}};applyTph();
 const nudgeTph=d=>{tph=Math.max(50,Math.min(96,tph+d));applyTph();if(!$("#tpa").hidden)fitAll();if(!$("#tp").hidden)showCard(Talk.cur)};
-$("#tpa-ta").onclick=()=>nudgeTph(4);$("#tpa-sh").onclick=()=>nudgeTph(-4);$("#tpa-dn").onclick=()=>{tpaAdj-=1;fitAll()};
+$("#tpa-ta").onclick=()=>nudgeTph(4);
+const nudgeNotch=d=>{notch=Math.max(30,Math.min(100,notch+d));try{localStorage.setItem("incode-notch",notch)}catch(e){}if(!$("#tpa").hidden)fitAll()};
+$("#tpa-nu").onclick=()=>nudgeNotch(-3);$("#tpa-nd").onclick=()=>nudgeNotch(3);$("#tpa-sh").onclick=()=>nudgeTph(-4);$("#tpa-dn").onclick=()=>{tpaAdj-=1;fitAll()};
 addEventListener("resize",()=>{if(!$("#tpa").hidden)fitAll()});
 
 function present(i){$("#tp").hidden=false;showCard(i);$("#tp-text").focus({preventScroll:true})}
