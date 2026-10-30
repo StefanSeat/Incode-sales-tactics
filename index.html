@@ -1708,7 +1708,7 @@ function renderCheat(){
   P.replaceChildren(h("Who's on the call"));
   const pl=lines(c.people);if(!pl.length)P.append(el("div","fm","Add the interviewers with Edit."));
   for(const [n,r,w] of pl){if(!r){const d=el("div","pp end");d.append(el("small",null,n||""),document.createTextNode(w||""));P.append(d);continue}const d=el("div","pp");d.append(el("b",null,n||""),el("span",null," · "+r+(w?" · "+w:"")));P.append(d)}
-  O.replaceChildren(h("Brush-offs · agree, reframe, two-day ask"));
+  O.replaceChildren(h("Cold call · opener and brush-offs"));
   lines(c.obj).forEach(([o,a],k)=>{const d=el("div","ob");const t=el("div");const ob=el("b",null,(o||"")+" ");ob.style.display="inline";t.append(ob,document.createTextNode(a||""));d.append(el("i",null,String(k+1)),t);O.append(d)});
   fitCheat();
 }
