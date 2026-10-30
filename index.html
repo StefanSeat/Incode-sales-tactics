@@ -498,6 +498,18 @@ body.presenting .wrap{visibility:hidden}
 .tpa{left:calc((100% - var(--tpw,100%)) / 2);right:calc((100% - var(--tpw,100%)) / 2)}
 .tpa.bottom{top:auto;bottom:0;border-bottom:0;border-top:2px solid var(--accent);border-left:1px solid var(--line);border-right:1px solid var(--line);border-radius:12px 12px 0 0;box-shadow:0 -12px 40px rgba(0,0,0,.25);padding-top:34px;padding-bottom:calc(8px + env(safe-area-inset-bottom,0px))}
 .tpa.bottom .tpa-tools{bottom:auto;top:5px}
+/* cheat sheet under the cards: participants + top brush-offs */
+.tpb{position:fixed;z-index:51;top:var(--tph,80vh);bottom:0;left:calc((100% - var(--tpw,100%)) / 2);right:calc((100% - var(--tpw,100%)) / 2);background:var(--bg);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2.2fr);gap:16px;padding:8px max(12px,env(safe-area-inset-right,0px)) calc(8px + env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px));line-height:1.28;font-family:var(--body);color:var(--fg)}
+.tpb-col{min-width:0;overflow:hidden;display:flex;flex-direction:column;gap:.35em}
+.tpb-col+.tpb-col{border-left:1px solid var(--line);padding-left:14px}
+.tpb h5{margin:0;font-family:var(--mono);font-size:.78em;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:500;display:flex;justify-content:space-between;gap:8px}
+.tpb h5 button{border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:6px;padding:1px 7px;font:inherit;font-size:.95em;letter-spacing:0;text-transform:none;cursor:pointer;opacity:.75}
+.tpb .pp b{color:var(--fg)}
+.tpb .pp span{color:var(--muted)}
+.tpb .ob{display:grid;grid-template-columns:auto minmax(0,1fr);gap:0 .5em}
+.tpb .ob i{font-style:normal;font-family:var(--display);font-weight:700;color:var(--accent)}
+.tpb .ob b{display:block}
+.tpb .fm{color:var(--muted);font-size:.9em}
 </style>
 </head>
 <body>
@@ -838,6 +850,8 @@ body.presenting .wrap{visibility:hidden}
     <div class="actions"><div><button class="btn" type="button" id="t-cancel">Cancel</button><button class="btn primary" type="submit">Save card</button></div></div>
   </form>
 </dialog>
+<div class="tpb" id="tpb" hidden aria-label="Participants and brush-offs"><div class="tpb-col" id="tpb-people"></div><div class="tpb-col" id="tpb-obj"></div></div>
+<dialog id="xdlg"><form class="ed" id="xform" method="dialog"><h2>Below-the-line notes</h2><label>Participants: one per line as Name | Role | What to ask or remember<textarea id="x-people" style="min-height:120px" maxlength="3000"></textarea></label><label>Brush-offs: one per line as Objection | Short answer<textarea id="x-obj" style="min-height:220px" maxlength="5000"></textarea></label><p class="note err" id="x-err" hidden></p><div class="actions"><div><button class="btn" type="button" id="x-cancel">Cancel</button><button class="btn primary" type="submit">Save</button></div></div></form></dialog>
 <div class="tpa" id="tpa" hidden role="dialog" aria-modal="false" aria-label="All interview cards"><div class="tpa-cols" id="tpa-cols"></div><div class="tpa-tools"><button type="button" id="tpa-pos">Near camera</button><button type="button" id="tpa-nw" aria-label="Narrower">◂▸ Narrower</button><button type="button" id="tpa-ww" aria-label="Wider">◂ ▸ Wider</button><button type="button" id="tpa-sh" aria-label="Make the cards area shorter">▲ Shorter</button><button type="button" id="tpa-ta" aria-label="Make the cards area taller">▼ Taller</button><button type="button" id="tpa-nu" aria-label="Raise the camera gap">Camera gap ▲</button><button type="button" id="tpa-nd" aria-label="Lower the camera gap">Camera gap ▼</button><button type="button" id="tpa-dn" aria-label="Smaller text">A−</button><button type="button" id="tpa-up" aria-label="Larger text">A+</button><button type="button" id="tpa-fs">Full screen</button><button type="button" id="tpa-x">Close</button></div></div>
 <div class="tp" id="tp" hidden role="dialog" aria-modal="false" aria-label="Interview card">
   <div class="tp-bar">
@@ -1600,6 +1614,8 @@ async function initTalk(){
   if(!nav.querySelector('[data-view="talk"]')){const b=el("button","tab","Interview");b.type="button";b.setAttribute("role","tab");b.dataset.view="talk";b.setAttribute("aria-selected","false");b.onclick=()=>showView("talk");nav.append(b)}
   if(!VIEWS.includes("talk"))VIEWS.push("talk");
   Talk.ref.onSnapshot(s=>{Talk.cards=Object.fromEntries(s.docs.map(d=>[d.id,d.data()]));renderTalk();if(!$("#tp").hidden)showCard(Talk.cur)},()=>{});
+  Talk.xRef=db.doc("data/users/"+id+"/talk").collection("extra");
+  Talk.xRef.onSnapshot(s=>{const d=s.docs.find(x=>x.id==="cheat");Talk.cheat=d?d.data():{};if(!$("#tpb").hidden)renderCheat()},()=>{});
   let want=location.hash.slice(1);if(want!=="talk"){try{want=localStorage.getItem("incode-view")}catch(e){}}
   if(want==="talk")showView("talk");
 }
@@ -1669,7 +1685,7 @@ function fitAll(){
   if(!layout(box,blocks,best.n,Math.max(7,f+tpaAdj)))layout(box,blocks,best.n,f);
 }
 $("#talk-all").onclick=showAll;
-{const sync=()=>document.body.classList.toggle("presenting",!$("#tpa").hidden||!$("#tp").hidden);const mo=new MutationObserver(sync);mo.observe($("#tpa"),{attributes:true,attributeFilter:["hidden"]});mo.observe($("#tp"),{attributes:true,attributeFilter:["hidden"]})}
+{const sync=()=>{document.body.classList.toggle("presenting",!$("#tpa").hidden||!$("#tp").hidden);const showB=!$("#tpa").hidden&&tpaPos!=="bottom";if($("#tpb").hidden===showB){$("#tpb").hidden=!showB;if(showB)renderCheat()}};const mo=new MutationObserver(sync);mo.observe($("#tpa"),{attributes:true,attributeFilter:["hidden"]});mo.observe($("#tp"),{attributes:true,attributeFilter:["hidden"]})}
 /* full screen hides the Claude window around the page (desktop browsers) */
 async function toggleFs(){try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen()}catch(e){alertFs()}}
 function alertFs(){const n=$("#talk-fs-note");if(n){n.hidden=false}}
@@ -1677,15 +1693,32 @@ const fsLabel=()=>{const t=document.fullscreenElement?"Exit full screen":"Full s
 document.addEventListener("fullscreenchange",()=>{fsLabel();if(!$("#tpa").hidden)setTimeout(fitAll,150);if(!$("#tp").hidden)setTimeout(()=>showCard(Talk.cur),150)});
 $("#talk-fs").onclick=toggleFs;$("#tpa-fs").onclick=toggleFs;
 $("#tpa-x").onclick=()=>{$("#tpa").hidden=true};
+/* below the line: participants and top brush-offs, auto-sized to the space left */
+const lines=t=>(t||"").split(/\n+/).map(x=>x.trim()).filter(Boolean).map(x=>x.split("|").map(y=>y.trim()));
+function renderCheat(){
+  const c=Talk.cheat||{};const P=$("#tpb-people"),O=$("#tpb-obj");
+  const h=(t)=>{const e=el("h5");e.append(el("span",null,t));const b=el("button",null,"Edit");b.type="button";b.onclick=openX;e.append(b);return e};
+  P.replaceChildren(h("Who's on the call"));
+  const pl=lines(c.people);if(!pl.length)P.append(el("div","fm","Add the interviewers with Edit."));
+  for(const [n,r,w] of pl){const d=el("div","pp");d.append(el("b",null,n||""));if(r)d.append(el("span",null," · "+r));if(w)d.append(document.createElement("br"),document.createTextNode(w));P.append(d)}
+  O.replaceChildren(h("Brush-offs · agree, reframe, two-day ask"));
+  lines(c.obj).forEach(([o,a],k)=>{const d=el("div","ob");const t=el("div");t.append(el("b",null,o||""),document.createTextNode(a||""));d.append(el("i",null,String(k+1)),t);O.append(d)});
+  fitCheat();
+}
+function fitCheat(){const b=$("#tpb");if(b.hidden)return;const cols=[...b.querySelectorAll(".tpb-col")];let lo=8,hi=26;for(let i=0;i<8;i++){const m=(lo+hi)/2;b.style.fontSize=m+"px";if(cols.some(c=>c.scrollHeight>c.clientHeight+1))hi=m;else lo=m}b.style.fontSize=Math.floor(lo*10)/10+"px"}
+function openX(){const c=Talk.cheat||{};$("#x-people").value=c.people||"";$("#x-obj").value=c.obj||"";$("#x-err").hidden=true;$("#xdlg").showModal()}
+$("#xform").addEventListener("submit",async e=>{e.preventDefault();const d={people:$("#x-people").value.trim(),obj:$("#x-obj").value.trim(),updated:Date.now()};try{Talk.cheat=d;renderCheat();await Talk.xRef.doc("cheat").set(d);$("#xdlg").close()}catch(err){$("#x-err").textContent="Saving failed ("+(err?.code||"error")+").";$("#x-err").hidden=false}});
+$("#x-cancel").onclick=()=>$("#xdlg").close();
+addEventListener("resize",()=>fitCheat());
 $("#tpa-up").onclick=()=>{tpaAdj+=1;fitAll()};
 /* height of the cards area, remembered in this browser */
 let tph=80;try{tph=+localStorage.getItem("incode-tph")||80}catch(e){}
-const applyTph=()=>{document.documentElement.style.setProperty("--tph",tph+"vh");try{localStorage.setItem("incode-tph",tph)}catch(e){}};applyTph();
+const applyTph=()=>{document.documentElement.style.setProperty("--tph",tph+"vh");setTimeout(()=>{try{fitCheat()}catch(e){}},50);try{localStorage.setItem("incode-tph",tph)}catch(e){}};applyTph();
 const nudgeTph=d=>{tph=Math.max(50,Math.min(96,tph+d));applyTph();if(!$("#tpa").hidden)fitAll();if(!$("#tp").hidden)showCard(Talk.cur)};
 $("#tpa-ta").onclick=()=>nudgeTph(4);
 /* position (top, or bottom near the webcam) and width, remembered in this browser */
 let tpaPos="top",tpw=100;try{tpaPos=localStorage.getItem("incode-tpos")||"top";tpw=+localStorage.getItem("incode-tpw")||100}catch(e){}
-function applyPos(){$("#tpa").classList.toggle("bottom",tpaPos==="bottom");document.documentElement.style.setProperty("--tpw",tpw+"%");$("#tpa-pos").textContent=tpaPos==="bottom"?"Move to top":"Near camera";$("#tpa-nu").hidden=$("#tpa-nd").hidden=tpaPos==="bottom";try{localStorage.setItem("incode-tpos",tpaPos);localStorage.setItem("incode-tpw",tpw)}catch(e){}}
+function applyPos(){$("#tpa").classList.toggle("bottom",tpaPos==="bottom");if(!$("#tpa").hidden){$("#tpb").hidden=tpaPos==="bottom";if(tpaPos!=="bottom")renderCheat()}document.documentElement.style.setProperty("--tpw",tpw+"%");$("#tpa-pos").textContent=tpaPos==="bottom"?"Move to top":"Near camera";$("#tpa-nu").hidden=$("#tpa-nd").hidden=tpaPos==="bottom";try{localStorage.setItem("incode-tpos",tpaPos);localStorage.setItem("incode-tpw",tpw)}catch(e){}}
 applyPos();
 $("#tpa-pos").onclick=()=>{tpaPos=tpaPos==="bottom"?"top":"bottom";if(tpaPos==="bottom"){if(tph>62)tph=56;if(tpw>80)tpw=70}else{tpw=100;tph=80}applyTph();applyPos();fitAll()};
 $("#tpa-nw").onclick=()=>{tpw=Math.max(30,tpw-10);applyPos();fitAll()};$("#tpa-ww").onclick=()=>{tpw=Math.min(100,tpw+10);applyPos();fitAll()};
