@@ -510,6 +510,13 @@ body.presenting .wrap{visibility:hidden}
 .tpb .ob i{font-style:normal;font-family:var(--display);font-weight:700;color:var(--accent)}
 .tpb .ob b{display:block}
 .tpb .fm{color:var(--muted);font-size:.9em}
+/* give the notes below the line at least 30% of the screen */
+.tpa:not(.bottom){height:min(var(--tph,80vh),70vh)}
+.tpb{top:min(var(--tph,80vh),70vh)}
+.tpb .pp{line-height:1.2}
+.tpb .pp b{font-size:1.15em}
+.tpb .pp.end{margin-top:.2em;color:var(--fg)}
+.tpb .pp.end small{display:block;font-family:var(--mono);font-size:.72em;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
 </style>
 </head>
 <body>
@@ -1700,9 +1707,9 @@ function renderCheat(){
   const h=(t)=>{const e=el("h5");e.append(el("span",null,t));const b=el("button",null,"Edit");b.type="button";b.onclick=openX;e.append(b);return e};
   P.replaceChildren(h("Who's on the call"));
   const pl=lines(c.people);if(!pl.length)P.append(el("div","fm","Add the interviewers with Edit."));
-  for(const [n,r,w] of pl){const d=el("div","pp");d.append(el("b",null,n||""));if(r)d.append(el("span",null," · "+r));if(w)d.append(document.createElement("br"),document.createTextNode(w));P.append(d)}
+  for(const [n,r,w] of pl){if(!r){const d=el("div","pp end");d.append(el("small",null,n||""),document.createTextNode(w||""));P.append(d);continue}const d=el("div","pp");d.append(el("b",null,n||""),el("span",null," · "+r+(w?" · "+w:"")));P.append(d)}
   O.replaceChildren(h("Brush-offs · agree, reframe, two-day ask"));
-  lines(c.obj).forEach(([o,a],k)=>{const d=el("div","ob");const t=el("div");t.append(el("b",null,o||""),document.createTextNode(a||""));d.append(el("i",null,String(k+1)),t);O.append(d)});
+  lines(c.obj).forEach(([o,a],k)=>{const d=el("div","ob");const t=el("div");const ob=el("b",null,(o||"")+" ");ob.style.display="inline";t.append(ob,document.createTextNode(a||""));d.append(el("i",null,String(k+1)),t);O.append(d)});
   fitCheat();
 }
 function fitCheat(){const b=$("#tpb");if(b.hidden)return;const cols=[...b.querySelectorAll(".tpb-col")];let lo=8,hi=26;for(let i=0;i<8;i++){const m=(lo+hi)/2;b.style.fontSize=m+"px";if(cols.some(c=>c.scrollHeight>c.clientHeight+1))hi=m;else lo=m}b.style.fontSize=Math.floor(lo*10)/10+"px"}
